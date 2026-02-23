@@ -1,0 +1,6 @@
+project_name: projectB
+model_id: Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice
+language: Chinese
+speaker: Ethan
+sample_rate: 24000
+output_dir: ./outputs/projectB

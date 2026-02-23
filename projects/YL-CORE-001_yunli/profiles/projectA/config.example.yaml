@@ -1,0 +1,6 @@
+project_name: projectA
+model_id: Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice
+language: Chinese
+speaker: Vivian
+sample_rate: 24000
+output_dir: ./outputs/projectA
