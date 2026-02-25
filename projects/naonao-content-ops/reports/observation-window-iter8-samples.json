@@ -34,6 +34,75 @@
         "patch_effect_observed": "fixed",
         "notes": "seed from iter8 minpatch regression output"
       }
+    },
+    {
+      "sample_id": "seed_reg_002",
+      "source": {
+        "platform": "other",
+        "content_type": "cat_food",
+        "timestamp": "2026-02-26T02:13:10+08:00"
+      },
+      "input": {
+        "draft_before": "有风险，马上换粮。",
+        "draft_after": "风险点在矿物平衡，先观察便便和食欲，再决定是否换粮。"
+      },
+      "prediction": {
+        "issue_class": "logic_closure",
+        "issue_tags": [
+          "missing_bridge",
+          "premature_cta",
+          "no_mechanism_explained"
+        ],
+        "root_cause_layer": "template_problem",
+        "editor_action_types": [
+          "rewrite",
+          "add"
+        ],
+        "issue_class_rationale": "",
+        "issue_class_evidence_signals": []
+      },
+      "review": {
+        "is_executable": true,
+        "has_obvious_misclassification": false,
+        "patch_effect_observed": "fixed",
+        "notes": "seed from iter8 minpatch regression output"
+      }
+    },
+    {
+      "sample_id": "seed_reg_003",
+      "source": {
+        "platform": "other",
+        "content_type": "cat_food",
+        "timestamp": "2026-02-26T02:13:20+08:00"
+      },
+      "input": {
+        "draft_before": "看完这些风险你必须现在就下单。",
+        "draft_after": "先确认是否命中对应信号，再决定是否调整方案。"
+      },
+      "prediction": {
+        "issue_class": "cta_coordination",
+        "issue_tags": [
+          "hard_command_after_warning",
+          "cta_without_readiness",
+          "premature_cta"
+        ],
+        "root_cause_layer": "requirement_problem",
+        "editor_action_types": [
+          "rewrite"
+        ],
+        "issue_class_rationale": "改前是风险提示后直接给出‘必须现在就下单’的强CTA；改后改为‘先确认信号，再决定’的行动前置链路，命中 case_003 的 CTA 时机修正场景，因此主类目应为 cta_coordination。",
+        "issue_class_evidence_signals": [
+          "hard_command_after_warning",
+          "cta_without_readiness",
+          "imperative_tone_softened"
+        ]
+      },
+      "review": {
+        "is_executable": true,
+        "has_obvious_misclassification": false,
+        "patch_effect_observed": "fixed",
+        "notes": "seed from iter8 minpatch regression output"
+      }
     }
   ]
 }
