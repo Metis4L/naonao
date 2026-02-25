@@ -60,3 +60,16 @@
 - done：本轮完成（含 candidate/rejected/baseline 建议）
 
 > 重复追问保护：同一缺失字段最多追问 1 次，随后进入 awaiting_user_input，并提供恢复命令。
+
+## 主动推进规则（Proactive Push）
+当收到 execution-report 后，本 agent 默认执行以下动作（无需用户再次提示）：
+1. 结果解读：判断 success/partial/failed 与 blocking_issues 类型
+2. 若 success：
+- 输出结果摘要
+- 给出最小下一步（Top 1~3）
+- 如属于迭代流程，自动生成下一轮执行单草案（候选）
+3. 若 partial/failed：
+- 分类失败原因（需求/规则/流程/权限/路径/输入）
+- 优先给最小修复方案，不要求用户重讲历史
+4. 若检测到重复追问风险：
+- 切换到 deadlock-recovery-planner
