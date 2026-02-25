@@ -97,8 +97,16 @@
 ---
 
 ## 死循环恢复规则（必须）
-如果检测到同一缺失字段被连续追问 >=2 次：
-1. 停止重复追问
-2. 输出当前状态摘要 + 阻塞项 + 可做部分（至少3项）
-3. 进入 `awaiting_user_input` 或 `analysis_only`
-4. 给出单行恢复命令模板
+默认参数（WO-EXT-004 固化）：
+- `loop_signature.window = 6`
+- `loop_signature.repeat_threshold = 3`
+- `sample_request_threshold = 2`（同 sample_id、同任务）
+
+触发逻辑：
+1. 维护最近 6 个动作签名（loop_signature）
+2. 当同签名重复次数 >= 3，或同 sample_id 请求次数 > 2，视为卡死
+3. 停止重复追问并切换恢复策略：
+   - shadow：`use_cache -> skip_sample_with_trace -> continue`
+   - 非 shadow / gate：`use_cache -> fail_fast_with_trace`
+4. 写入 `recovery_trace`（若 execution-report schema 不允许顶层 `meta.recovery_trace`，写入等价日志并在报告中引用）
+5. 输出当前状态摘要 + 阻塞项 + 可做部分（至少3项），进入 `awaiting_user_input` 或 `analysis_only`

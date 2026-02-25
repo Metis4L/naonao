@@ -15,6 +15,15 @@
 4. 无样本恢复模式（analysis-only）
 5. 最小缺失字段格式（只提示一次）
 6. 防复发建议（规则/状态机补丁）
+7. recovery_trace（触发原因、计数、恢复动作、策略分支）
+
+recovery_trace 最小字段：
+- `trigger`: `loop_signature` | `sample_request_threshold`
+- `loop_signature`: `{window, repeat_threshold, repeated_signature, repeated_count}`
+- `sample_request`: `{sample_id, request_count, threshold}`
+- `policy_branch`: `shadow` | `non_shadow_or_gate`
+- `actions`: 按执行顺序记录（如 `use_cache`, `skip_sample_with_trace`, `continue`）
+- `result_state`: `analysis_only` | `awaiting_user_input` | `blocked` | `ready_for_execution`
 
 ## 规则
 - 不重复索要同一字段

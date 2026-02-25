@@ -1,0 +1,108 @@
+{
+  "task_id": "wo_ext_004_min_patch",
+  "status": "success",
+  "summary": "WO-EXT-004 最小补丁已落地：技术顾问/编排侧加入 loop-signature 与 sample 请求阈值护栏，并产出 recovery_trace 可观测性。",
+  "started_at": "2026-02-26T04:18:51+08:00",
+  "finished_at": "2026-02-26T04:18:51+08:00",
+  "file_results": [
+    {
+      "root_alias": "openclaw",
+      "path": "agents/naonao-technical-advisor/ROUTING_MAP.md",
+      "operation": "MODIFY",
+      "status": "success",
+      "detail_phase": "apply",
+      "diff_summary": "固化 WO-EXT-004 默认参数、触发逻辑、策略分支与 recovery_trace 落盘约束",
+      "validations": [
+        {
+          "type": "contains_text",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "agents/naonao-technical-advisor/skills/deadlock-recovery-planner/SKILL.md",
+      "operation": "MODIFY",
+      "status": "success",
+      "detail_phase": "apply",
+      "diff_summary": "新增 recovery_trace 固定输出结构与最小字段要求",
+      "validations": [
+        {
+          "type": "contains_text",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "agents/naonao-technical-advisor/skills/execution-handoff-orchestrator/SKILL.md",
+      "operation": "MODIFY",
+      "status": "success",
+      "detail_phase": "apply",
+      "diff_summary": "增加 recovery_trace 写入策略（schema 受限时采用等价日志并在 execution-report.meta 引用）",
+      "validations": [
+        {
+          "type": "contains_text",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/tools/simulate-wo-ext-004-loop-guard.py",
+      "operation": "ADD",
+      "status": "success",
+      "detail_phase": "apply",
+      "validations": [
+        {
+          "type": "exists",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/reports/wo-ext-004-recovery-trace-simulation.json",
+      "operation": "TEST",
+      "status": "success",
+      "detail_phase": "test",
+      "validations": [
+        {
+          "type": "json_parse",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/reports/execution-report-wo-ext-004.json",
+      "operation": "ADD",
+      "status": "success",
+      "detail_phase": "test",
+      "validations": [
+        {
+          "type": "json_parse",
+          "status": "pass"
+        }
+      ]
+    }
+  ],
+  "blocking_issues": [],
+  "next_actions": [
+    "将同样 recovery_trace 字段映射接入实际 technical-advisor 运行会话（若运行时可写 execution-report，优先落 meta.recovery_trace；否则继续采用等价日志+引用）。",
+    "在下一轮 shadow 回归中挂载真实重复索样本场景，验证线上会话可自动脱离循环。"
+  ],
+  "meta": {
+    "run_mode": "test",
+    "validator": {
+      "unexplained_regression": false,
+      "unstable_candidate": false,
+      "recovery_trace_report": "projects/naonao-content-ops/reports/wo-ext-004-recovery-trace-simulation.json"
+    },
+    "acceptance_selftest": {
+      "repeat_sample_over_threshold_auto_escape_loop": true,
+      "trigger_reason_and_recovery_actions_visible_in_report": true,
+      "success_path_behavior_unchanged": true
+    }
+  }
+}

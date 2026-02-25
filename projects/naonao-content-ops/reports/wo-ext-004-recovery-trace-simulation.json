@@ -1,0 +1,95 @@
+{
+  "task_id": "wo_ext_004_loop_guard_simulation",
+  "generated_at": "2026-02-26T04:18:51+08:00",
+  "defaults": {
+    "loop_signature": {
+      "window": 6,
+      "repeat_threshold": 3
+    },
+    "sample_request_threshold": 2,
+    "recovery_policy": {
+      "shadow": "use_cache->skip_sample_with_trace->continue",
+      "non_shadow_or_gate": "use_cache->fail_fast_with_trace"
+    }
+  },
+  "cases": [
+    {
+      "case": "shadow_repeated_sample_request",
+      "mode": "shadow",
+      "status": "continued",
+      "recovery_trace": {
+        "case": "shadow_repeated_sample_request",
+        "trigger": "sample_request_threshold",
+        "loop_signature": {
+          "window": 6,
+          "repeat_threshold": 3,
+          "repeated_signature": "ask_sample_obs_001",
+          "repeated_count": 5
+        },
+        "sample_request": {
+          "sample_id": "obs_001",
+          "request_count": 3,
+          "threshold": 2
+        },
+        "policy_branch": "shadow",
+        "actions": [
+          "use_cache",
+          "skip_sample_with_trace",
+          "continue"
+        ],
+        "result_state": "analysis_only"
+      }
+    },
+    {
+      "case": "gate_repeated_sample_request",
+      "mode": "gate",
+      "status": "failed_fast",
+      "recovery_trace": {
+        "case": "gate_repeated_sample_request",
+        "trigger": "sample_request_threshold",
+        "loop_signature": {
+          "window": 6,
+          "repeat_threshold": 3,
+          "repeated_signature": "ask_sample_obs_001",
+          "repeated_count": 6
+        },
+        "sample_request": {
+          "sample_id": "obs_001",
+          "request_count": 4,
+          "threshold": 2
+        },
+        "policy_branch": "non_shadow_or_gate",
+        "actions": [
+          "use_cache",
+          "fail_fast_with_trace"
+        ],
+        "result_state": "blocked"
+      }
+    },
+    {
+      "case": "success_path_no_loop",
+      "mode": "shadow",
+      "status": "normal",
+      "recovery_trace": {
+        "case": "success_path_no_loop",
+        "trigger": "none",
+        "loop_signature": {
+          "window": 6,
+          "repeat_threshold": 3,
+          "repeated_signature": null,
+          "repeated_count": 0
+        },
+        "sample_request": {
+          "sample_id": "obs_002",
+          "request_count": 1,
+          "threshold": 2
+        },
+        "policy_branch": "none",
+        "actions": [
+          "continue_normal"
+        ],
+        "result_state": "ready_for_execution"
+      }
+    }
+  ]
+}
