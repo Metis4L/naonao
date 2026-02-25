@@ -1,0 +1,48 @@
+{
+  "project": "naonao-content-ops",
+  "baseline_guard": {
+    "enabled": true,
+    "rule": "score_below_baseline_cannot_promote"
+  },
+  "current_baseline": {
+    "iter_id": "iter6",
+    "status": "baseline_locked"
+  },
+  "iterations": [
+    {
+      "iter_id": "iter6",
+      "status": "baseline",
+      "score_total": 83.33,
+      "metrics": {
+        "issue_class": "2/3",
+        "core_tag": "3/3",
+        "root_cause": "2/3"
+      },
+      "report_path": "projects/naonao-content-ops/reports/correction-regression-run-20260226-real-packe-iter6.json",
+      "notes": "locked as production baseline"
+    },
+    {
+      "iter_id": "iter7",
+      "status": "rejected",
+      "score_total": 73.33,
+      "metrics": {
+        "issue_class": "1/3"
+      },
+      "report_path": "projects/naonao-content-ops/reports/correction-regression-run-20260226-real-packe-iter7.json",
+      "reason": "73.33 < 83.33 baseline guard triggered"
+    },
+    {
+      "iter_id": "iter8-minpatch",
+      "status": "candidate",
+      "score_total": 100.0,
+      "metrics": {
+        "issue_class": "3/3",
+        "core_tag": "3/3",
+        "root_cause": "3/3"
+      },
+      "report_path": "projects/naonao-content-ops/reports/correction-regression-run-20260226-real-packe-iter8-minpatch.json",
+      "error_analysis_path": "projects/naonao-content-ops/reports/correction-regression-error-analysis-iter8.json",
+      "notes": "passed fixed-3 regression; pending stability rerun and sample expansion before promotion"
+    }
+  ]
+}
