@@ -120,7 +120,8 @@
             "ADD",
             "MODIFY",
             "MERGE",
-            "DELETE"
+            "DELETE",
+            "TEST"
           ]
         },
         "status": {
@@ -129,6 +130,14 @@
             "success",
             "skipped",
             "failed"
+          ]
+        },
+        "detail_phase": {
+          "type": "string",
+          "enum": [
+            "dry-run",
+            "apply",
+            "test"
           ]
         },
         "diff_summary": {

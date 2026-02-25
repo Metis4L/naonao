@@ -30,4 +30,5 @@ disable-model-invocation: false
 ## 最低验收场景
 - 能校验：`projects/naonao-content-ops/tests/correction-event-samples.json`（逐条）
 - 能校验：单条 execution-report JSON（含 `task_id/status/file_results`）
+- 能发现 execution-report 漂移字段（如 `operation=TEST`、`detail_phase`）并报路径级错误
 - 错误必须定位到字段路径（示例：`$.meta.backup_ts`）

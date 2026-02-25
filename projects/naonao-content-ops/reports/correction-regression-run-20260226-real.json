@@ -1,0 +1,32 @@
+{
+  "run_id": "reg_20260226_real_01",
+  "mode": "real-chain",
+  "executor": "naonao-feedback-router (subagent run)",
+  "cases": [
+    {
+      "case_id": "reg_001_human_likeness",
+      "run_id": "fb416ea5-ff91-4a20-a5ad-2ff6ebebd844",
+      "status": "done",
+      "json_parse": "unknown_payload_not_visible"
+    },
+    {
+      "case_id": "reg_002_logic_closure",
+      "run_id": "3f80f616-00b0-4d24-95f1-b60a8469303f",
+      "status": "done",
+      "json_parse": "unknown_payload_not_visible"
+    },
+    {
+      "case_id": "reg_003_cta_coordination",
+      "run_id": "0b436b82-a666-43cc-a5ef-4cab4d310c59",
+      "status": "done",
+      "json_parse": "unknown_payload_not_visible"
+    }
+  ],
+  "scoring": {
+    "issue_class_match": null,
+    "core_tag_hit": null,
+    "root_cause_match": null,
+    "candidate_rule_usefulness": null,
+    "note": "session history visibility restricted; payload-level scoring requires tools.sessions.visibility=all or explicit callback logging"
+  }
+}
