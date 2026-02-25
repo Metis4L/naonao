@@ -1,0 +1,125 @@
+{
+  "run_id": "reg_fp_20260226_real",
+  "cases": [
+    {
+      "case_id": "reg_001",
+      "expected": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "quote_overuse",
+          "template_voice"
+        ],
+        "root_cause_layer": "rule_problem"
+      },
+      "actual": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "quote_overuse",
+          "template_voice",
+          "premature_cta"
+        ],
+        "root_cause_layer": "rule_problem",
+        "editor_action_types": [
+          "rewrite",
+          "delete",
+          "add"
+        ]
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    },
+    {
+      "case_id": "reg_002",
+      "expected": {
+        "issue_class": "logic_closure",
+        "issue_tags": [
+          "missing_bridge",
+          "premature_cta"
+        ],
+        "root_cause_layer": "template_problem"
+      },
+      "actual": {
+        "issue_class": "logic_closure",
+        "issue_tags": [
+          "missing_bridge",
+          "premature_cta",
+          "no_mechanism_explained"
+        ],
+        "root_cause_layer": "template_problem",
+        "editor_action_types": [
+          "rewrite",
+          "add"
+        ]
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    },
+    {
+      "case_id": "reg_003",
+      "expected": {
+        "issue_class": "cta_coordination",
+        "issue_tags": [
+          "premature_cta",
+          "hard_command_after_warning"
+        ],
+        "root_cause_layer": "requirement_problem"
+      },
+      "actual": {
+        "issue_class": "cta_coordination",
+        "issue_tags": [
+          "hard_command_after_warning",
+          "cta_without_readiness",
+          "premature_cta"
+        ],
+        "root_cause_layer": "requirement_problem",
+        "editor_action_types": [
+          "rewrite"
+        ]
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    }
+  ],
+  "metrics": {
+    "issue_class_match": "3/3",
+    "core_tag_hit": "3/3",
+    "root_cause_match": "3/3",
+    "candidate_rule_usefulness_avg": 1
+  },
+  "scoring": {
+    "issue_class_match": {
+      "weight": 30,
+      "value": 1,
+      "score": 30
+    },
+    "core_tag_hit": {
+      "weight": 35,
+      "value": 1,
+      "score": 35
+    },
+    "root_cause_match": {
+      "weight": 20,
+      "value": 1,
+      "score": 20
+    },
+    "candidate_rule_usefulness": {
+      "weight": 15,
+      "value": 1,
+      "score": 15
+    },
+    "total": 100
+  },
+  "delta_vs_packf": 10
+}

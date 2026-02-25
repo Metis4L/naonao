@@ -1,9 +1,9 @@
 {
-  "baseline_id": "baseline_iter8_20260226",
-  "source_report": "projects/naonao-content-ops/reports/correction-regression-run-20260226-real-packe-iter8.json",
+  "baseline_id": "baseline_packf_plus_20260226",
+  "source_report": "projects/naonao-content-ops/reports/correction-regression-run-20260226-packf-plus-real.json",
   "status": "active",
-  "last_evaluated_iter": "iter8",
-  "baseline_guard": "hold_iter8",
+  "last_evaluated_iter": "packf_plus",
+  "baseline_guard": "hold_packf_plus",
   "score": {
     "issue_class_match": "3/3",
     "core_tag_hit": "3/3",
@@ -11,7 +11,7 @@
     "candidate_rule_usefulness_avg": 1,
     "total": 100
   },
-  "freeze_note": "Iter8 promoted: better than iter6 and no key metric regression.",
+  "freeze_note": "Pack F+ single-point fix promoted as best baseline.",
   "next_focus": "在测试分支单独优化 case_001/case_003 的 issue_class 分流；生产基线保持 iter6 不变",
   "rejected_iters": [
     {
