@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "naonao-content-ops/execution-report.schema.json",
+  "title": "ExecutionReport",
+  "type": "object",
+  "required": ["report_id", "order_id", "status", "file_results"],
+  "properties": {
+    "report_id": {"type": "string"},
+    "order_id": {"type": "string"},
+    "status": {"type": "string", "enum": ["success", "partial", "failed"]},
+    "started_at": {"type": "string", "format": "date-time"},
+    "ended_at": {"type": "string", "format": "date-time"},
+    "file_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "action", "result", "validation"],
+        "properties": {
+          "path": {"type": "string"},
+          "action": {"type": "string"},
+          "result": {"type": "string", "enum": ["applied", "skipped", "failed"]},
+          "validation": {"type": "string", "enum": ["passed", "failed", "not_run"]},
+          "message": {"type": "string"}
+        }
+      }
+    },
+    "blockers": {"type": "array", "items": {"type": "string"}},
+    "next_actions": {"type": "array", "items": {"type": "string"}}
+  }
+}

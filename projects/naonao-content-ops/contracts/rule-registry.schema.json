@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "naonao-content-ops/rule-registry.schema.json",
+  "title": "RuleRegistry",
+  "type": "object",
+  "required": ["rules"],
+  "properties": {
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["rule_id", "title", "status", "action", "scope", "content"],
+        "properties": {
+          "rule_id": {"type": "string"},
+          "title": {"type": "string"},
+          "status": {"type": "string", "enum": ["candidate", "active", "paused", "deprecated"]},
+          "action": {"type": "string", "enum": ["ADD", "MODIFY", "MERGE", "DEPRECATE", "DELETE", "REACTIVATE"]},
+          "scope": {"type": "string", "enum": ["template", "skill", "global", "project"]},
+          "content": {"type": "string"},
+          "priority": {"type": "integer", "minimum": 0},
+          "conflicts_with": {"type": "array", "items": {"type": "string"}},
+          "supersedes": {"type": "array", "items": {"type": "string"}},
+          "source_evidence": {"type": "array", "items": {"type": "string", "pattern": "^ce_"}},
+          "owner": {"type": "string"},
+          "created_at": {"type": "string", "format": "date-time"},
+          "updated_at": {"type": "string", "format": "date-time"}
+        }
+      }
+    }
+  }
+}

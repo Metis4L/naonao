@@ -52,3 +52,11 @@
 
 - 未确认可调用前，不要假设“已经可用”
 - 不要把项目特化 skill 当通用能力强行迁移
+
+---
+
+## 根目录别名映射（新增）
+- `openclaw` -> `/home/metis/.openclaw/workspace`
+- `naonao_project` -> `/mnt/e/AI/openclaw/workspaces/naonao-pet-content`
+
+说明：执行单默认使用 root_alias，减少绝对路径误写风险。

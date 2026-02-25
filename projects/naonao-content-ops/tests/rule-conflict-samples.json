@@ -1,0 +1,12 @@
+[
+  {"id":"rc_01","type":"normal","a":"先结论后证据","b":"先结论后证据","expected":"no_conflict"},
+  {"id":"rc_02","type":"duplicate","a":"避免过度引用","b":"不要大量引号","expected":"duplicate"},
+  {"id":"rc_03","type":"contradiction","a":"CTA必须开头","b":"CTA禁止开头","expected":"contradiction"},
+  {"id":"rc_04","type":"overlap","a":"猫粮类要机制解释","b":"检测报告类要机制解释","expected":"overlap"},
+  {"id":"rc_05","type":"scope_mismatch","a":"标题结构写入skill规则","b":"标题结构应在模板层","expected":"scope_mismatch"},
+  {"id":"rc_06","type":"ambiguity","a":"适当强情绪","b":"强情绪需限制","expected":"ambiguity"},
+  {"id":"rc_07","type":"normal","a":"先解释风险再给建议","b":"避免硬命令","expected":"no_conflict"},
+  {"id":"rc_08","type":"duplicate","a":"避免topic jump","b":"减少话题跳跃","expected":"duplicate"},
+  {"id":"rc_09","type":"contradiction","a":"必须引用原句","b":"禁止引用原句","expected":"contradiction"},
+  {"id":"rc_10","type":"scope_mismatch","a":"人设口吻放全局","b":"人设口吻放风格偏好层","expected":"scope_mismatch"}
+]
