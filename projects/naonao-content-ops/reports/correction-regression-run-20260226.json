@@ -1,0 +1,50 @@
+{
+  "run_id": "reg_20260226_01",
+  "mode": "test",
+  "parser": "json_parse_pass",
+  "cases": [
+    {
+      "id": "reg_001_human_likeness",
+      "pred": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "quote_overuse",
+          "template_voice"
+        ],
+        "root_cause_layer": "rule_problem"
+      }
+    },
+    {
+      "id": "reg_002_logic_closure",
+      "pred": {
+        "issue_class": "logic_closure",
+        "issue_tags": [
+          "missing_bridge",
+          "premature_cta"
+        ],
+        "root_cause_layer": "template_problem"
+      }
+    },
+    {
+      "id": "reg_003_cta_coordination",
+      "pred": {
+        "issue_class": "cta_coordination",
+        "issue_tags": [
+          "hard_command_after_warning",
+          "premature_cta"
+        ],
+        "root_cause_layer": "requirement_problem"
+      }
+    }
+  ],
+  "metrics": {
+    "issue_class_accuracy": 1,
+    "core_tag_hit_rate": 1,
+    "root_cause_presence_rate": 1
+  },
+  "pass_gate": {
+    "issue_class_at_least_2of3": true,
+    "core_tag_at_least_2of3": true,
+    "root_cause_all_present": true
+  }
+}

@@ -57,6 +57,40 @@
       "items": {
         "type": "string"
       }
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "precheck_rootb_write": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        },
+        "dry_run_status": {
+          "type": "string",
+          "enum": [
+            "success",
+            "partial",
+            "failed"
+          ]
+        },
+        "backup_before_change": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        },
+        "backup_ts": {
+          "type": [
+            "string",
+            "number"
+          ]
+        }
+      }
     }
   },
   "$defs": {
