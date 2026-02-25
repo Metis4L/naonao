@@ -1,0 +1,114 @@
+{
+  "manifest_id": "sample_manifest_v2_iter8_shadow_20260226",
+  "version": "v2",
+  "status": "frozen_for_shadow",
+  "total_samples": 8,
+  "samples": [
+    {
+      "sample_id": "reg_001",
+      "source_type": "real",
+      "risk_bucket": "human_likeness_priority_gate",
+      "boundary_reason": "quote/template voice should stay human_likeness, not factual_risk",
+      "gold_version": "v2",
+      "expected": {
+        "issue_class": "human_likeness",
+        "issue_tags": ["quote_overuse", "template_voice"],
+        "root_cause_layer": "rule_problem"
+      }
+    },
+    {
+      "sample_id": "reg_002",
+      "source_type": "real",
+      "risk_bucket": "tie_break_logic",
+      "boundary_reason": "logic_closure vs mechanism_explanation boundary",
+      "gold_version": "v2",
+      "expected": {
+        "issue_class": "logic_closure",
+        "issue_tags": ["missing_bridge", "premature_cta"],
+        "root_cause_layer": "template_problem"
+      }
+    },
+    {
+      "sample_id": "reg_003",
+      "source_type": "real",
+      "risk_bucket": "cta_coordination_boundary",
+      "boundary_reason": "risk warning + hard CTA should stay cta_coordination",
+      "gold_version": "v2",
+      "expected": {
+        "issue_class": "cta_coordination",
+        "issue_tags": ["premature_cta", "hard_command_after_warning"],
+        "root_cause_layer": "requirement_problem"
+      }
+    },
+    {
+      "sample_id": "reg_004_factual_true_positive",
+      "source_type": "synthetic",
+      "risk_bucket": "factual_risk_boundary",
+      "boundary_reason": "true factual correction (nutrition ratio/date) must trigger factual_risk",
+      "gold_version": "v2",
+      "draft_before": "这款猫粮粗蛋白是52%，2021年配方，适口性100%。",
+      "draft_after": "该配方粗蛋白为42%，并在2024版更新，适口性需结合个体反馈评估。",
+      "expected": {
+        "issue_class": "factual_risk",
+        "issue_tags": ["other"],
+        "root_cause_layer": "input_data_problem"
+      }
+    },
+    {
+      "sample_id": "reg_005_factual_false_positive_guard",
+      "source_type": "synthetic",
+      "risk_bucket": "factual_risk_boundary",
+      "boundary_reason": "style-only rewrite should NOT trigger factual_risk",
+      "gold_version": "v2",
+      "draft_before": "“完美猫粮”，你现在就冲。",
+      "draft_after": "这款更稳，但先看适配反应再决定。",
+      "expected": {
+        "issue_class": "human_likeness",
+        "issue_tags": ["quote_overuse", "template_voice"],
+        "root_cause_layer": "rule_problem"
+      }
+    },
+    {
+      "sample_id": "reg_006_tie_break_logic_vs_cta",
+      "source_type": "synthetic",
+      "risk_bucket": "tie_break_conflict",
+      "boundary_reason": "missing bridge + CTA present, should prefer logic_closure by tie-break",
+      "gold_version": "v2",
+      "draft_before": "有风险，直接下单换掉。",
+      "draft_after": "先看便便和食欲变化，再决定是否调整。",
+      "expected": {
+        "issue_class": "logic_closure",
+        "issue_tags": ["missing_bridge", "premature_cta"],
+        "root_cause_layer": "template_problem"
+      }
+    },
+    {
+      "sample_id": "reg_007_span_note_intent_required",
+      "source_type": "synthetic",
+      "risk_bucket": "span_note_intent_priority",
+      "boundary_reason": "intent note should surface style softening signal",
+      "gold_version": "v2",
+      "draft_before": "你必须马上按这个方案喂，不然就会出问题。",
+      "draft_after": "建议先按这个方案观察两天，再结合状态调整。",
+      "expected": {
+        "issue_class": "cta_coordination",
+        "issue_tags": ["hard_command_after_warning", "cta_without_readiness"],
+        "root_cause_layer": "requirement_problem"
+      }
+    },
+    {
+      "sample_id": "reg_008_human_vs_mechanism_conflict",
+      "source_type": "synthetic",
+      "risk_bucket": "human_likeness_priority_gate",
+      "boundary_reason": "template voice with minor mechanism add should remain human_likeness",
+      "gold_version": "v2",
+      "draft_before": "这就是唯一正确答案，照做就行。",
+      "draft_after": "这个方案更稳，原因在于矿物比例更平衡，但仍要看个体反应。",
+      "expected": {
+        "issue_class": "human_likeness",
+        "issue_tags": ["template_voice", "emotion_overdrive"],
+        "root_cause_layer": "rule_problem"
+      }
+    }
+  ]
+}
