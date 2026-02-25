@@ -1,0 +1,14 @@
+{
+  "baseline_id": "baseline_iter6_20260226",
+  "source_report": "projects/naonao-content-ops/reports/correction-regression-run-20260226-real-packe-iter6.json",
+  "status": "active",
+  "score": {
+    "issue_class_match": "2/3",
+    "core_tag_hit": "3/3",
+    "root_cause_match": "2/3",
+    "candidate_rule_usefulness_avg": 1,
+    "total": 83.33
+  },
+  "freeze_note": "Iter6 targeted split patch accepted as current production baseline.",
+  "next_focus": "Case reg_003 root_cause_layer tuning (template_problem -> requirement_problem) with minimal-risk patch"
+}
