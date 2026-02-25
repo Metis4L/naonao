@@ -2,6 +2,8 @@
   "baseline_id": "baseline_iter6_20260226",
   "source_report": "projects/naonao-content-ops/reports/correction-regression-run-20260226-real-packe-iter6.json",
   "status": "active",
+  "last_evaluated_iter": "iter7",
+  "baseline_guard": "hold_iter6",
   "score": {
     "issue_class_match": "2/3",
     "core_tag_hit": "3/3",
@@ -10,5 +12,12 @@
     "total": 83.33
   },
   "freeze_note": "Iter6 targeted split patch accepted as current production baseline.",
-  "next_focus": "Case reg_003 root_cause_layer tuning (template_problem -> requirement_problem) with minimal-risk patch"
+  "next_focus": "在测试分支单独优化 case_001/case_003 的 issue_class 分流；生产基线保持 iter6 不变",
+  "rejected_iters": [
+    {
+      "iter": "iter7",
+      "score": 73.33,
+      "reason": "低于基线 83.33，且引入 issue_class 回退"
+    }
+  ]
 }
