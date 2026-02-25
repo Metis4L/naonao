@@ -60,3 +60,9 @@
 - `naonao_project` -> `/mnt/e/AI/openclaw/workspaces/naonao-pet-content`
 
 说明：执行单默认使用 root_alias，减少绝对路径误写风险。
+
+## 与 naonao-technical-advisor 的协作协议（新增）
+- execution-engineer 优先接收来自 technical-advisor 的结构化执行单
+- execution-engineer 不负责重新定义迭代目标；若发现目标不清晰，返回 blocking_issues，由 technical-advisor 收口
+- execution-engineer 必须回传结构化 execution-report（含 file_results / blocking_issues / next_actions）
+- execution-engineer 可提出执行层改进建议，但不越权修改基线晋升规则

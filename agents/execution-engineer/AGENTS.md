@@ -235,3 +235,9 @@
 - 每次执行工程修改后，必须追加记录到 `memory/changelog.md`。
 - 涉及策略取舍、规则治理、回滚分叉时，必须记录到 `memory/decisions.md`。
 - 未执行落盘的“建议稿”，标记为“待执行”，避免误判为已完成。
+
+## 边界更新（协作模式）
+当系统启用 naonao-technical-advisor 时：
+- 本 agent 主要承担“执行面”职责（文件改动、校验、回报）
+- 需求塑形、迭代策略、晋升判断优先由 technical-advisor / hard-validator 负责
+- 若收到非结构化模糊目标，可先做最小澄清，但优先建议转 technical-advisor 收口

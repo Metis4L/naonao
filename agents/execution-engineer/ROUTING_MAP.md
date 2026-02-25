@@ -57,3 +57,12 @@
 ### 面向其他 Agent（例如项目内）
 
 - 必须：目标 Agent + 文件 + 改动类型 + 建议内容 + 不要改的部分
+
+## 协作路由（新增）
+### 来自 technical-advisor 的执行单
+- 直接进入 patch-spec-writer / patch-apply-validator / schema-contract-guard 等执行链
+- 输出 execution-report 给 technical-advisor
+
+### 发现阻塞
+- 若为路径/权限/工具问题：直接 blocking_issues
+- 若为需求边界不清：回退 technical-advisor（不要在执行面扩大解释）
