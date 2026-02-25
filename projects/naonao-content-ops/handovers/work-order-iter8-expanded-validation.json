@@ -1,0 +1,32 @@
+{
+  "task_id": "iter8_candidate_expanded_validation",
+  "goal": "Validate iter8-minpatch on expanded 8~12 samples with factual_risk boundary coverage; no production baseline change.",
+  "run_mode": "test",
+  "root_aliases": {
+    "openclaw": "/home/metis/.openclaw/workspace",
+    "naonao_project": "/mnt/e/AI/openclaw/workspaces/naonao-pet-content"
+  },
+  "files": [
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/reports/",
+      "operation": "TEST",
+      "change_spec": "Run expanded regression (8~12 samples, includes factual_risk boundary pair) and save round report + error analysis.",
+      "validation": [
+        "round report includes issue_class/core_tag/root_cause/total",
+        "error analysis includes mismatch_type + likely_cause + patch_hypothesis"
+      ],
+      "acceptance_criteria": [
+        "total >= 83.33",
+        "issue_class_hit >= 0.8",
+        "core_tag_hit >= 0.8",
+        "no regression on fixed-3"
+      ]
+    }
+  ],
+  "postchecks": [
+    "no_production_baseline_overwrite=must_pass",
+    "execution_report_generated=must_pass"
+  ],
+  "rollback_required": false
+}
