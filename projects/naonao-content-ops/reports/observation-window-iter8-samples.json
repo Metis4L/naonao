@@ -1,4 +1,39 @@
 {
   "track_id": "iter8_candidate_observation_20260226",
-  "samples": []
+  "samples": [
+    {
+      "sample_id": "seed_reg_001",
+      "source": {
+        "platform": "other",
+        "content_type": "cat_food",
+        "timestamp": "2026-02-26T02:13:00+08:00"
+      },
+      "input": {
+        "draft_before": "“完美猫粮”这就是答案，你直接冲。",
+        "draft_after": "这款在蛋白来源上更稳，但先看你家猫的适配反应。"
+      },
+      "prediction": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "quote_overuse",
+          "template_voice",
+          "premature_cta"
+        ],
+        "root_cause_layer": "rule_problem",
+        "editor_action_types": [],
+        "issue_class_rationale": "核心改动是去口号化与去模板腔，命令口吻被降级为自然建议。",
+        "issue_class_evidence_signals": [
+          "quote_overuse",
+          "template_voice",
+          "imperative_tone_softened"
+        ]
+      },
+      "review": {
+        "is_executable": true,
+        "has_obvious_misclassification": false,
+        "patch_effect_observed": "fixed",
+        "notes": "seed from iter8 minpatch regression output"
+      }
+    }
+  ]
 }

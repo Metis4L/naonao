@@ -9,17 +9,19 @@
   },
   "status": "ready_for_samples",
   "target_samples": 10,
-  "collected_samples": 0,
-  "samples": [],
+  "collected_samples": 1,
+  "samples": [
+    "seed_reg_001"
+  ],
   "gates": {
     "score_ge_83_33": true,
     "reg_001_issue_class_fixed": true,
     "no_regression_on_reg_002_003": true
   },
   "summary": {
-    "issue_class_hit": null,
-    "core_tag_hit": null,
-    "root_cause_reasonable": null,
+    "issue_class_hit": 1.0,
+    "core_tag_hit": 1.0,
+    "root_cause_reasonable": 1.0,
     "candidate_score": 100,
     "decision": "awaiting_observation",
     "note": "iter8 minimal patch accepted as candidate in test branch; collect 10 real samples before any promotion decision."
