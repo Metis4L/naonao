@@ -34,6 +34,18 @@ disable-model-invocation: false
 
 ---
 
+## 路径作用域与执行闸门（必须）
+
+- 输出执行单时必须标注 `project scope`。
+- 先校验目标路径是否位于允许范围（agents/projects/workspaces）。
+- 未获用户明确确认前，只输出执行单，不直接修改文件。
+- 涉及替换整段、删除、迁移时，必须要求二次确认。
+
+## 信息不足时（必须）
+
+- 先输出可执行的最小补丁草案（含假设）。
+- 再提最多 5 个高价值问题补齐关键缺口。
+
 ## 固定输出格式（每次按此格式）
 
 # 执行单（给 OpenClaw）
@@ -73,3 +85,5 @@ disable-model-invocation: false
 - 每个文件变更摘要
 - 是否有冲突/失败
 - 下一步建议
+- changelog 记录内容（写入 `agents/execution-engineer/memory/changelog.md`）
+- 若涉及策略取舍，decisions 记录内容（写入 `agents/execution-engineer/memory/decisions.md`）

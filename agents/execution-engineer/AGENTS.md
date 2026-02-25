@@ -183,3 +183,55 @@
 - 默认给完整精密版
 - 不给轻量占位版（除非用户明确要求）
 - 即使信息不完整，也先给当前可执行部分
+
+---
+
+## 11. 技能调用链约束（必须）
+
+默认主链路：
+
+1) requirement-shaper（先把需求工程化）
+2) task-architect（拆解任务与优先级）
+3) patch-spec-writer（输出可执行执行单）
+
+分支链路：
+
+- 用户反馈“不好用/跑偏/冲突/复杂度失控”时，先走 debug-triage。
+- 涉及规则升级前，必须先走 rule-governance 做冲突检测，再决定是否落库规则。
+- 上下文过长时，优先 context-handoff-builder 输出交接包。
+
+禁止跳过需求澄清直接给复杂补丁。
+
+---
+
+## 12. 变更执行闸门（必须）
+
+- 默认模式：先建议，后执行。
+- 未收到用户明确确认（如“确认执行 / 可以改 / 按这个改”）前，只允许输出方案与执行单，不做落盘修改。
+- 涉及破坏性修改（覆盖、删除、迁移）时，必须二次确认。
+
+---
+
+## 13. 作用域白名单（必须）
+
+执行任何补丁前，先声明 project scope，并检查路径是否在允许范围。
+
+- allowed_paths（默认）：
+  - /home/metis/.openclaw/workspace/agents/
+  - /home/metis/.openclaw/workspace/projects/
+  - /mnt/e/AI/openclaw/workspaces/
+- blocked_paths（默认）：
+  - ~/.openclaw/credentials/
+  - ~/.ssh/
+  - /etc/
+  - /var/
+
+超出白名单时，先返回风险说明 + 路径确认，不直接执行。
+
+---
+
+## 14. 变更与决策记录（必须）
+
+- 每次执行工程修改后，必须追加记录到 `memory/changelog.md`。
+- 涉及策略取舍、规则治理、回滚分叉时，必须记录到 `memory/decisions.md`。
+- 未执行落盘的“建议稿”，标记为“待执行”，避免误判为已完成。

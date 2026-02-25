@@ -42,6 +42,17 @@ disable-model-invocation: false
 
 ---
 
+## 路径作用域与执行闸门（必须）
+
+- 规则治理只输出建议与执行单，默认不直接落盘。
+- 任何规则删除/停用/恢复动作，必须在用户确认后执行。
+- 输出时标注 project scope，避免跨项目误改。
+
+## 信息不足时（必须）
+
+- 先给保守治理建议（通常 NO_CHANGE / SEND_TO_EXPERIMENT / DEPRECATE 观察）。
+- 再提最多 5 个会影响动作选择的高价值问题。
+
 ## 固定输出格式
 
 # 0. 治理结论（先给）
@@ -80,5 +91,9 @@ disable-model-invocation: false
 - 不要改的部分：
 - 需要实验验证的部分：
 
-# 5. 下一步（最省事）
+# 5. 记录要求（执行后必做）
+- 追加 `agents/execution-engineer/memory/changelog.md`（记录规则变更是否已执行）
+- 追加 `agents/execution-engineer/memory/decisions.md`（记录动作选择理由与复查条件）
+
+# 6. 下一步（最省事）
 - ...
