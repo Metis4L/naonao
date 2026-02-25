@@ -1,0 +1,42 @@
+{
+  "target": "iter8_candidate_expanded_validation",
+  "required_new_samples": 5,
+  "required_boundary_pair": {
+    "factual_true_positive": {
+      "sample_id": "",
+      "risk_bucket": "factual_risk_boundary",
+      "boundary_reason": "true factual correction",
+      "gold": {
+        "issue_class": "factual_risk",
+        "issue_tags": [],
+        "root_cause_layer": ""
+      }
+    },
+    "factual_false_positive_guard": {
+      "sample_id": "",
+      "risk_bucket": "factual_risk_boundary",
+      "boundary_reason": "style-only should not be factual_risk",
+      "gold": {
+        "issue_class": "human_likeness",
+        "issue_tags": [],
+        "root_cause_layer": ""
+      }
+    }
+  },
+  "samples": [
+    {
+      "sample_id": "",
+      "source_type": "real|synthetic",
+      "risk_bucket": "",
+      "boundary_reason": "",
+      "gold_version": "v2",
+      "draft_before": "",
+      "draft_after": "",
+      "gold": {
+        "issue_class": "",
+        "issue_tags": [],
+        "root_cause_layer": ""
+      }
+    }
+  ]
+}
