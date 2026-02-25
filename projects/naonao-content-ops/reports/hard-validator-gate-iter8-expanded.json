@@ -1,0 +1,23 @@
+{
+  "task_id": "iter8_candidate_expanded_validation_gate",
+  "mode": "test",
+  "status": "blocked",
+  "gate_inputs": {
+    "candidate_iter": "iter8-minpatch",
+    "baseline_iter": "iter6",
+    "expanded_report": "projects/naonao-content-ops/reports/correction-regression-run-20260226-iter8-expanded.json",
+    "error_analysis": "projects/naonao-content-ops/reports/correction-regression-error-analysis-iter8-expanded.json"
+  },
+  "checks": {
+    "total_ge_83_33": "pass",
+    "issue_class_hit_ge_0_8": "pass",
+    "core_tag_hit_ge_0_8": "pass",
+    "no_regression_on_fixed_3": "pass",
+    "expanded_sample_size_8_to_12": "fail",
+    "factual_risk_boundary_pair_present": "fail",
+    "no_production_baseline_overwrite": "pass"
+  },
+  "decision": "expanded_validation_incomplete",
+  "decision_note": "No baseline promotion conclusion generated. current_baseline.iter_id remains iter6.",
+  "generated_at": "2026-02-26T04:20:00+08:00"
+}

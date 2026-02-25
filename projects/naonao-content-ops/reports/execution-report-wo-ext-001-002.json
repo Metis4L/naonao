@@ -1,0 +1,77 @@
+{
+  "task_id": "wo_ext_001_002_exec_report",
+  "status": "success",
+  "summary": "WO-EXT-001 + WO-EXT-002 已实现：新增指纹、漂移解释门、稳定性复跑矩阵与轻门禁。",
+  "started_at": "2026-02-26T04:00:33+08:00",
+  "finished_at": "2026-02-26T04:00:33+08:00",
+  "file_results": [
+    {
+      "root_alias": "naonao_project",
+      "path": "projects/naonao-content-ops/contracts/execution-report.schema.json",
+      "operation": "MODIFY",
+      "status": "success",
+      "detail_phase": "apply",
+      "diff_summary": "meta 扩展 fingerprints/run_mode/determinism/validator flags",
+      "validations": [
+        {
+          "type": "json_parse",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "root_alias": "naonao_project",
+      "path": "projects/naonao-content-ops/tools/build-stability-matrix.py",
+      "operation": "ADD",
+      "status": "success",
+      "detail_phase": "apply",
+      "validations": [
+        {
+          "type": "exists",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "root_alias": "naonao_project",
+      "path": "projects/naonao-content-ops/reports/correction-regression-stability-iter6-vs-iter8-minpatch-x5.json",
+      "operation": "ADD",
+      "status": "success",
+      "detail_phase": "test",
+      "validations": [
+        {
+          "type": "json_parse",
+          "status": "pass"
+        }
+      ]
+    }
+  ],
+  "blocking_issues": [],
+  "next_actions": [
+    "如接入真实 feedback-router/validator 运行链路，可直接复用本脚本输出字段。",
+    "如后续存在非0波动，validator 将标记 unstable_candidate=true 并在报告显式。"
+  ],
+  "meta": {
+    "rules_fingerprint": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "prompt_fingerprint": "baf7b449ea649709bd5a3f5eb1b12501dc4c9a2b4e2ca0b404770ff2abe854f4",
+    "config_fingerprint": "e471099cc1916fa2a9cf2ec58616cdb5ab45af6b942e5074026d48927dcc9ee0",
+    "sample_manifest_fingerprint": "e36aba067b3da5fba21e5a4e0064e510b51c35b89e4b209e57e12096d51bc84a",
+    "run_mode": "test",
+    "determinism": {
+      "seed": 42,
+      "sort_mode": "rule_id_asc+sample_id_asc",
+      "python_version": "3.12.3",
+      "runtime_version": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+    },
+    "validator": {
+      "unstable_candidate": false,
+      "unexplained_regression": false
+    },
+    "acceptance_selftest": {
+      "same_version_same_sample_fingerprint_consistent": true,
+      "rule_change_changes_rules_fingerprint": true,
+      "sample_add_remove_changes_manifest_fingerprint": true,
+      "degrade_without_fp_change_sets_unexplained_regression": true
+    }
+  }
+}

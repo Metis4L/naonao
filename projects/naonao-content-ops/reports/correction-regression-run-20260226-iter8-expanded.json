@@ -1,0 +1,130 @@
+{
+  "run_id": "reg_e_20260226_iter8_expanded_partial",
+  "mode": "test",
+  "status": "partial",
+  "source": {
+    "executed_from": "projects/naonao-content-ops/reports/correction-regression-run-20260226-real-packe-iter8-minpatch.json",
+    "expanded_target": "8~12 samples (with factual_risk boundary pair)",
+    "actual_sample_count": 3,
+    "required_min": 8
+  },
+  "cases": [
+    {
+      "case_id": "reg_001",
+      "expected": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "quote_overuse",
+          "template_voice"
+        ],
+        "root_cause_layer": "rule_problem"
+      },
+      "actual": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "quote_overuse",
+          "template_voice",
+          "premature_cta"
+        ],
+        "root_cause_layer": "rule_problem"
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    },
+    {
+      "case_id": "reg_002",
+      "expected": {
+        "issue_class": "logic_closure",
+        "issue_tags": [
+          "missing_bridge",
+          "premature_cta"
+        ],
+        "root_cause_layer": "template_problem"
+      },
+      "actual": {
+        "issue_class": "logic_closure",
+        "issue_tags": [
+          "missing_bridge",
+          "premature_cta",
+          "no_mechanism_explained"
+        ],
+        "root_cause_layer": "template_problem"
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    },
+    {
+      "case_id": "reg_003",
+      "expected": {
+        "issue_class": "cta_coordination",
+        "issue_tags": [
+          "premature_cta",
+          "hard_command_after_warning"
+        ],
+        "root_cause_layer": "requirement_problem"
+      },
+      "actual": {
+        "issue_class": "cta_coordination",
+        "issue_tags": [
+          "hard_command_after_warning",
+          "cta_without_readiness",
+          "premature_cta"
+        ],
+        "root_cause_layer": "requirement_problem"
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    }
+  ],
+  "metrics": {
+    "issue_class": "3/3",
+    "core_tag": "3/3",
+    "root_cause": "3/3",
+    "candidate_rule_usefulness_avg": 1
+  },
+  "scoring": {
+    "issue_class_match": {
+      "weight": 30,
+      "value": 1,
+      "score": 30
+    },
+    "core_tag_hit": {
+      "weight": 35,
+      "value": 1,
+      "score": 35
+    },
+    "root_cause_match": {
+      "weight": 20,
+      "value": 1,
+      "score": 20
+    },
+    "candidate_rule_usefulness": {
+      "weight": 15,
+      "value": 1,
+      "score": 15
+    },
+    "total": 100
+  },
+  "acceptance_snapshot": {
+    "total_ge_83_33": true,
+    "issue_class_hit_ge_0_8": true,
+    "core_tag_hit_ge_0_8": true,
+    "no_regression_on_fixed_3": true,
+    "expanded_sample_size_met": false,
+    "factual_risk_boundary_pair_covered": false
+  },
+  "blocking_note": "Expanded run target not met: only fixed-3 sample set available; expanded 8~12 and factual_risk boundary pair are missing.",
+  "generated_at": "2026-02-26T04:20:00+08:00"
+}

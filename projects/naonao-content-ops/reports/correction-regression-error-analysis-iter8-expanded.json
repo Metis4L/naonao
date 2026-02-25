@@ -1,0 +1,27 @@
+{
+  "analysis_id": "iter8_expanded_error_analysis_20260226_partial",
+  "mode": "test",
+  "status": "partial",
+  "input_report": "projects/naonao-content-ops/reports/correction-regression-run-20260226-iter8-expanded.json",
+  "sample_coverage": {
+    "required_range": "8~12",
+    "actual": 3,
+    "factual_risk_boundary_pair_required": 2,
+    "factual_risk_boundary_pair_actual": 0
+  },
+  "error_items": [
+    {
+      "case_id": "coverage_gap",
+      "mismatch_type": "insufficient_sample_coverage",
+      "likely_cause": "No expanded sample source was delivered beyond fixed-3 seeds; no true factual_risk case and no style-only factual false-positive guard in observation set.",
+      "patch_hypothesis": "Provide 5~9 additional labeled before/after samples, including at least one true factual correction and one style-only non-factual boundary case, then rerun expanded regression.",
+      "severity": "high"
+    }
+  ],
+  "summary": {
+    "mismatch_total": 1,
+    "model_behavior_regression_found": false,
+    "data_coverage_blocked": true
+  },
+  "generated_at": "2026-02-26T04:20:00+08:00"
+}

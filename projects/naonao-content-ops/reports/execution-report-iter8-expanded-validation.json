@@ -1,0 +1,72 @@
+{
+  "task_id": "iter8_candidate_expanded_validation",
+  "status": "partial",
+  "file_results": [
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/reports/correction-regression-run-20260226-iter8-expanded.json",
+      "operation": "TEST",
+      "status": "success",
+      "detail_phase": "test",
+      "validations": [
+        {
+          "type": "json_parse",
+          "status": "pass",
+          "detail": "Valid JSON; includes issue_class/core_tag/root_cause/total metrics."
+        }
+      ]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/reports/correction-regression-error-analysis-iter8-expanded.json",
+      "operation": "TEST",
+      "status": "success",
+      "detail_phase": "test",
+      "validations": [
+        {
+          "type": "json_parse",
+          "status": "pass",
+          "detail": "Valid JSON; includes mismatch_type/likely_cause/patch_hypothesis."
+        }
+      ]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/reports/hard-validator-gate-iter8-expanded.json",
+      "operation": "TEST",
+      "status": "success",
+      "detail_phase": "test",
+      "validations": [
+        {
+          "type": "contains_text",
+          "status": "pass",
+          "detail": "Explicitly states no baseline promotion conclusion and baseline overwrite forbidden."
+        }
+      ]
+    }
+  ],
+  "blocking_issues": [
+    {
+      "code": "MISSING_EXPANDED_SAMPLE_SOURCE",
+      "message": "Expanded validation target requires 8~12 samples, but only fixed-3 seeds are available.",
+      "path": "projects/naonao-content-ops/reports/observation-window-iter8-samples.json",
+      "suggested_fix": "Provide at least 5 additional labeled samples (before/after + expected issue_class/core_tag/root_cause)."
+    },
+    {
+      "code": "MISSING_FACTUAL_BOUNDARY_PAIR",
+      "message": "Required factual_risk boundary pair not present.",
+      "suggested_fix": "Add 2 boundary samples: (1) true factual correction, (2) style-only non-factual case to test false-positive guard."
+    }
+  ],
+  "next_actions": [
+    "Collect and append minimum missing sample set into observation-window-iter8-samples.json (or equivalent expanded source).",
+    "Rerun expanded regression on full 8~12 set and regenerate run/error-analysis/gate artifacts.",
+    "Keep current_baseline.iter_id unchanged at iter6 until expanded gate passes and human approves promotion."
+  ],
+  "meta": {
+    "dry_run_status": "partial",
+    "precheck_rootb_write": "pass",
+    "backup_before_change": "pass",
+    "backup_ts": "n/a-test-only"
+  }
+}

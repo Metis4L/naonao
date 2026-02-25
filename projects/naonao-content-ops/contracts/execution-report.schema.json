@@ -89,6 +89,64 @@
             "string",
             "number"
           ]
+        },
+        "rules_fingerprint": {
+          "type": "string"
+        },
+        "prompt_fingerprint": {
+          "type": "string"
+        },
+        "config_fingerprint": {
+          "type": "string"
+        },
+        "sample_manifest_fingerprint": {
+          "type": "string"
+        },
+        "run_mode": {
+          "type": "string",
+          "enum": [
+            "dry-run",
+            "apply",
+            "test"
+          ]
+        },
+        "determinism": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "seed": {
+              "type": [
+                "integer",
+                "number",
+                "string"
+              ]
+            },
+            "sort_mode": {
+              "type": "string"
+            },
+            "python_version": {
+              "type": "string"
+            },
+            "runtime_version": {
+              "type": "string"
+            }
+          }
+        },
+        "validator": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "unexplained_regression": {
+              "type": "boolean"
+            },
+            "unstable_candidate": {
+              "type": "boolean"
+            }
+          }
+        },
+        "acceptance_selftest": {
+          "type": "object",
+          "additionalProperties": true
         }
       }
     }

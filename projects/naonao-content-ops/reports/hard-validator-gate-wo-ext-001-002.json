@@ -1,0 +1,21 @@
+{
+  "task_id": "wo_ext_001_002_gate",
+  "decision": "pass",
+  "reasons": [
+    "execution-report contains required structure and meta fingerprints; schema includes compatible fields for fingerprint and determinism metadata.",
+    "stability matrix (iter6 vs iter8-minpatch, 5x each) shows zero variance (std=0) on candidate and baseline.",
+    "No baseline overwrite action observed; current production baseline remains iter6."
+  ],
+  "evidence_refs": [
+    "projects/naonao-content-ops/reports/execution-report-wo-ext-001-002.json",
+    "projects/naonao-content-ops/reports/correction-regression-stability-iter6-vs-iter8-minpatch-x5.json#summary",
+    "projects/naonao-content-ops/contracts/execution-report.schema.json#properties.meta",
+    "projects/naonao-content-ops/handovers/iteration-ledger.json#current_baseline.iter_id"
+  ],
+  "suggested_fixes": [
+    "Proceed to WO-EXT-003 sample expansion (8~12) to validate generalization beyond fixed-3.",
+    "Implement WO-EXT-004 loop-signature guard and recovery_trace for anti-deadlock observability.",
+    "Wire feedback-router runtime output to print fingerprint drift summary when regression drops."
+  ],
+  "next_action": "proceed_p1_wo_ext_003_then_004"
+}
