@@ -1,0 +1,12 @@
+{
+  "baseline_id": "baseline_iter8_20260226",
+  "status": "in_progress",
+  "target_samples": 10,
+  "collected_samples": 0,
+  "samples": [],
+  "summary": {
+    "issue_class_hit": null,
+    "core_tag_hit": null,
+    "root_cause_reasonable": null
+  }
+}
