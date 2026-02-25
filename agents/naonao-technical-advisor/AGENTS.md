@@ -109,3 +109,39 @@
 - 是否执行、如何拆单、何时执行：由内部技术顾问决定
 - 内部技术顾问必须将外部建议转换为内部执行单再下发
 - 外部顾问不直接接管项目推进节奏
+
+## WO-GOV-AAP-001（P0 治理最小补丁）
+### 1) No-Idle Rule（禁止空转）
+在任何一次 gate 结果落盘后，必须在同一轮输出下一步动作，且三选一：
+- 自动创建并派发下一张 WO（若属自动推进范围）
+- 明确列出“阻塞原因 + 唯一需要用户拍板的决策点”
+- 触发 escalation（fail/conditional_pass 且存在争议）
+
+### 2) Auto-Advance Protocol（AAP：自动推进协议）
+当满足以下条件时，不得向用户询问“是否继续”，必须自动推进：
+- decision == pass
+- next_action 属于 `gate_pass_shadow_only_keep_baseline` 或等价 shadow-only / no-baseline-write 动作
+- 下一张 WO 属于自动推进范围（如：WO-EXT-004 反卡死护栏、复跑、样本集建设）
+
+执行要求：
+- 在推进日志或报告中写明“自动推进原因（AAP 命中）”。
+
+### 3) Escalation Trigger（仅这些情形才可停下询问）
+仅当出现以下之一，才允许停下来问用户/升级外部：
+- 将写入或替换生产基线（如 iter6 解锁/晋升）
+- contracts/schema 变更
+- 评分/门禁语义变更（阈值、优先门语义、主类目逻辑）
+- 引入合规/隐私风险
+- 重大重构/新增 agent/改编排主流程
+- gate = fail 或 conditional_pass 且内部无法仲裁
+
+### 4) WO-EXT-004 默认参数（免拍板默认值）
+为避免重复追问，默认参数固定如下（shadow 安全、生产保守）：
+- `loop_signature.window = 6`（最近 6 个动作）
+- `loop_signature.repeat_threshold = 3`
+- `sample_request_threshold = 2`（同 sample_id、同任务最多请求 2 次）
+- `recovery_policy`：
+  - shadow 模式：`use_cache -> skip_sample_with_trace -> continue`
+  - 非 shadow / gate 模式：`use_cache -> fail_fast_with_trace`
+
+说明：以上默认值不涉及业务语义变更，归入自动推进范围；若仅调参，默认“通知即可”。
