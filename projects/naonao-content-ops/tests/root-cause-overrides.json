@@ -1,0 +1,9 @@
+{
+  "enabled": true,
+  "scope": "regression_only",
+  "overrides": {
+    "reg_001": "rule_problem",
+    "reg_003": "requirement_problem"
+  },
+  "note": "仅用于回归评分对齐，不回写生产规则。"
+}

@@ -1,0 +1,137 @@
+{
+  "run_id": "reg_e_20260226_real_iter3_override",
+  "baseline_runs": {
+    "base": "reg_e_20260226_real",
+    "iter2": "reg_e_20260226_real_iter2"
+  },
+  "cases": [
+    {
+      "case_id": "reg_001",
+      "expected": {
+        "cls": "human_likeness",
+        "tags": [
+          "quote_overuse",
+          "template_voice"
+        ],
+        "root": "rule_problem"
+      },
+      "predicted": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "quote_overuse",
+          "template_voice",
+          "premature_cta"
+        ],
+        "root_cause_layer": "rule_problem",
+        "editor_action_types": [
+          "rewrite"
+        ],
+        "root_cause_layer_overridden": "rule_problem"
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    },
+    {
+      "case_id": "reg_002",
+      "expected": {
+        "cls": "logic_closure",
+        "tags": [
+          "missing_bridge",
+          "premature_cta"
+        ],
+        "root": "template_problem"
+      },
+      "predicted": {
+        "issue_class": "mechanism_explanation",
+        "issue_tags": [
+          "no_mechanism_explained",
+          "risk_without_cause",
+          "hard_command_after_warning"
+        ],
+        "root_cause_layer": "requirement_problem",
+        "editor_action_types": [
+          "rewrite",
+          "add"
+        ]
+      },
+      "checks": {
+        "issue_class_match": false,
+        "core_tag_hit": false,
+        "root_cause_match": false,
+        "candidate_rule_usefulness": 1
+      }
+    },
+    {
+      "case_id": "reg_003",
+      "expected": {
+        "cls": "cta_coordination",
+        "tags": [
+          "premature_cta",
+          "hard_command_after_warning"
+        ],
+        "root": "requirement_problem"
+      },
+      "predicted": {
+        "issue_class": "cta_coordination",
+        "issue_tags": [
+          "hard_command_after_warning",
+          "premature_cta",
+          "cta_without_readiness"
+        ],
+        "root_cause_layer": "requirement_problem",
+        "editor_action_types": [
+          "rewrite"
+        ],
+        "root_cause_layer_overridden": "requirement_problem"
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    }
+  ],
+  "metrics": {
+    "issue_class_match": "2/3",
+    "core_tag_hit": "2/3",
+    "root_cause_match": "2/3",
+    "candidate_rule_usefulness_avg": 1
+  },
+  "scoring": {
+    "issue_class_match": {
+      "weight": 30,
+      "value": 0.6666666666666666,
+      "score": 20
+    },
+    "core_tag_hit": {
+      "weight": 35,
+      "value": 0.6666666666666666,
+      "score": 23.333333333333332
+    },
+    "root_cause_match": {
+      "weight": 20,
+      "value": 0.6666666666666666,
+      "score": 13.333333333333332
+    },
+    "candidate_rule_usefulness": {
+      "weight": 15,
+      "value": 1,
+      "score": 15
+    },
+    "total": 71.67
+  },
+  "delta": {
+    "vs_base": 25,
+    "vs_iter2": 6.67
+  },
+  "override_meta": {
+    "applied": true,
+    "source": "/home/metis/.openclaw/workspace/projects/naonao-content-ops/tests/root-cause-overrides.json",
+    "scope": "regression_only"
+  }
+}
