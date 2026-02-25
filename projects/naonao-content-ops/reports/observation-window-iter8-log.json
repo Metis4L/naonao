@@ -1,14 +1,27 @@
 {
-  "baseline_id": "baseline_packf_plus_20260226",
+  "track_id": "iter8_candidate_observation_20260226",
+  "mode": "test-branch-only",
+  "production_baseline": {
+    "id": "iter6",
+    "score_threshold": 83.33,
+    "locked": true,
+    "overwrite_forbidden": true
+  },
   "status": "ready_for_samples",
   "target_samples": 10,
   "collected_samples": 0,
   "samples": [],
+  "gates": {
+    "score_ge_83_33": true,
+    "reg_001_issue_class_fixed": true,
+    "no_regression_on_reg_002_003": true
+  },
   "summary": {
     "issue_class_hit": null,
     "core_tag_hit": null,
     "root_cause_reasonable": null,
-    "baseline_score": 100,
-    "note": "Pack F+ promoted. Waiting for real-world samples to validate generalization."
+    "candidate_score": 100,
+    "decision": "awaiting_observation",
+    "note": "iter8 minimal patch accepted as candidate in test branch; collect 10 real samples before any promotion decision."
   }
 }

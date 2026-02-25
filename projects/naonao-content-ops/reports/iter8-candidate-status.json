@@ -1,0 +1,31 @@
+{
+  "candidate_id": "iter8_minpatch_candidate_20260226",
+  "branch_scope": "test-only",
+  "source_reports": [
+    "projects/naonao-content-ops/reports/correction-regression-run-20260226-real-packe-iter8-minpatch.json",
+    "projects/naonao-content-ops/reports/correction-regression-error-analysis-iter8.json"
+  ],
+  "current_result": {
+    "score": 100,
+    "issue_class_match": "3/3",
+    "core_tag_hit": "3/3",
+    "root_cause_match": "3/3",
+    "reg_001_issue_class_fixed": true
+  },
+  "promotion_policy": {
+    "guardrail": "baseline_guard_enabled",
+    "production_baseline_locked": "iter6",
+    "minimum_score": 83.33,
+    "must_not_regress_cases": [
+      "reg_002",
+      "reg_003"
+    ],
+    "requires_observation_samples": 10
+  },
+  "next_actions": [
+    "collect_10_real_samples",
+    "append_samples_to_observation_window_log",
+    "review_candidate_for_promotion_or_reject"
+  ],
+  "status": "awaiting_observation"
+}
