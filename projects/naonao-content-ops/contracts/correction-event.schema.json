@@ -1,76 +1,269 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "naonao-content-ops/correction-event.schema.json",
-  "title": "CorrectionEvent",
+  "$id": "naonao-content-ops/contracts/correction-event.schema.json",
+  "title": "Correction Event",
   "type": "object",
-  "required": ["event_id", "created_at", "source", "content_type", "diff_segments", "classifications", "root_cause_layer"],
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "content_id",
+    "platform",
+    "draft_before",
+    "draft_after",
+    "diff_segments",
+    "issue_class",
+    "issue_tags",
+    "root_cause_layer",
+    "severity",
+    "editor_action_types",
+    "review_status",
+    "created_at"
+  ],
   "properties": {
-    "event_id": {"type": "string", "pattern": "^ce_[a-zA-Z0-9_-]{6,}$"},
-    "created_at": {"type": "string", "format": "date-time"},
-    "source": {
-      "type": "object",
-      "required": ["agent", "session"],
-      "properties": {
-        "agent": {"type": "string"},
-        "session": {"type": "string"},
-        "project": {"type": "string"}
-      }
+    "event_id": {
+      "type": "string",
+      "pattern": "^ce_[a-zA-Z0-9_-]{6,}$"
     },
-    "content_type": {"type": "string", "enum": ["cat_food_analysis", "behavior", "newbie_cat", "comment_extension", "pet_hot_topic", "generic"]},
-    "before_text": {"type": "string"},
-    "after_text": {"type": "string"},
+    "content_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "platform": {
+      "type": "string",
+      "enum": [
+        "douyin",
+        "xiaohongshu",
+        "wechat",
+        "other"
+      ]
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "draft_before": {
+      "type": "string",
+      "minLength": 1
+    },
+    "draft_after": {
+      "type": "string",
+      "minLength": 1
+    },
     "diff_segments": {
       "type": "array",
       "minItems": 1,
       "items": {
-        "type": "object",
-        "required": ["segment_id", "operation", "before_text", "after_text"],
-        "properties": {
-          "segment_id": {"type": "string"},
-          "operation": {"type": "string", "enum": ["add", "delete", "replace", "reorder"]},
-          "before_text": {"type": "string"},
-          "after_text": {"type": "string"},
-          "span_note": {"type": "string"}
-        }
+        "$ref": "#/$defs/diffSegment"
       }
     },
-    "classifications": {
+    "issue_class": {
+      "type": "string",
+      "enum": [
+        "human_likeness",
+        "tone_consistency",
+        "logic_closure",
+        "mechanism_explanation",
+        "cta_coordination",
+        "factual_risk",
+        "compliance_risk",
+        "other"
+      ]
+    },
+    "issue_tags": {
       "type": "array",
       "minItems": 1,
+      "uniqueItems": true,
       "items": {
-        "type": "object",
-        "required": ["category", "tag", "confidence"],
-        "properties": {
-          "category": {"type": "string", "enum": ["human_likeness", "tone_consistency", "logic_closure", "mechanism_explanation", "cta_coordination"]},
-          "tag": {
-            "type": "string",
-            "enum": [
-              "quote_overuse", "template_voice", "emotion_overdrive", "attitude_flip", "persona_shift",
-              "missing_bridge", "premature_cta", "incomplete_reasoning", "topic_jump", "no_mechanism_explained",
-              "risk_without_cause", "hard_command_after_warning", "cta_without_readiness"
-            ]
-          },
-          "confidence": {"type": "number", "minimum": 0, "maximum": 1},
-          "evidence_segment_ids": {"type": "array", "items": {"type": "string"}}
-        }
+        "type": "string",
+        "enum": [
+          "quote_overuse",
+          "template_voice",
+          "emotion_overdrive",
+          "attitude_flip",
+          "persona_shift",
+          "missing_bridge",
+          "premature_cta",
+          "incomplete_reasoning",
+          "topic_jump",
+          "no_mechanism_explained",
+          "risk_without_cause",
+          "hard_command_after_warning",
+          "cta_without_readiness",
+          "other"
+        ]
       }
     },
-    "root_cause_layer": {"type": "string", "enum": ["requirement_problem", "template_problem", "rule_problem", "skill_problem", "input_problem"]},
+    "root_cause_layer": {
+      "type": "string",
+      "enum": [
+        "requirement_problem",
+        "template_problem",
+        "rule_problem",
+        "workflow_problem",
+        "skill_boundary_problem",
+        "input_data_problem",
+        "unknown"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "S1",
+        "S2",
+        "S3"
+      ]
+    },
+    "editor_action_types": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "add",
+          "delete",
+          "rewrite",
+          "reorder"
+        ]
+      }
+    },
+    "evidence_notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "candidate_rule_suggestions": {
       "type": "array",
       "items": {
-        "type": "object",
-        "required": ["action", "scope", "suggestion"],
-        "properties": {
-          "action": {"type": "string", "enum": ["ADD", "MODIFY", "MERGE", "DEPRECATE", "DELETE", "REACTIVATE", "NO_CHANGE", "SEND_TO_OPSLAB"]},
-          "scope": {"type": "string", "enum": ["template", "skill", "global"]},
-          "suggestion": {"type": "string"}
+        "$ref": "#/$defs/candidateRuleSuggestion"
+      }
+    },
+    "candidate_rule_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^rule_[a-zA-Z0-9_-]{4,}$"
+      }
+    },
+    "review_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "accepted",
+        "rejected"
+      ]
+    },
+    "editor_id": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "$defs": {
+    "diffSegment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "segment_id",
+        "operation",
+        "before_text",
+        "after_text"
+      ],
+      "properties": {
+        "segment_id": {
+          "type": "string",
+          "pattern": "^seg_[a-zA-Z0-9_-]{4,}$"
+        },
+        "operation": {
+          "type": "string",
+          "enum": [
+            "add",
+            "delete",
+            "replace",
+            "reorder"
+          ]
+        },
+        "before_text": {
+          "type": "string"
+        },
+        "after_text": {
+          "type": "string"
+        },
+        "span_note": {
+          "type": "string"
+        },
+        "position_hint": {
+          "type": "string",
+          "description": "例如 intro/body/cta/end"
         }
       }
     },
-    "must_watch_tags": {
-      "type": "array",
-      "items": {"type": "string", "enum": ["quote_overuse", "premature_cta", "missing_bridge", "no_mechanism_explained"]}
+    "candidateRuleSuggestion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "instruction",
+        "scope_hint",
+        "reason"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instruction": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope_hint": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "platform": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "douyin",
+                  "xiaohongshu",
+                  "wechat",
+                  "all"
+                ]
+              }
+            },
+            "stage": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "hook",
+                  "body",
+                  "mechanism",
+                  "cta",
+                  "review",
+                  "all"
+                ]
+              }
+            }
+          }
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
     }
   }
 }
