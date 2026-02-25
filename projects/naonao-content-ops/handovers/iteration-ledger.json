@@ -44,5 +44,40 @@
       "error_analysis_path": "projects/naonao-content-ops/reports/correction-regression-error-analysis-iter8.json",
       "notes": "passed fixed-3 regression; pending stability rerun and sample expansion before promotion"
     }
+  ],
+  "validation_runs": [
+    {
+      "run_id": "iter8-minpatch-stability-x3-20260226",
+      "iter_id": "iter8-minpatch",
+      "track": "validation_runs",
+      "task_id": "smoke_iter8_candidate_stability_x3_exec",
+      "mode": "test",
+      "status": "completed",
+      "baseline_iter_locked": "iter6",
+      "artifacts": [
+        "projects/naonao-content-ops/reports/correction-regression-stability-iter8-x3.json",
+        "projects/naonao-content-ops/reports/agent-integration-smoke-test-iter8-x3.json"
+      ],
+      "result": {
+        "rounds": 3,
+        "score_totals": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "variance_range": 0.0,
+        "reg_hits": [
+          "reg_001",
+          "reg_002",
+          "reg_003"
+        ]
+      },
+      "postchecks": {
+        "no_production_baseline_overwrite": "pass",
+        "execution_report_generated": "pass",
+        "file_results_complete": "pass"
+      },
+      "timestamp": "2026-02-26T03:51:00+08:00"
+    }
   ]
 }

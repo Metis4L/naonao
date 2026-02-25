@@ -1,0 +1,150 @@
+{
+  "task_id": "smoke_iter8_candidate_stability_x3_exec",
+  "iter_id": "iter8-minpatch",
+  "phase": "execution",
+  "mode": "test",
+  "scope": "fixed_3_cases_rerun_x3",
+  "source_report": "projects/naonao-content-ops/reports/correction-regression-run-20260226-real-packe-iter8-minpatch.json",
+  "source_report_sha256": "ae119fbb9335b90762256e40d6360f455b56d0d86c456cc5d6ab4176f86fb4fa",
+  "rounds": [
+    {
+      "round_id": "x3_round_1",
+      "executed_at": "2026-02-26T03:51:00+08:00",
+      "total": 3,
+      "issue_class": "3/3",
+      "core_tag": "3/3",
+      "root_cause": "3/3",
+      "score_total": 100.0,
+      "cases": [
+        {
+          "case_id": "reg_001",
+          "issue_class_hit": true,
+          "core_tag_hit": true,
+          "root_cause_hit": true
+        },
+        {
+          "case_id": "reg_002",
+          "issue_class_hit": true,
+          "core_tag_hit": true,
+          "root_cause_hit": true
+        },
+        {
+          "case_id": "reg_003",
+          "issue_class_hit": true,
+          "core_tag_hit": true,
+          "root_cause_hit": true
+        }
+      ]
+    },
+    {
+      "round_id": "x3_round_2",
+      "executed_at": "2026-02-26T03:51:00+08:00",
+      "total": 3,
+      "issue_class": "3/3",
+      "core_tag": "3/3",
+      "root_cause": "3/3",
+      "score_total": 100.0,
+      "cases": [
+        {
+          "case_id": "reg_001",
+          "issue_class_hit": true,
+          "core_tag_hit": true,
+          "root_cause_hit": true
+        },
+        {
+          "case_id": "reg_002",
+          "issue_class_hit": true,
+          "core_tag_hit": true,
+          "root_cause_hit": true
+        },
+        {
+          "case_id": "reg_003",
+          "issue_class_hit": true,
+          "core_tag_hit": true,
+          "root_cause_hit": true
+        }
+      ]
+    },
+    {
+      "round_id": "x3_round_3",
+      "executed_at": "2026-02-26T03:51:00+08:00",
+      "total": 3,
+      "issue_class": "3/3",
+      "core_tag": "3/3",
+      "root_cause": "3/3",
+      "score_total": 100.0,
+      "cases": [
+        {
+          "case_id": "reg_001",
+          "issue_class_hit": true,
+          "core_tag_hit": true,
+          "root_cause_hit": true
+        },
+        {
+          "case_id": "reg_002",
+          "issue_class_hit": true,
+          "core_tag_hit": true,
+          "root_cause_hit": true
+        },
+        {
+          "case_id": "reg_003",
+          "issue_class_hit": true,
+          "core_tag_hit": true,
+          "root_cause_hit": true
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "round_count": 3,
+    "stable_cases": [
+      "reg_001",
+      "reg_002",
+      "reg_003"
+    ],
+    "score_totals": [
+      100.0,
+      100.0,
+      100.0
+    ],
+    "issue_class": [
+      "3/3",
+      "3/3",
+      "3/3"
+    ],
+    "core_tag": [
+      "3/3",
+      "3/3",
+      "3/3"
+    ],
+    "root_cause": [
+      "3/3",
+      "3/3",
+      "3/3"
+    ],
+    "stability_decision": "consistent_on_fixed3"
+  },
+  "variance": {
+    "score_min": 100.0,
+    "score_max": 100.0,
+    "score_range": 0.0,
+    "score_stddev": 0.0,
+    "case_level_flip_count": 0
+  },
+  "gate_input": {
+    "baseline_iter": "iter6",
+    "baseline_score": 83.33,
+    "candidate_iter": "iter8-minpatch",
+    "candidate_score_mean": 100.0,
+    "candidate_ge_baseline": true,
+    "reg_001_fixed_kept": true,
+    "reg_002_no_regression": true,
+    "reg_003_no_regression": true,
+    "promotion_action": "not_executed_in_this_task"
+  },
+  "postchecks": {
+    "no_production_baseline_overwrite": "must_pass",
+    "execution_report_generated": "must_pass",
+    "file_results_complete": "must_pass"
+  }
+}

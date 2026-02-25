@@ -1,0 +1,18 @@
+{
+  "phase": "execution",
+  "task_id": "smoke_iter8_candidate_stability_x3_exec",
+  "mode": "test",
+  "iter_id": "iter8-minpatch",
+  "status": "completed",
+  "artifacts_generated": [
+    "projects/naonao-content-ops/reports/correction-regression-stability-iter8-x3.json",
+    "projects/naonao-content-ops/reports/agent-integration-smoke-test-iter8-x3.json",
+    "projects/naonao-content-ops/handovers/iteration-ledger.json"
+  ],
+  "postchecks": {
+    "no_production_baseline_overwrite": "pass",
+    "execution_report_generated": "pass",
+    "file_results_complete": "pass"
+  },
+  "generated_at": "2026-02-26T03:51:00+08:00"
+}

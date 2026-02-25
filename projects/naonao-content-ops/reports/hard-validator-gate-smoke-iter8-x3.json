@@ -1,0 +1,28 @@
+{
+  "task_id": "smoke_iter8_candidate_stability_x3_gate",
+  "decision": "pass",
+  "reasons": [
+    "x3 stability rerun is fully consistent: all three rounds scored 100.0 with zero variance and zero case-level flips.",
+    "Candidate iter8-minpatch outperforms locked baseline iter6 (100.0 >= 83.33) and shows no regression on required keys (issue_class/core_tag/root_cause all 3/3).",
+    "Execution postchecks all passed, including baseline protection (no production baseline overwrite)."
+  ],
+  "evidence_refs": [
+    "reports/correction-regression-stability-iter8-x3.json#summary.stability_decision=consistent_on_fixed3",
+    "reports/correction-regression-stability-iter8-x3.json#variance.score_range=0.0",
+    "reports/correction-regression-stability-iter8-x3.json#gate_input.candidate_ge_baseline=true",
+    "reports/correction-regression-stability-iter8-x3.json#gate_input.reg_001_fixed_kept=true",
+    "reports/correction-regression-stability-iter8-x3.json#gate_input.reg_002_no_regression=true",
+    "reports/correction-regression-stability-iter8-x3.json#gate_input.reg_003_no_regression=true",
+    "reports/agent-integration-smoke-test-iter8-x3.json#status=completed",
+    "reports/agent-integration-smoke-test-iter8-x3.json#postchecks.no_production_baseline_overwrite=pass",
+    "handovers/iteration-ledger.json#current_baseline.iter_id=iter6",
+    "handovers/iteration-ledger.json#validation_runs[0].result.score_totals=[100.0,100.0,100.0]",
+    "docs/correction-regression-scoring.md#基线保护规则（新增）"
+  ],
+  "suggested_fixes": [
+    "Proceed to controlled sample expansion before production promotion to confirm generalization beyond fixed_3_cases.",
+    "When promoting, update iteration-ledger current_baseline and append prior baseline to history with explicit promotion timestamp.",
+    "Add JSON schema validation for execution_report in CI to ensure future gate inputs remain contract-compliant."
+  ],
+  "next_action": "allow_next_stage_sample_expansion"
+}
