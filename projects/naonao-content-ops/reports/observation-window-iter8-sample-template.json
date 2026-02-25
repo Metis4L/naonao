@@ -1,0 +1,26 @@
+{
+  "sample_id": "sample_001",
+  "source": {
+    "platform": "douyin|xiaohongshu|wechat|other",
+    "content_type": "cat_food|behavior|newbie|hot_topic|other",
+    "timestamp": "2026-02-26T00:00:00+08:00"
+  },
+  "input": {
+    "draft_before": "",
+    "draft_after": ""
+  },
+  "prediction": {
+    "issue_class": "",
+    "issue_tags": [],
+    "root_cause_layer": "",
+    "editor_action_types": [],
+    "issue_class_rationale": "",
+    "issue_class_evidence_signals": []
+  },
+  "review": {
+    "is_executable": true,
+    "has_obvious_misclassification": false,
+    "patch_effect_observed": "fixed|unchanged-ok|needs-followup",
+    "notes": ""
+  }
+}
