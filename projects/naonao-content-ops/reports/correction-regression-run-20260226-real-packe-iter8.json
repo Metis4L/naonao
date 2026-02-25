@@ -1,0 +1,126 @@
+{
+  "run_id": "reg_e_20260226_real_iter8",
+  "cases": [
+    {
+      "case_id": "reg_001",
+      "expected": {
+        "cls": "human_likeness",
+        "tags": [
+          "quote_overuse",
+          "template_voice"
+        ],
+        "root": "rule_problem"
+      },
+      "predicted": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "quote_overuse",
+          "template_voice",
+          "premature_cta"
+        ],
+        "root_cause_layer": "rule_problem",
+        "editor_action_types": [
+          "delete",
+          "add",
+          "rewrite"
+        ]
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    },
+    {
+      "case_id": "reg_002",
+      "expected": {
+        "cls": "logic_closure",
+        "tags": [
+          "missing_bridge",
+          "premature_cta"
+        ],
+        "root": "template_problem"
+      },
+      "predicted": {
+        "issue_class": "logic_closure",
+        "issue_tags": [
+          "missing_bridge",
+          "premature_cta"
+        ],
+        "root_cause_layer": "template_problem",
+        "editor_action_types": [
+          "rewrite",
+          "add"
+        ]
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    },
+    {
+      "case_id": "reg_003",
+      "expected": {
+        "cls": "cta_coordination",
+        "tags": [
+          "premature_cta",
+          "hard_command_after_warning"
+        ],
+        "root": "requirement_problem"
+      },
+      "predicted": {
+        "issue_class": "cta_coordination",
+        "issue_tags": [
+          "hard_command_after_warning",
+          "cta_without_readiness",
+          "premature_cta"
+        ],
+        "root_cause_layer": "requirement_problem",
+        "editor_action_types": [
+          "rewrite"
+        ]
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    }
+  ],
+  "metrics": {
+    "issue_class_match": "3/3",
+    "core_tag_hit": "3/3",
+    "root_cause_match": "3/3",
+    "candidate_rule_usefulness_avg": 1
+  },
+  "scoring": {
+    "issue_class_match": {
+      "weight": 30,
+      "value": 1,
+      "score": 30
+    },
+    "core_tag_hit": {
+      "weight": 35,
+      "value": 1,
+      "score": 35
+    },
+    "root_cause_match": {
+      "weight": 20,
+      "value": 1,
+      "score": 20
+    },
+    "candidate_rule_usefulness": {
+      "weight": 15,
+      "value": 1,
+      "score": 15
+    },
+    "total": 100
+  },
+  "delta": {
+    "vs_iter6": 16.67
+  }
+}

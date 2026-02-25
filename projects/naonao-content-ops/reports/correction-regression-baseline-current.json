@@ -1,17 +1,17 @@
 {
-  "baseline_id": "baseline_iter6_20260226",
-  "source_report": "projects/naonao-content-ops/reports/correction-regression-run-20260226-real-packe-iter6.json",
+  "baseline_id": "baseline_iter8_20260226",
+  "source_report": "projects/naonao-content-ops/reports/correction-regression-run-20260226-real-packe-iter8.json",
   "status": "active",
-  "last_evaluated_iter": "iter7",
-  "baseline_guard": "hold_iter6",
+  "last_evaluated_iter": "iter8",
+  "baseline_guard": "hold_iter8",
   "score": {
-    "issue_class_match": "2/3",
+    "issue_class_match": "3/3",
     "core_tag_hit": "3/3",
-    "root_cause_match": "2/3",
+    "root_cause_match": "3/3",
     "candidate_rule_usefulness_avg": 1,
-    "total": 83.33
+    "total": 100
   },
-  "freeze_note": "Iter6 targeted split patch accepted as current production baseline.",
+  "freeze_note": "Iter8 promoted: better than iter6 and no key metric regression.",
   "next_focus": "在测试分支单独优化 case_001/case_003 的 issue_class 分流；生产基线保持 iter6 不变",
   "rejected_iters": [
     {
