@@ -1,32 +1,146 @@
 {
-  "run_id": "reg_20260226_real_01",
+  "run_id": "reg_20260226_real_02",
   "mode": "real-chain",
-  "executor": "naonao-feedback-router (subagent run)",
+  "source_files": [
+    "reg_case_001.json",
+    "reg_case_002.json",
+    "reg_case_003.json"
+  ],
   "cases": [
     {
-      "case_id": "reg_001_human_likeness",
-      "run_id": "fb416ea5-ff91-4a20-a5ad-2ff6ebebd844",
-      "status": "done",
-      "json_parse": "unknown_payload_not_visible"
+      "case_id": "reg_001",
+      "expected": {
+        "issue_class": "human_likeness",
+        "core": [
+          "quote_overuse",
+          "template_voice"
+        ],
+        "root": "rule_problem"
+      },
+      "predicted": {
+        "issue_class": "表达与风控纠偏",
+        "issue_tags": [
+          "去绝对化",
+          "降冲动型CTA",
+          "从强推改为条件化建议",
+          "语气由命令式转为陪伴式",
+          "增加个体适配意识"
+        ],
+        "root_cause_layer": "写作skill/话术策略层",
+        "editor_action_types": [
+          "replace",
+          "tone_soften",
+          "risk_mitigation",
+          "cta_remove",
+          "add_condition"
+        ]
+      },
+      "checks": {
+        "json_parse": "pass",
+        "issue_class_match": false,
+        "core_tag_hit": false,
+        "root_cause_match": false
+      }
     },
     {
-      "case_id": "reg_002_logic_closure",
-      "run_id": "3f80f616-00b0-4d24-95f1-b60a8469303f",
-      "status": "done",
-      "json_parse": "unknown_payload_not_visible"
+      "case_id": "reg_002",
+      "expected": {
+        "issue_class": "logic_closure",
+        "core": [
+          "missing_bridge",
+          "premature_cta"
+        ],
+        "root": "template_problem"
+      },
+      "predicted": {
+        "issue_class": "risk_communication_overgeneralization",
+        "issue_tags": [
+          "absolute_judgment",
+          "no_mechanism_explained",
+          "over_hasty_recommendation",
+          "missing_observation_step",
+          "risk_control_tone_adjustment"
+        ],
+        "root_cause_layer": "rule_problem",
+        "editor_action_types": [
+          "rewrite",
+          "add"
+        ]
+      },
+      "checks": {
+        "json_parse": "pass",
+        "issue_class_match": false,
+        "core_tag_hit": false,
+        "root_cause_match": false
+      }
     },
     {
-      "case_id": "reg_003_cta_coordination",
-      "run_id": "0b436b82-a666-43cc-a5ef-4cab4d310c59",
-      "status": "done",
-      "json_parse": "unknown_payload_not_visible"
+      "case_id": "reg_003",
+      "expected": {
+        "issue_class": "cta_coordination",
+        "core": [
+          "premature_cta",
+          "hard_command_after_warning"
+        ],
+        "root": "requirement_problem"
+      },
+      "predicted": {
+        "issue_class": "CTA_timing_and_tone",
+        "issue_tags": [
+          "premature_cta",
+          "fear_push",
+          "absolute_command",
+          "risk_control_deescalation"
+        ],
+        "root_cause_layer": "template_problem",
+        "editor_action_types": [
+          "rewrite",
+          "delete",
+          "add",
+          "reorder"
+        ]
+      },
+      "checks": {
+        "json_parse": "pass",
+        "issue_class_match": false,
+        "core_tag_hit": true,
+        "root_cause_match": false
+      }
     }
   ],
-  "scoring": {
-    "issue_class_match": null,
-    "core_tag_hit": null,
-    "root_cause_match": null,
-    "candidate_rule_usefulness": null,
-    "note": "session history visibility restricted; payload-level scoring requires tools.sessions.visibility=all or explicit callback logging"
+  "metrics": {
+    "issue_class_correct": "0/3",
+    "core_tag_hit": "1/3",
+    "root_cause_match": "0/3"
+  },
+  "weighted_score": {
+    "total": 21.57,
+    "breakdown": {
+      "issue_class_match": {
+        "weight": 30,
+        "value": 0,
+        "score": 0
+      },
+      "core_tag_hit": {
+        "weight": 35,
+        "value": 0.3333333333333333,
+        "score": 11.666666666666666
+      },
+      "root_cause_match": {
+        "weight": 20,
+        "value": 0,
+        "score": 0
+      },
+      "candidate_rule_usefulness": {
+        "weight": 15,
+        "value": 0.66,
+        "score": 9.9
+      }
+    }
+  },
+  "pass_gate": {
+    "issue_class_at_least_2of3": false,
+    "core_tag_at_least_2of3": false,
+    "root_cause_all_present": false
   }
 }
