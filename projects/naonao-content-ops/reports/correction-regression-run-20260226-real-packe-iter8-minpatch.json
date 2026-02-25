@@ -1,0 +1,142 @@
+{
+  "run_id": "reg_e_20260226_real_iter8_patch_min",
+  "source": "naonao-feedback-router real chain (iter8 test branch, minimal patch)",
+  "cases": [
+    {
+      "case_id": "reg_001",
+      "expected": {
+        "cls": "human_likeness",
+        "tags": [
+          "quote_overuse",
+          "template_voice"
+        ],
+        "root": "rule_problem"
+      },
+      "predicted": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "quote_overuse",
+          "template_voice",
+          "premature_cta"
+        ],
+        "root_cause_layer": "rule_problem",
+        "editor_action_types": [],
+        "issue_class_rationale": "核心改动是去口号化与去模板腔，命令口吻被降级为自然建议。",
+        "issue_class_evidence_signals": [
+          "quote_overuse",
+          "template_voice",
+          "imperative_tone_softened"
+        ]
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    },
+    {
+      "case_id": "reg_002",
+      "expected": {
+        "cls": "logic_closure",
+        "tags": [
+          "missing_bridge",
+          "premature_cta"
+        ],
+        "root": "template_problem"
+      },
+      "predicted": {
+        "issue_class": "logic_closure",
+        "issue_tags": [
+          "missing_bridge",
+          "premature_cta",
+          "no_mechanism_explained"
+        ],
+        "root_cause_layer": "template_problem",
+        "editor_action_types": [
+          "rewrite",
+          "add"
+        ],
+        "issue_class_rationale": null,
+        "issue_class_evidence_signals": null
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    },
+    {
+      "case_id": "reg_003",
+      "expected": {
+        "cls": "cta_coordination",
+        "tags": [
+          "premature_cta",
+          "hard_command_after_warning"
+        ],
+        "root": "requirement_problem"
+      },
+      "predicted": {
+        "issue_class": "cta_coordination",
+        "issue_tags": [
+          "hard_command_after_warning",
+          "cta_without_readiness",
+          "premature_cta"
+        ],
+        "root_cause_layer": "requirement_problem",
+        "editor_action_types": [
+          "rewrite"
+        ],
+        "issue_class_rationale": "改前是风险提示后直接给出‘必须现在就下单’的强CTA；改后改为‘先确认信号，再决定’的行动前置链路，命中 case_003 的 CTA 时机修正场景，因此主类目应为 cta_coordination。",
+        "issue_class_evidence_signals": [
+          "hard_command_after_warning",
+          "cta_without_readiness",
+          "imperative_tone_softened"
+        ]
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    }
+  ],
+  "metrics": {
+    "issue_class_match": "3/3",
+    "core_tag_hit": "3/3",
+    "root_cause_match": "3/3",
+    "candidate_rule_usefulness_avg": 1
+  },
+  "scoring": {
+    "issue_class_match": {
+      "weight": 30,
+      "value": 1.0,
+      "score": 30.0
+    },
+    "core_tag_hit": {
+      "weight": 35,
+      "value": 1.0,
+      "score": 35.0
+    },
+    "root_cause_match": {
+      "weight": 20,
+      "value": 1.0,
+      "score": 20.0
+    },
+    "candidate_rule_usefulness": {
+      "weight": 15,
+      "value": 1,
+      "score": 15
+    },
+    "total": 100.0
+  },
+  "pass_gate": {
+    "baseline_iter6": 83.33,
+    "total_ge_baseline": true,
+    "issue_class_at_least_2of3": true,
+    "core_tag_at_least_2of3": true,
+    "root_cause_all_present": true
+  }
+}

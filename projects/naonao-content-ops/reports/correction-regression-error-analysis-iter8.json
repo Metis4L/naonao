@@ -1,0 +1,75 @@
+{
+  "analysis_id": "iter8_min_patch_error_analysis_20260226",
+  "focus": "reg_001 issue_class routing recovery without baseline override",
+  "cases": [
+    {
+      "case_id": "reg_001",
+      "expected": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "quote_overuse",
+          "template_voice"
+        ]
+      },
+      "actual": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "quote_overuse",
+          "template_voice",
+          "premature_cta"
+        ]
+      },
+      "issue_class_rationale": "核心改动是去口号化与去模板腔，命令口吻被降级为自然建议。",
+      "why_mismatch": "none",
+      "patch_effect_observed": "fixed"
+    },
+    {
+      "case_id": "reg_002",
+      "expected": {
+        "issue_class": "logic_closure",
+        "issue_tags": [
+          "missing_bridge",
+          "premature_cta"
+        ]
+      },
+      "actual": {
+        "issue_class": "logic_closure",
+        "issue_tags": [
+          "missing_bridge",
+          "premature_cta",
+          "no_mechanism_explained"
+        ]
+      },
+      "issue_class_rationale": null,
+      "why_mismatch": "none",
+      "patch_effect_observed": "unchanged-ok"
+    },
+    {
+      "case_id": "reg_003",
+      "expected": {
+        "issue_class": "cta_coordination",
+        "issue_tags": [
+          "premature_cta",
+          "hard_command_after_warning"
+        ]
+      },
+      "actual": {
+        "issue_class": "cta_coordination",
+        "issue_tags": [
+          "hard_command_after_warning",
+          "cta_without_readiness",
+          "premature_cta"
+        ]
+      },
+      "issue_class_rationale": "改前是风险提示后直接给出‘必须现在就下单’的强CTA；改后改为‘先确认信号，再决定’的行动前置链路，命中 case_003 的 CTA 时机修正场景，因此主类目应为 cta_coordination。",
+      "why_mismatch": "none",
+      "patch_effect_observed": "unchanged-ok"
+    }
+  ],
+  "summary": {
+    "reg_001_issue_class_fixed": true,
+    "total_score": 100.0,
+    "baseline_iter6": 83.33,
+    "status": "candidate"
+  }
+}
