@@ -1,0 +1,60 @@
+{
+  "run_id": "packf_error_analysis_20260226",
+  "items": [
+    {
+      "case_id": "reg_001",
+      "expected": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "quote_overuse",
+          "template_voice"
+        ],
+        "root_cause_layer": "rule_problem"
+      },
+      "actual": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "quote_overuse",
+          "template_voice",
+          "cta_without_readiness"
+        ],
+        "root_cause_layer": "rule_problem"
+      },
+      "mismatch_type": [
+        "none"
+      ],
+      "likely_cause": [
+        "无关键错配，当前规则命中稳定"
+      ],
+      "patch_hypothesis": "保持现有判定，不做改动"
+    },
+    {
+      "case_id": "reg_003",
+      "expected": {
+        "issue_class": "cta_coordination",
+        "issue_tags": [
+          "premature_cta",
+          "hard_command_after_warning"
+        ],
+        "root_cause_layer": "requirement_problem"
+      },
+      "actual": {
+        "issue_class": "logic_closure",
+        "issue_tags": [
+          "missing_bridge",
+          "premature_cta",
+          "hard_command_after_warning"
+        ],
+        "root_cause_layer": "requirement_problem"
+      },
+      "mismatch_type": [
+        "issue_class"
+      ],
+      "likely_cause": [
+        "分类优先级偏向 logic_closure，压过 cta_coordination",
+        "diff 位置线索中 CTA 触发词权重不足"
+      ],
+      "patch_hypothesis": "在同时命中 hard_command_after_warning + cta_without_readiness + 强行动指令时，主类目强制提升为 cta_coordination"
+    }
+  ]
+}

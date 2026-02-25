@@ -1,0 +1,134 @@
+{
+  "run_id": "reg_f_20260226_real",
+  "source": "naonao-feedback-router real chain",
+  "cases": [
+    {
+      "case_id": "reg_001",
+      "expected": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "quote_overuse",
+          "template_voice"
+        ],
+        "root_cause_layer": "rule_problem"
+      },
+      "actual": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "quote_overuse",
+          "template_voice",
+          "cta_without_readiness"
+        ],
+        "root_cause_layer": "rule_problem",
+        "editor_action_types": [
+          "rewrite"
+        ],
+        "issue_class_rationale": "改前使用引号口号与命令式‘直接冲’，模板腔和绝对化表达明显；改后转为条件化、观察先行的人类决策语气，因此主问题归为 human_likeness。"
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    },
+    {
+      "case_id": "reg_002",
+      "expected": {
+        "issue_class": "logic_closure",
+        "issue_tags": [
+          "missing_bridge",
+          "premature_cta"
+        ],
+        "root_cause_layer": "template_problem"
+      },
+      "actual": {
+        "issue_class": "logic_closure",
+        "issue_tags": [
+          "missing_bridge",
+          "premature_cta",
+          "risk_without_cause",
+          "no_mechanism_explained"
+        ],
+        "root_cause_layer": "template_problem",
+        "editor_action_types": [
+          "rewrite",
+          "add"
+        ],
+        "issue_class_rationale": "改前是“有风险→马上换粮”的跳步指令，缺少观察与判断桥接；改后补上“先观察便便和食欲，再决定”的闭环，因此主问题是逻辑闭合不足。"
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    },
+    {
+      "case_id": "reg_003",
+      "expected": {
+        "issue_class": "cta_coordination",
+        "issue_tags": [
+          "premature_cta",
+          "hard_command_after_warning"
+        ],
+        "root_cause_layer": "requirement_problem"
+      },
+      "actual": {
+        "issue_class": "logic_closure",
+        "issue_tags": [
+          "missing_bridge",
+          "premature_cta",
+          "hard_command_after_warning"
+        ],
+        "root_cause_layer": "requirement_problem",
+        "editor_action_types": [
+          "rewrite",
+          "reorder"
+        ],
+        "issue_class_rationale": "改前是‘风险提示后立即下单’的跳步命令，缺少从风险识别到行动决策的桥接；改后补上‘先确认→再决定’闭环，因此主问题归于逻辑闭合不足。",
+        "root_cause_evidence_signals": [
+          "原句包含强行动指令（必须、现在就）",
+          "改后明确加入行动前置判断链路（先确认是否命中信号，再决定）",
+          "改动核心是把目标从立即执行改为条件决策"
+        ],
+        "root_cause_confidence": 0.91
+      },
+      "checks": {
+        "issue_class_match": false,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    }
+  ],
+  "metrics": {
+    "issue_class_match": "2/3",
+    "core_tag_hit": "3/3",
+    "root_cause_match": "3/3",
+    "candidate_rule_usefulness_avg": 1
+  },
+  "scoring": {
+    "issue_class_match": {
+      "weight": 30,
+      "value": 0.6666666666666666,
+      "score": 20
+    },
+    "core_tag_hit": {
+      "weight": 35,
+      "value": 1,
+      "score": 35
+    },
+    "root_cause_match": {
+      "weight": 20,
+      "value": 1,
+      "score": 20
+    },
+    "candidate_rule_usefulness": {
+      "weight": 15,
+      "value": 1,
+      "score": 15
+    },
+    "total": 90
+  }
+}
