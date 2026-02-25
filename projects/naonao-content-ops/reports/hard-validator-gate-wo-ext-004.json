@@ -1,0 +1,72 @@
+{
+  "task_id": "wo_ext_004_gate",
+  "validated_at": "2026-02-26T04:19:30+08:00",
+  "decision": "pass",
+  "reasons": [
+    "改动范围符合最小补丁目标，证据均指向 shadow/test 护栏与可观测性增强，未发现 baseline 持久化写入。",
+    "recovery_trace 已覆盖触发原因与动作链（trigger/policy_branch/actions/result_state），可用于排查卡死恢复路径。",
+    "success path unchanged 有双重证据：execution_report 自测结论为 true，且 simulation 中无循环场景保持 normal/continue_normal。"
+  ],
+  "evidence_refs": [
+    {
+      "file": "projects/naonao-content-ops/reports/execution-report-wo-ext-004.json",
+      "json_path": "$.meta.run_mode",
+      "value": "test"
+    },
+    {
+      "file": "projects/naonao-content-ops/reports/execution-report-wo-ext-004.json",
+      "json_path": "$.file_results[*].path",
+      "value": [
+        "agents/naonao-technical-advisor/ROUTING_MAP.md",
+        "agents/naonao-technical-advisor/skills/deadlock-recovery-planner/SKILL.md",
+        "agents/naonao-technical-advisor/skills/execution-handoff-orchestrator/SKILL.md",
+        "projects/naonao-content-ops/tools/simulate-wo-ext-004-loop-guard.py",
+        "projects/naonao-content-ops/reports/wo-ext-004-recovery-trace-simulation.json",
+        "projects/naonao-content-ops/reports/execution-report-wo-ext-004.json"
+      ]
+    },
+    {
+      "file": "projects/naonao-content-ops/reports/execution-report-wo-ext-004.json",
+      "json_path": "$.meta.acceptance_selftest",
+      "value": {
+        "repeat_sample_over_threshold_auto_escape_loop": true,
+        "trigger_reason_and_recovery_actions_visible_in_report": true,
+        "success_path_behavior_unchanged": true
+      }
+    },
+    {
+      "file": "projects/naonao-content-ops/reports/wo-ext-004-recovery-trace-simulation.json",
+      "json_path": "$.cases[0].recovery_trace",
+      "value": {
+        "trigger": "sample_request_threshold",
+        "policy_branch": "shadow",
+        "actions": [
+          "use_cache",
+          "skip_sample_with_trace",
+          "continue"
+        ],
+        "result_state": "analysis_only"
+      }
+    },
+    {
+      "file": "projects/naonao-content-ops/reports/wo-ext-004-recovery-trace-simulation.json",
+      "json_path": "$.cases[2]",
+      "value": {
+        "case": "success_path_no_loop",
+        "status": "normal",
+        "trigger": "none",
+        "actions": [
+          "continue_normal"
+        ],
+        "result_state": "ready_for_execution"
+      }
+    },
+    {
+      "file": "projects/naonao-content-ops/reports/correction-regression-baseline-current.json",
+      "json_path": "$.baseline_id",
+      "value": "baseline_packf_plus_20260226"
+    }
+  ],
+  "suggested_fixes": [],
+  "next_action": "允许合并 WO-EXT-004 最小补丁到下一轮 shadow 回归；继续按 execution_report.next_actions 接入真实会话 recovery_trace 映射并验证线上自动脱环。"
+}
