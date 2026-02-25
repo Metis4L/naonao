@@ -1,0 +1,29 @@
+{
+  "run_id": "reg_20260226_real_04_normalized",
+  "checks": [
+    {
+      "file": "reg_case_001.normalized.json",
+      "issue_class_valid": true,
+      "issue_tags_valid": true,
+      "root_valid": true,
+      "action_types_valid": true
+    },
+    {
+      "file": "reg_case_002.normalized.json",
+      "issue_class_valid": true,
+      "issue_tags_valid": true,
+      "root_valid": true,
+      "action_types_valid": true
+    },
+    {
+      "file": "reg_case_003.normalized.json",
+      "issue_class_valid": true,
+      "issue_tags_valid": true,
+      "root_valid": true,
+      "action_types_valid": true
+    }
+  ],
+  "summary": {
+    "all_pass": true
+  }
+}
