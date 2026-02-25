@@ -1,0 +1,288 @@
+{
+  "run_id": "reg_e_20260226_iter8_expanded_v2_shadow",
+  "mode": "test",
+  "status": "success",
+  "source": {
+    "manifest_path": "projects/naonao-content-ops/regression_samples/sample_manifest_v2.json",
+    "manifest_id": "sample_manifest_v2_iter8_shadow_20260226",
+    "manifest_status": "frozen_for_shadow",
+    "actual_sample_count": 8,
+    "required_min": 8,
+    "expanded_target": "8~12 samples (with factual_risk boundary pair)",
+    "compare_refs": {
+      "iter6": "projects/naonao-content-ops/reports/correction-regression-run-20260226-real-packe-iter6.json",
+      "iter8_minpatch": "projects/naonao-content-ops/reports/correction-regression-run-20260226-real-packe-iter8-minpatch.json"
+    }
+  },
+  "cases": [
+    {
+      "case_id": "reg_001",
+      "source_type": "real",
+      "risk_bucket": "human_likeness_priority_gate",
+      "boundary_reason": "quote/template voice should stay human_likeness, not factual_risk",
+      "expected": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "quote_overuse",
+          "template_voice"
+        ],
+        "root_cause_layer": "rule_problem"
+      },
+      "actual": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "quote_overuse",
+          "template_voice",
+          "premature_cta"
+        ],
+        "root_cause_layer": "rule_problem"
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    },
+    {
+      "case_id": "reg_002",
+      "source_type": "real",
+      "risk_bucket": "tie_break_logic",
+      "boundary_reason": "logic_closure vs mechanism_explanation boundary",
+      "expected": {
+        "issue_class": "logic_closure",
+        "issue_tags": [
+          "missing_bridge",
+          "premature_cta"
+        ],
+        "root_cause_layer": "template_problem"
+      },
+      "actual": {
+        "issue_class": "logic_closure",
+        "issue_tags": [
+          "missing_bridge",
+          "premature_cta",
+          "no_mechanism_explained"
+        ],
+        "root_cause_layer": "template_problem"
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    },
+    {
+      "case_id": "reg_003",
+      "source_type": "real",
+      "risk_bucket": "cta_coordination_boundary",
+      "boundary_reason": "risk warning + hard CTA should stay cta_coordination",
+      "expected": {
+        "issue_class": "cta_coordination",
+        "issue_tags": [
+          "premature_cta",
+          "hard_command_after_warning"
+        ],
+        "root_cause_layer": "requirement_problem"
+      },
+      "actual": {
+        "issue_class": "cta_coordination",
+        "issue_tags": [
+          "hard_command_after_warning",
+          "cta_without_readiness",
+          "premature_cta"
+        ],
+        "root_cause_layer": "requirement_problem"
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    },
+    {
+      "case_id": "reg_004_factual_true_positive",
+      "source_type": "synthetic",
+      "risk_bucket": "factual_risk_boundary",
+      "boundary_reason": "true factual correction (nutrition ratio/date) must trigger factual_risk",
+      "expected": {
+        "issue_class": "factual_risk",
+        "issue_tags": [
+          "other"
+        ],
+        "root_cause_layer": "input_data_problem"
+      },
+      "actual": {
+        "issue_class": "factual_risk",
+        "issue_tags": [
+          "other"
+        ],
+        "root_cause_layer": "input_data_problem"
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    },
+    {
+      "case_id": "reg_005_factual_false_positive_guard",
+      "source_type": "synthetic",
+      "risk_bucket": "factual_risk_boundary",
+      "boundary_reason": "style-only rewrite should NOT trigger factual_risk",
+      "expected": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "quote_overuse",
+          "template_voice"
+        ],
+        "root_cause_layer": "rule_problem"
+      },
+      "actual": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "quote_overuse",
+          "template_voice"
+        ],
+        "root_cause_layer": "rule_problem"
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    },
+    {
+      "case_id": "reg_006_tie_break_logic_vs_cta",
+      "source_type": "synthetic",
+      "risk_bucket": "tie_break_conflict",
+      "boundary_reason": "missing bridge + CTA present, should prefer logic_closure by tie-break",
+      "expected": {
+        "issue_class": "logic_closure",
+        "issue_tags": [
+          "missing_bridge",
+          "premature_cta"
+        ],
+        "root_cause_layer": "template_problem"
+      },
+      "actual": {
+        "issue_class": "logic_closure",
+        "issue_tags": [
+          "missing_bridge",
+          "premature_cta"
+        ],
+        "root_cause_layer": "template_problem"
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    },
+    {
+      "case_id": "reg_007_span_note_intent_required",
+      "source_type": "synthetic",
+      "risk_bucket": "span_note_intent_priority",
+      "boundary_reason": "intent note should surface style softening signal",
+      "expected": {
+        "issue_class": "cta_coordination",
+        "issue_tags": [
+          "hard_command_after_warning",
+          "cta_without_readiness"
+        ],
+        "root_cause_layer": "requirement_problem"
+      },
+      "actual": {
+        "issue_class": "cta_coordination",
+        "issue_tags": [
+          "hard_command_after_warning",
+          "cta_without_readiness"
+        ],
+        "root_cause_layer": "requirement_problem"
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    },
+    {
+      "case_id": "reg_008_human_vs_mechanism_conflict",
+      "source_type": "synthetic",
+      "risk_bucket": "human_likeness_priority_gate",
+      "boundary_reason": "template voice with minor mechanism add should remain human_likeness",
+      "expected": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "template_voice",
+          "emotion_overdrive"
+        ],
+        "root_cause_layer": "rule_problem"
+      },
+      "actual": {
+        "issue_class": "human_likeness",
+        "issue_tags": [
+          "template_voice",
+          "emotion_overdrive"
+        ],
+        "root_cause_layer": "rule_problem"
+      },
+      "checks": {
+        "issue_class_match": true,
+        "core_tag_hit": true,
+        "root_cause_match": true,
+        "candidate_rule_usefulness": 1
+      }
+    }
+  ],
+  "metrics": {
+    "issue_class": "8/8",
+    "core_tag": "8/8",
+    "root_cause": "8/8",
+    "candidate_rule_usefulness_avg": 1
+  },
+  "scoring": {
+    "issue_class_match": {
+      "weight": 30,
+      "value": 1.0,
+      "score": 30.0
+    },
+    "core_tag_hit": {
+      "weight": 35,
+      "value": 1.0,
+      "score": 35.0
+    },
+    "root_cause_match": {
+      "weight": 20,
+      "value": 1.0,
+      "score": 20.0
+    },
+    "candidate_rule_usefulness": {
+      "weight": 15,
+      "value": 1,
+      "score": 15
+    },
+    "total": 100.0
+  },
+  "acceptance_snapshot": {
+    "total_ge_83_33": true,
+    "issue_class_hit_ge_0_8": true,
+    "core_tag_hit_ge_0_8": true,
+    "no_regression_on_fixed_3": true,
+    "expanded_sample_size_met": true,
+    "factual_risk_boundary_pair_covered": true
+  },
+  "meta": {
+    "sample_manifest_fingerprint": "93728f10fe8258696ca80b69092da06d0344ce83774e5ff764f97f3f8e4e2f2c",
+    "run_mode": "test",
+    "shadow_only": true,
+    "baseline_write": "forbidden"
+  },
+  "generated_at": "2026-02-26T04:05:20+08:00"
+}

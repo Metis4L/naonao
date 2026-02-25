@@ -1,0 +1,71 @@
+{
+  "task_id": "wo_ext_003_shadow",
+  "status": "success",
+  "summary": "WO-EXT-003 shadow 执行完成：基于冻结 manifest v2 完成 8 样本扩样回归与边界覆盖，未改生产基线 iter6。",
+  "started_at": "2026-02-26T04:05:20+08:00",
+  "finished_at": "2026-02-26T04:05:20+08:00",
+  "file_results": [
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/reports/correction-regression-run-20260226-iter8-expanded-v2.json",
+      "operation": "TEST",
+      "status": "success",
+      "detail_phase": "test",
+      "validations": [
+        {
+          "type": "json_parse",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/reports/correction-regression-error-analysis-iter8-expanded-v2.json",
+      "operation": "TEST",
+      "status": "success",
+      "detail_phase": "test",
+      "validations": [
+        {
+          "type": "json_parse",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/reports/execution-report-wo-ext-003-shadow.json",
+      "operation": "ADD",
+      "status": "success",
+      "detail_phase": "test",
+      "validations": [
+        {
+          "type": "json_parse",
+          "status": "pass"
+        }
+      ]
+    }
+  ],
+  "blocking_issues": [],
+  "next_actions": [
+    "仅做 shadow 对比读取，不做 baseline 晋升。",
+    "如需晋升，先由主流程复核与人工批准。"
+  ],
+  "meta": {
+    "precheck_rootb_write": "pass",
+    "dry_run_status": "success",
+    "backup_before_change": "pass",
+    "backup_ts": "n/a-test-only",
+    "sample_manifest_fingerprint": "93728f10fe8258696ca80b69092da06d0344ce83774e5ff764f97f3f8e4e2f2c",
+    "run_mode": "test",
+    "determinism": {
+      "seed": 42,
+      "sort_mode": "sample_id_asc",
+      "python_version": "3.12.3",
+      "runtime_version": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+    },
+    "validator": {
+      "unexplained_regression": false,
+      "unstable_candidate": false
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "analysis_id": "iter8_expanded_error_analysis_20260226_v2_shadow",
+  "mode": "test",
+  "status": "success",
+  "input_report": "projects/naonao-content-ops/reports/correction-regression-run-20260226-iter8-expanded-v2.json",
+  "sample_coverage": {
+    "required_range": "8~12",
+    "actual": 8,
+    "factual_risk_boundary_pair_required": 2,
+    "factual_risk_boundary_pair_actual": 2,
+    "expanded_sample_size_met": true
+  },
+  "error_items": [],
+  "summary": {
+    "mismatch_total": 0,
+    "model_behavior_regression_found": false,
+    "data_coverage_blocked": false,
+    "factual_risk_boundary_pair_covered": true
+  },
+  "comparison_context": {
+    "iter6_ref": "projects/naonao-content-ops/reports/correction-regression-run-20260226-real-packe-iter6.json",
+    "iter8_minpatch_ref": "projects/naonao-content-ops/reports/correction-regression-run-20260226-real-packe-iter8-minpatch.json"
+  },
+  "generated_at": "2026-02-26T04:05:20+08:00"
+}

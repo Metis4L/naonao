@@ -1,0 +1,65 @@
+{
+  "task_id": "wo_ext_003_shadow_gate",
+  "mode": "regression_gate + execution_report",
+  "decision": "pass",
+  "reasons": [
+    "扩样回归结果满足门禁阈值：总分 100.0，高于 scoring policy 建议阈值（>=0.80 可考虑采纳；>=0.70 可继续优化）。",
+    "关键一致性指标全部命中：issue_class 8/8、core_tag 8/8、root_cause 8/8，且 candidate_rule_usefulness_avg=1。",
+    "验收快照全部为 true（含 total_ge_83_33、关键命中率门槛、无固定样本回退、扩样数量达标、factual_risk 边界对覆盖）。",
+    "错误分析无失配：mismatch_total=0，未发现 model_behavior_regression。",
+    "执行报告状态 success，且明确 shadow_only=true、baseline_write=forbidden，符合“仅 shadow 不晋升生产基线”的约束。"
+  ],
+  "evidence_refs": [
+    {
+      "path": "projects/naonao-content-ops/reports/correction-regression-run-20260226-iter8-expanded-v2.json",
+      "keys": [
+        "metrics",
+        "scoring.total",
+        "acceptance_snapshot",
+        "source.actual_sample_count",
+        "meta.shadow_only",
+        "meta.baseline_write"
+      ]
+    },
+    {
+      "path": "projects/naonao-content-ops/reports/correction-regression-error-analysis-iter8-expanded-v2.json",
+      "keys": [
+        "summary.mismatch_total",
+        "summary.model_behavior_regression_found",
+        "sample_coverage"
+      ]
+    },
+    {
+      "path": "projects/naonao-content-ops/reports/execution-report-wo-ext-003-shadow.json",
+      "keys": [
+        "status",
+        "blocking_issues",
+        "meta.validator",
+        "next_actions"
+      ]
+    },
+    {
+      "path": "projects/naonao-content-ops/docs/correction-regression-scoring.md",
+      "keys": [
+        "指标与权重",
+        "回归通过建议阈值",
+        "基线保护规则（新增）"
+      ]
+    },
+    {
+      "path": "projects/naonao-content-ops/reports/correction-regression-baseline-current.json",
+      "keys": [
+        "status",
+        "baseline_guard",
+        "score.total",
+        "next_focus"
+      ]
+    }
+  ],
+  "suggested_fixes": [
+    "当前门禁通过且无失配；无需追加阻断性修复。",
+    "按 baseline.next_focus 在测试分支继续优化 case_001/case_003 的 issue_class 分流，完成后再做下一轮 shadow 对比。",
+    "保持冻结 manifest 指纹校验（93728f10...e2f2c）与 deterministic 配置，确保复现实验可比性。"
+  ],
+  "next_action": "gate_pass_shadow_only_keep_baseline"
+}
