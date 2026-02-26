@@ -27,5 +27,8 @@ bash scripts/deploy-safe.sh
 - 文件：`deploy-YYYYmmdd-HHMMSS.log`
 
 ## 注意
-- 若工作区有未提交改动，自动部署会被阻止（避免覆盖现场）。
+- 工作区脏改动策略由 `DIRTY_MODE` 控制：
+  - `warn`（默认）：仅告警，不阻断部署
+  - `block`：阻断部署
+- 可临时切换：`DIRTY_MODE=block bash scripts/deploy-safe.sh`
 - 依赖 `openclaw message send` 可用；若通知发送失败，不影响回滚与主流程。

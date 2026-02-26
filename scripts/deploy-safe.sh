@@ -8,6 +8,7 @@ DEPLOY_BRANCH="${DEPLOY_BRANCH:-main}"
 DEPLOY_CMD="${DEPLOY_CMD:-make p15-all}"
 TELEGRAM_CHAT_ID="${TELEGRAM_CHAT_ID:-5667549865}"
 NOTIFY_CHANNEL="${NOTIFY_CHANNEL:-telegram}"
+DIRTY_MODE="${DIRTY_MODE:-warn}"   # block | warn
 LOCK_FILE="${LOCK_FILE:-$REPO_ROOT/.deploy.lock}"
 LOG_DIR="${LOG_DIR:-$REPO_ROOT/.deploy-logs}"
 mkdir -p "$LOG_DIR"
@@ -53,8 +54,11 @@ main() {
   fi
 
   if [[ -n "$(git status --porcelain)" ]]; then
-    notify "blocked" "工作区有未提交改动，已阻止自动部署。"
-    exit 1
+    if [[ "$DIRTY_MODE" == "block" ]]; then
+      notify "blocked" "工作区有未提交改动，已阻止自动部署。"
+      exit 1
+    fi
+    notify "warn" "工作区有未提交改动，按 DIRTY_MODE=warn 继续执行部署。"
   fi
 
   local pre_head post_head
