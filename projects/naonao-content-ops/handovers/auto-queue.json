@@ -1,0 +1,12 @@
+{
+  "active": true,
+  "auto_classes": ["ops", "governance", "observability"],
+  "queue": [
+    { "wo_id": "WO-ROOT-001", "class": "governance", "auto": true },
+    { "wo_id": "WO-DRIFT-AUDIT-001", "class": "observability", "auto": true }
+  ],
+  "stop_when": {
+    "queue_empty": true,
+    "requires_approval_class_C": true
+  }
+}
