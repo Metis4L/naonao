@@ -1,0 +1,29 @@
+[
+  {
+    "event_id": "ce_demo_001",
+    "created_at": "2026-02-26T00:00:00+08:00",
+    "source": {"agent":"naonao-feedback-router-core","session":"demo"},
+    "content_type": "cat_food_analysis",
+    "diff_segments": [{"segment_id":"s1","operation":"replace","before_text":"这款很好","after_text":"这款配料结构更稳，原因是..."}],
+    "classifications": [{"category":"mechanism_explanation","tag":"no_mechanism_explained","confidence":0.91,"evidence_segment_ids":["s1"]}],
+    "root_cause_layer": "template_problem"
+  },
+  {
+    "event_id": "ce_demo_002",
+    "created_at": "2026-02-26T00:01:00+08:00",
+    "source": {"agent":"naonao-feedback-router-core","session":"demo"},
+    "content_type": "generic",
+    "diff_segments": [{"segment_id":"s2","operation":"delete","before_text":"“完美猫粮”","after_text":""}],
+    "classifications": [{"category":"human_likeness","tag":"quote_overuse","confidence":0.88,"evidence_segment_ids":["s2"]}],
+    "root_cause_layer": "rule_problem"
+  },
+  {
+    "event_id": "ce_demo_003",
+    "created_at": "2026-02-26T00:02:00+08:00",
+    "source": {"agent":"naonao-feedback-router-core","session":"demo"},
+    "content_type": "newbie_cat",
+    "diff_segments": [{"segment_id":"s3","operation":"reorder","before_text":"先下单...","after_text":"先看是否适配，再决定..."}],
+    "classifications": [{"category":"cta_coordination","tag":"premature_cta","confidence":0.86,"evidence_segment_ids":["s3"]}],
+    "root_cause_layer": "requirement_problem"
+  }
+]

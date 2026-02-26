@@ -1,0 +1,23 @@
+{
+  "run_id": "auto-20260226-164551",
+  "start_at": "2026-02-26T16:45:51",
+  "end_at": "2026-02-26T16:45:52",
+  "steps_attempted": 2,
+  "wo_executed": [
+    {
+      "wo_id": "WO-DRIFT-AUDIT-001",
+      "work_order_path": "projects/naonao-content-ops/handovers/work-order-drift-audit-001.json",
+      "gate_decision": "pass",
+      "duration_sec": 0.0
+    },
+    {
+      "wo_id": "projects/naonao-content-ops/handovers/work-order-shadow-monitoring.json",
+      "work_order_path": "projects/naonao-content-ops/handovers/work-order-shadow-monitoring.json",
+      "gate_decision": "pass",
+      "duration_sec": 0.0
+    }
+  ],
+  "stop_reason": "idle",
+  "repo_head": "772d31b4cffb20366adad22f931337c59f276691",
+  "workspace_root": "/home/metis/.openclaw/workspace"
+}

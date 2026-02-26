@@ -1,0 +1,8 @@
+{
+  "decision": "fail",
+  "task_id": "wo_patchtext_notfd_001",
+  "work_order": "projects/naonao-content-ops/handovers/work-order-patch-text-oldnotfound.tmp.json",
+  "validated_at": "2026-02-26T17:50:04",
+  "message": "execution_failed",
+  "reason": "patch_old_text_not_found"
+}

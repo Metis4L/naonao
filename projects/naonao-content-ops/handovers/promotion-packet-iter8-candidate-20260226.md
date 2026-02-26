@@ -29,8 +29,8 @@ If promoted and regression occurs:
 3. Run stability matrix + expanded samples before re-approval.
 
 ## 5) Approval Block
-- [ ] Approve promotion to production baseline
+- [x] Approve promotion to production baseline
 - [ ] Reject (keep iter6 locked, continue shadow monitoring)
-- Approved by: __________
-- Time: __________
+- Approved by: user
+- Time: 2026-02-26T18:40:00+08:00
 - Notes: __________

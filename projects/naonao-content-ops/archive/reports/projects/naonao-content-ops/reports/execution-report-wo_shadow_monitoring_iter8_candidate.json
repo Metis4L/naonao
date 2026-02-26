@@ -1,0 +1,24 @@
+{
+  "task_id": "wo_shadow_monitoring_iter8_candidate",
+  "status": "success",
+  "run_mode": "test",
+  "source_work_order": "projects/naonao-content-ops/handovers/work-order-drift-audit-001.json",
+  "finished_at": "2026-02-26T17:11:47",
+  "summary": "execute-work-order wrapper completed",
+  "meta": {
+    "workspace_root": "/home/metis/.openclaw/workspace",
+    "git_head": "98893d4cddaefcde4041ca28b385fc59a2da9bfb",
+    "root_manifest_fingerprint": "362f700576293601212f38c38efc71aeb73b3681beaeae6d23632922a5286a82",
+    "path_resolution_table": [
+      {
+        "root_alias": "openclaw",
+        "relative_path": "projects/naonao-content-ops/reports/correction-regression-shadow-monitoring.json",
+        "resolved_path": "/home/metis/.openclaw/workspace/projects/naonao-content-ops/reports/correction-regression-shadow-monitoring.json",
+        "exists": true,
+        "in_declared_root": true
+      }
+    ],
+    "root_drift_status": "ok"
+  },
+  "blocking_issues": []
+}

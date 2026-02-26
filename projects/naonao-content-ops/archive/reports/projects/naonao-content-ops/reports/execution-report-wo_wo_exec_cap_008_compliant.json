@@ -1,0 +1,34 @@
+{
+  "task_id": "wo_exec_cap_008_compliant",
+  "status": "success",
+  "run_mode": "apply",
+  "source_work_order": "projects/naonao-content-ops/handovers/work-order-exec-capability-008-compliant.json",
+  "finished_at": "2026-02-26T17:44:02",
+  "summary": "executed files: 1 success / 0 failed",
+  "file_results": [
+    {
+      "index": 1,
+      "root_alias": "openclaw",
+      "relative_path": "projects/naonao-content-ops/reports/exec-cap-008/compliant.txt",
+      "operation": "ADD",
+      "status": "success",
+      "reason_code": "ok",
+      "resolved_path": "/home/metis/.openclaw/workspace/projects/naonao-content-ops/reports/exec-cap-008/compliant.txt",
+      "before_exists": false,
+      "before_size": 0,
+      "bytes_written": 14,
+      "after_exists": true,
+      "after_size": 14
+    }
+  ],
+  "meta": {
+    "workspace_root": "/home/metis/.openclaw/workspace",
+    "git_head": "86680e746a6028eff607d8a2ff5ff45927225ffe",
+    "root_manifest_fingerprint": "d8fd992297a568ed4006e2ddc67274f469482cf7b8024ea1d01ee2f69080ca0b",
+    "root_aliases_used": {
+      "openclaw": "/home/metis/.openclaw/workspace",
+      "naonao_project": "/mnt/e/AI/openclaw/workspaces/naonao-pet-content"
+    }
+  },
+  "blocking_issues": []
+}

@@ -1,0 +1,34 @@
+{
+  "task_id": "wo_root_manifest_001",
+  "status": "success",
+  "run_mode": "test",
+  "source_work_order": "projects/naonao-content-ops/handovers/work-order-root-001.json",
+  "finished_at": "2026-02-26T17:15:25",
+  "summary": "executed files: 1 success / 0 failed",
+  "file_results": [
+    {
+      "index": 1,
+      "root_alias": "openclaw",
+      "relative_path": "projects/naonao-content-ops/handovers/root-manifest.json",
+      "operation": "MODIFY",
+      "status": "success",
+      "resolved_path": "/home/metis/.openclaw/workspace/projects/naonao-content-ops/handovers/root-manifest.json",
+      "mode": "full_replace",
+      "bytes_written": 284,
+      "before_exists": true,
+      "before_size": 607,
+      "after_exists": true,
+      "after_size": 284
+    }
+  ],
+  "meta": {
+    "workspace_root": "/home/metis/.openclaw/workspace",
+    "git_head": "86680e746a6028eff607d8a2ff5ff45927225ffe",
+    "root_manifest_fingerprint": "362f700576293601212f38c38efc71aeb73b3681beaeae6d23632922a5286a82",
+    "root_aliases_used": {
+      "openclaw": "/home/metis/.openclaw/workspace",
+      "naonao_project": "/mnt/e/AI/openclaw/workspaces/naonao-pet-content"
+    }
+  },
+  "blocking_issues": []
+}

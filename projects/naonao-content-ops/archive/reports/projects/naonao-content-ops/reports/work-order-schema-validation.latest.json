@@ -1,0 +1,6 @@
+{
+  "work_order": "projects/naonao-content-ops/handovers/work-order-exec-capability-008-compliant.json",
+  "schema": "projects/naonao-content-ops/contracts/work-order.schema.json",
+  "ok": true,
+  "errors": []
+}

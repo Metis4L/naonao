@@ -4,7 +4,11 @@
   "current_baseline": "iter6",
   "decision_requested": "approve_or_reject",
   "metrics": {
-    "stability_x3_scores": [100.0, 100.0, 100.0],
+    "stability_x3_scores": [
+      100.0,
+      100.0,
+      100.0
+    ],
     "stability_x3_std": 0.0,
     "shadow_latest": {
       "mean": 100.0,
@@ -33,5 +37,11 @@
     "projects/naonao-content-ops/handovers/iteration-ledger.json",
     "projects/naonao-content-ops/reports/hard-validator-gate-wo-ext-004.json"
   ],
-  "requires_user_signoff": true
+  "requires_user_signoff": true,
+  "approval": {
+    "approved": true,
+    "approved_by": "user",
+    "approved_at": "2026-02-26T18:40:00+08:00",
+    "decision": "promote"
+  }
 }

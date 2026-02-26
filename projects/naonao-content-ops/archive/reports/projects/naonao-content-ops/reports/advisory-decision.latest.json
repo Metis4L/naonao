@@ -1,0 +1,9 @@
+{
+  "decision": "auto_proceed",
+  "context": {
+    "selected_wo": {
+      "wo_id": "WO-INVALID-008",
+      "path": "projects/naonao-content-ops/handovers/work-order-exec-capability-008-invalid.json"
+    }
+  }
+}

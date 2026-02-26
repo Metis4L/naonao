@@ -1,0 +1,150 @@
+{
+  "task_id": "wo_root_001_min_loop",
+  "status": "success",
+  "summary": "WO-ROOT-001 已按分阶段策略落地：新增 root-manifest、execution-report 兼容字段、execution-engineer preflight 约束、hard-validator root-drift 分阶段 gate。",
+  "started_at": "2026-02-26T13:09:00+08:00",
+  "finished_at": "2026-02-26T13:22:00+08:00",
+  "file_results": [
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/handovers/root-manifest.json",
+      "operation": "ADD",
+      "status": "success",
+      "detail_phase": "apply",
+      "diff_summary": "新增根目录单一事实源（root_aliases、active_roots、cross_root_write_policy）",
+      "validations": [
+        {
+          "type": "json_parse",
+          "status": "pass"
+        },
+        {
+          "type": "contains_text",
+          "status": "pass",
+          "detail": "contains root_aliases/openclaw/naonao_project"
+        }
+      ]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "agents/execution-engineer/PREFLIGHT_ROOT_RESOLUTION.md",
+      "operation": "ADD",
+      "status": "success",
+      "detail_phase": "apply",
+      "diff_summary": "新增 preflight 约束文档，输出 workspace_root/git_head/path_resolution_table 并定义 mismatch=blocked",
+      "validations": [
+        {
+          "type": "contains_text",
+          "status": "pass",
+          "detail": "preflight output includes cwd/git root/head/resolved target paths"
+        }
+      ]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "agents/execution-engineer/INTEGRATIONS.md",
+      "operation": "MODIFY",
+      "status": "success",
+      "detail_phase": "apply",
+      "diff_summary": "加入 preflight 钩子约束与 phase_1/phase_2 规则对齐说明",
+      "validations": [
+        {
+          "type": "contains_text",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/contracts/execution-report.schema.json",
+      "operation": "MODIFY",
+      "status": "success",
+      "detail_phase": "apply",
+      "diff_summary": "meta 兼容新增 workspace_root/git_head/root_manifest_fingerprint/path_resolution_table（均非 required）",
+      "validations": [
+        {
+          "type": "json_parse",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "agents/naonao-hard-validator/skills/gatekeeper/SKILL.md",
+      "operation": "MODIFY",
+      "status": "success",
+      "detail_phase": "apply",
+      "diff_summary": "新增 root-drift gate phase_1 shadow_soft 与 phase_2 C 类 hard-fail 触发清单",
+      "validations": [
+        {
+          "type": "contains_text",
+          "status": "pass",
+          "detail": "contains phase_1 and phase_2 rules + C-class hard-fail trigger list"
+        }
+      ]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/reports/execution-report-wo-root-001.json",
+      "operation": "ADD",
+      "status": "success",
+      "detail_phase": "test",
+      "validations": [
+        {
+          "type": "json_parse",
+          "status": "pass"
+        }
+      ]
+    }
+  ],
+  "blocking_issues": [],
+  "next_actions": [
+    "在 execution-engineer 实际执行入口挂接 PREFLIGHT_ROOT_RESOLUTION.md 中的命令（当前为文档约束）。",
+    "hard-validator 按 phase 配置落地 root_drift_status/root_drift_phase 输出，并在 phase_2 仅对 C 类风险启用 hard fail。",
+    "继续保持 no_production_baseline_overwrite，待观察窗口通过后再评估 phase_2 全量启用。"
+  ],
+  "meta": {
+    "run_mode": "test",
+    "workspace_root": "/home/metis/.openclaw/workspace",
+    "git_head": "954f949493358d6acd8897ec9080e4391721162f",
+    "root_manifest_fingerprint": "93b9483e8b0897c45078d0bdfde539338031bcf477087b8495459363383fc6e8",
+    "path_resolution_table": [
+      {
+        "root_alias": "openclaw",
+        "resolved_path": "/home/metis/.openclaw/workspace/projects/naonao-content-ops/handovers/root-manifest.json",
+        "exists": true
+      },
+      {
+        "root_alias": "openclaw",
+        "resolved_path": "/home/metis/.openclaw/workspace/agents/execution-engineer",
+        "exists": true
+      },
+      {
+        "root_alias": "openclaw",
+        "resolved_path": "/home/metis/.openclaw/workspace/projects/naonao-content-ops/contracts/execution-report.schema.json",
+        "exists": true
+      },
+      {
+        "root_alias": "openclaw",
+        "resolved_path": "/home/metis/.openclaw/workspace/agents/naonao-hard-validator/skills/gatekeeper/SKILL.md",
+        "exists": true
+      },
+      {
+        "root_alias": "openclaw",
+        "resolved_path": "/home/metis/.openclaw/workspace/projects/naonao-content-ops/reports/execution-report-wo-root-001.json",
+        "exists": false,
+        "note": "preflight 阶段目标报告文件尚未生成，属预期"
+      }
+    ],
+    "validator": {
+      "root_drift_status": "warn",
+      "root_drift_phase": "phase_1_shadow_soft",
+      "no_production_baseline_overwrite": true,
+      "schema_backward_compatibility": true
+    },
+    "acceptance_selftest": {
+      "schema_required_mode_compat_add_only": true,
+      "root_drift_gate_phase1_shadow_soft": true,
+      "c_class_only_hard_fail_policy_defined": true
+    }
+  }
+}

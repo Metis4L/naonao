@@ -1,0 +1,23 @@
+{
+  "plan_id": "plan_20260226_171547",
+  "timestamp": "2026-02-26T17:15:47+08:00",
+  "mode": "test",
+  "selected_work_order": "projects/naonao-content-ops/handovers/work-order-shadow-monitoring.json",
+  "auto_advance": true,
+  "meta": {
+    "auto_selected_wo_id": null,
+    "auto_selected_work_order_path": "projects/naonao-content-ops/handovers/work-order-shadow-monitoring.json"
+  },
+  "steps": [
+    {
+      "id": 1,
+      "name": "validate-json",
+      "cmd": "make validate-json"
+    }
+  ],
+  "candidate_iter": "iter8-minpatch",
+  "baseline_iter": "iter6",
+  "artifacts": {
+    "idle_report": "projects/naonao-content-ops/reports/idle-reports/idle-report-20260226-171547.json"
+  }
+}

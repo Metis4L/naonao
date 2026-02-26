@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "naonao-content-ops/contracts/work-order.schema.json",
+  "title": "Execution Work Order",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "task_id",
+    "goal",
+    "run_mode",
+    "rollback_required",
+    "root_aliases",
+    "files"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "pattern": "^wo_[a-zA-Z0-9_-]{6,}$"
+    },
+    "goal": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scope": {
+      "type": "string"
+    },
+    "run_mode": {
+      "type": "string",
+      "enum": [
+        "dry-run",
+        "apply"
+      ]
+    },
+    "rollback_required": {
+      "type": "boolean"
+    },
+    "root_aliases": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "openclaw",
+        "naonao_project"
+      ],
+      "properties": {
+        "openclaw": {
+          "type": "string",
+          "minLength": 1
+        },
+        "naonao_project": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "prechecks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/fileOperation"
+      }
+    },
+    "postchecks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "owner": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "$defs": {
+    "fileOperation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "root_alias",
+        "path",
+        "operation",
+        "change_spec",
+        "acceptance_criteria"
+      ],
+      "properties": {
+        "root_alias": {
+          "type": "string",
+          "enum": [
+            "openclaw",
+            "naonao_project"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation": {
+          "type": "string",
+          "enum": [
+            "ADD",
+            "MODIFY",
+            "MERGE",
+            "DELETE"
+          ]
+        },
+        "backup_before_change": {
+          "type": "boolean",
+          "default": true
+        },
+        "change_spec": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": [
+                "full_replace",
+                "append_section",
+                "insert_after_heading",
+                "structured_write",
+                "patch"
+              ]
+            },
+            "target_heading": {
+              "type": "string"
+            },
+            "content": {
+              "type": "string"
+            },
+            "patch_text": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "mode"
+          ]
+        },
+        "validation": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "exists",
+                  "json_parse",
+                  "json_schema",
+                  "contains_text"
+                ]
+              },
+              "schema_path": {
+                "type": "string"
+              },
+              "sample_path": {
+                "type": "string"
+              },
+              "pattern": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

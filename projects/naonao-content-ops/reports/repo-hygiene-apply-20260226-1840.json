@@ -1,0 +1,8 @@
+{
+  "applied_at": "2026-02-26T18:40:55",
+  "moved_bak_files": 22,
+  "moved_report_files": 26,
+  "removed_pycache": "projects/naonao-content-ops/**/__pycache__",
+  "baseline_promoted_to": "iter8-minpatch",
+  "baseline_pointer": "projects/naonao-content-ops/reports/correction-regression-baseline-current.json"
+}

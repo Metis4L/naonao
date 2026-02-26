@@ -1,0 +1,112 @@
+[
+  {
+    "event_id": "ce_case_000001",
+    "content_id": "cnt_001",
+    "platform": "douyin",
+    "project_id": "naonao-pet-content",
+    "draft_before": "“这款猫粮完美无缺”，你直接买就对了。",
+    "draft_after": "这款猫粮的蛋白来源更稳定，但仍要看你家猫的肠胃适配。",
+    "diff_segments": [
+      {
+        "segment_id": "seg_a001",
+        "operation": "replace",
+        "before_text": "“这款猫粮完美无缺”",
+        "after_text": "这款猫粮的蛋白来源更稳定",
+        "span_note": "去模板腔并补充客观依据",
+        "position_hint": "hook"
+      }
+    ],
+    "issue_class": "human_likeness",
+    "issue_tags": ["quote_overuse", "template_voice"],
+    "root_cause_layer": "rule_problem",
+    "severity": "S2",
+    "editor_action_types": ["rewrite"],
+    "evidence_notes": ["引号和绝对化词导致模板感强"],
+    "candidate_rule_suggestions": [
+      {
+        "title": "避免绝对化引号口号",
+        "instruction": "首句避免“完美/无敌”等绝对化口号，优先给可验证依据",
+        "scope_hint": {"platform": ["douyin"], "stage": ["hook"]},
+        "reason": "降低模板腔，提高可信度",
+        "confidence": 0.87
+      }
+    ],
+    "review_status": "pending",
+    "editor_id": "manual_review",
+    "created_at": "2026-02-26T01:20:00+08:00"
+  },
+  {
+    "event_id": "ce_case_000002",
+    "content_id": "cnt_002",
+    "platform": "xiaohongshu",
+    "draft_before": "这配方风险高。赶紧换粮。",
+    "draft_after": "这配方在矿物平衡上有潜在压力，先观察便便和食欲变化，再决定是否换粮。",
+    "diff_segments": [
+      {
+        "segment_id": "seg_b001",
+        "operation": "replace",
+        "before_text": "这配方风险高。赶紧换粮。",
+        "after_text": "这配方在矿物平衡上有潜在压力，先观察便便和食欲变化，再决定是否换粮。",
+        "span_note": "补机制与过渡，延后CTA",
+        "position_hint": "mechanism"
+      }
+    ],
+    "issue_class": "logic_closure",
+    "issue_tags": ["missing_bridge", "premature_cta"],
+    "root_cause_layer": "template_problem",
+    "severity": "S2",
+    "editor_action_types": ["rewrite", "add"],
+    "evidence_notes": ["改前从风险直接跳到命令，缺少解释桥接"],
+    "review_status": "pending",
+    "created_at": "2026-02-26T01:21:00+08:00"
+  },
+  {
+    "event_id": "ce_case_000003",
+    "content_id": "cnt_003",
+    "platform": "douyin",
+    "draft_before": "这猫粮不好，别买。",
+    "draft_after": "这款在肉源标注和脂肪比例上有争议点，不建议盲买，先看配料与自家猫状态匹配。",
+    "diff_segments": [
+      {
+        "segment_id": "seg_c001",
+        "operation": "replace",
+        "before_text": "这猫粮不好，别买。",
+        "after_text": "这款在肉源标注和脂肪比例上有争议点，不建议盲买，先看配料与自家猫状态匹配。",
+        "span_note": "补成因机制，降低武断命令",
+        "position_hint": "body"
+      }
+    ],
+    "issue_class": "mechanism_explanation",
+    "issue_tags": ["no_mechanism_explained", "risk_without_cause"],
+    "root_cause_layer": "requirement_problem",
+    "severity": "S1",
+    "editor_action_types": ["rewrite"],
+    "evidence_notes": ["改前仅结论无机制解释"],
+    "review_status": "pending",
+    "created_at": "2026-02-26T01:22:00+08:00"
+  },
+  {
+    "event_id": "ce_case_000004",
+    "content_id": "cnt_004",
+    "platform": "wechat",
+    "draft_before": "看完这些风险你就必须立刻换。",
+    "draft_after": "看完这些风险后，先确认你家猫是否出现对应信号，再决定是否调整。",
+    "diff_segments": [
+      {
+        "segment_id": "seg_d001",
+        "operation": "replace",
+        "before_text": "你就必须立刻换",
+        "after_text": "先确认信号，再决定是否调整",
+        "span_note": "去硬命令，提升可执行衔接",
+        "position_hint": "cta"
+      }
+    ],
+    "issue_class": "cta_coordination",
+    "issue_tags": ["hard_command_after_warning", "cta_without_readiness"],
+    "root_cause_layer": "rule_problem",
+    "severity": "S2",
+    "editor_action_types": ["rewrite"],
+    "review_status": "pending",
+    "created_at": "2026-02-26T01:23:00+08:00"
+  }
+]

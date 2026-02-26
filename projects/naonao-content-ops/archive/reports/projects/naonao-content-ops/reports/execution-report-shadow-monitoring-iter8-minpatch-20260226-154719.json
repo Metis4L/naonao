@@ -1,0 +1,24 @@
+{
+  "work_order_id": "wo_shadow_monitoring_iter8_candidate",
+  "operation": "TEST",
+  "status": "completed",
+  "timestamp": "2026-02-26T15:47:19+08:00",
+  "candidate_iter": "iter8-minpatch",
+  "baseline_iter": "iter6",
+  "mode": "shadow",
+  "summary": {
+    "score_mean": 100.0,
+    "score_std": 0.0,
+    "unexplained_regression": false,
+    "unstable_candidate": false,
+    "no_production_baseline_overwrite": true
+  },
+  "artifacts": [
+    "projects/naonao-content-ops/reports/correction-regression-shadow-monitoring.json",
+    "projects/naonao-content-ops/handovers/iteration-ledger.json"
+  ],
+  "constraints": {
+    "baseline_promotion": "forbidden",
+    "baseline_overwrite": "forbidden"
+  }
+}

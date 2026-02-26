@@ -1,0 +1,41 @@
+{
+  "task_id": "wo_patchtext_invalid_001",
+  "status": "failed",
+  "run_mode": "apply",
+  "source_work_order": "projects/naonao-content-ops/handovers/work-order-patch-text-invalid.json",
+  "finished_at": "2026-02-26T17:49:46",
+  "summary": "executed files: 0 success / 1 failed",
+  "file_results": [
+    {
+      "index": 1,
+      "root_alias": "openclaw",
+      "relative_path": "projects/naonao-content-ops/reports/patch-text-fixture.txt",
+      "operation": "MODIFY",
+      "status": "failed",
+      "reason_code": "patch_text_invalid_json",
+      "resolved_path": "/home/metis/.openclaw/workspace/projects/naonao-content-ops/reports/patch-text-fixture.txt",
+      "before_exists": true,
+      "before_size": 22,
+      "detail": "Expecting ',' delimiter: line 1 column 40 (char 39)",
+      "after_exists": true,
+      "after_size": 22
+    }
+  ],
+  "meta": {
+    "workspace_root": "/home/metis/.openclaw/workspace",
+    "git_head": "86680e746a6028eff607d8a2ff5ff45927225ffe",
+    "root_manifest_fingerprint": "d8fd992297a568ed4006e2ddc67274f469482cf7b8024ea1d01ee2f69080ca0b",
+    "root_aliases_used": {
+      "openclaw": "/home/metis/.openclaw/workspace",
+      "naonao_project": "/mnt/e/AI/openclaw/workspaces/naonao-pet-content"
+    }
+  },
+  "blocking_issues": [
+    {
+      "code": "patch_text_invalid_json",
+      "file": "projects/naonao-content-ops/reports/patch-text-fixture.txt",
+      "operation": "MODIFY",
+      "detail": "Expecting ',' delimiter: line 1 column 40 (char 39)"
+    }
+  ]
+}

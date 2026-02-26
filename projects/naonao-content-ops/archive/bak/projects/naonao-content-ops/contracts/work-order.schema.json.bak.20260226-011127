@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "naonao-content-ops/work-order.schema.json",
+  "title": "WorkOrder",
+  "type": "object",
+  "required": ["order_id", "target", "run_mode", "changes"],
+  "properties": {
+    "order_id": {"type": "string"},
+    "target": {
+      "type": "object",
+      "required": ["root_alias"],
+      "properties": {
+        "root_alias": {"type": "string", "enum": ["openclaw", "naonao_project"]},
+        "project": {"type": "string"}
+      }
+    },
+    "run_mode": {"type": "string", "enum": ["dry-run", "apply"]},
+    "rollback_required": {"type": "boolean", "default": false},
+    "changes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["path", "action", "purpose"],
+        "properties": {
+          "path": {"type": "string"},
+          "action": {"type": "string", "enum": ["ADD", "MODIFY", "REPLACE", "APPEND", "DELETE"]},
+          "purpose": {"type": "string"},
+          "content": {"type": "string"},
+          "acceptance": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}
