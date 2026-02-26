@@ -1,6 +1,6 @@
 {
   "root_aliases": {
-    "openclaw": "/home/metis/.openclaw/workspace",
+    "openclaw": ".",
     "naonao_project": "/mnt/e/AI/openclaw/workspaces/naonao-pet-content"
   },
   "active_root_for_reports": "openclaw",
