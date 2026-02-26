@@ -1,4 +1,4 @@
-.PHONY: preflight shadow-monitoring validate-json advisor-plan p0-all p15-all execute-work-order queue-progress
+.PHONY: preflight shadow-monitoring validate-json advisor-plan p0-all p15-all execute-work-order queue-progress queue-mark-inflight
 
 WORK_ORDER ?= projects/naonao-content-ops/handovers/work-order-shadow-monitoring.json
 MANIFEST ?= projects/naonao-content-ops/handovers/root-manifest.json
@@ -27,7 +27,10 @@ execute-work-order:
 	bash projects/naonao-content-ops/tools/run-selected-work-order.sh "$(WORK_ORDER)" "$(RUN_MODE)"
 
 queue-progress:
-	python3 projects/naonao-content-ops/tools/queue-progress.py --gate "$(GATE_REPORT)"
+	python3 projects/naonao-content-ops/tools/queue-progress.py --stage post --gate "$(GATE_REPORT)"
+
+queue-mark-inflight:
+	python3 projects/naonao-content-ops/tools/queue-progress.py --stage pre --gate "$(GATE_REPORT)"
 
 p0-all: preflight validate-json shadow-monitoring
 	@echo "P0 pipeline done (test/shadow mode)."
@@ -48,6 +51,7 @@ p15-all:
 	run_mode=$$(python3 -c "import json;print(json.load(open('projects/naonao-content-ops/reports/execution-plan.latest.json',encoding='utf-8')).get('mode','test'))"); \
 	$(MAKE) preflight WORK_ORDER="$$wo" && \
 	$(MAKE) validate-json && \
+	$(MAKE) queue-mark-inflight GATE_REPORT="$(GATE_REPORT)" && \
 	$(MAKE) execute-work-order WORK_ORDER="$$wo" RUN_MODE="$$run_mode" && \
 	$(MAKE) queue-progress GATE_REPORT="$(GATE_REPORT)" && \
 	$(MAKE) shadow-monitoring && \

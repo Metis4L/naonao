@@ -112,7 +112,7 @@ def first_pending_auto(queue: list, done_ids: list):
     for idx, item in indexed:
         if item.get("wo_id") in done_ids:
             continue
-        if item.get("status", "pending") == "done":
+        if item.get("status", "pending") in {"done", "quarantined", "skipped"}:
             continue
         if item.get("auto") is True:
             return idx, item
