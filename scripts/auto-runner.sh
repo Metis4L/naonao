@@ -19,36 +19,6 @@ notify() {
   fi
 }
 
-mark_done() {
-  python3 - <<'PY'
-import json
-from datetime import datetime
-from pathlib import Path
-qf=Path("projects/naonao-content-ops/handovers/auto-queue.json")
-sf=Path("projects/naonao-content-ops/.auto/queue-state.json")
-if not qf.exists() or not sf.exists():
-    raise SystemExit(0)
-q=json.loads(qf.read_text(encoding='utf-8'))
-s=json.loads(sf.read_text(encoding='utf-8'))
-sel=(s.get('last_selected') or {})
-wo_id=sel.get('wo_id')
-if not wo_id:
-    raise SystemExit(0)
-for item in q.get('queue',[]):
-    if item.get('wo_id')==wo_id and item.get('status','pending')!='done':
-        item['status']='done'
-        item['done_at']=datetime.now().isoformat(timespec='seconds')
-        break
-done=s.get('done',[])
-if wo_id not in done:
-    done.append(wo_id)
-s['done']=done
-s['last_run_at']=datetime.now().isoformat(timespec='seconds')
-sf.parent.mkdir(parents=True, exist_ok=True)
-sf.write_text(json.dumps(s,ensure_ascii=False,indent=2),encoding='utf-8')
-qf.write_text(json.dumps(q,ensure_ascii=False,indent=2),encoding='utf-8')
-PY
-}
 
 has_pending_auto() {
   python3 - <<'PY'
@@ -104,8 +74,7 @@ PY
     exit 0
   fi
 
-  mark_done
-  notify "ok" "step=$i 完成并出队"
+  notify "ok" "step=$i 完成"
 
 done
 

@@ -107,9 +107,9 @@ def is_c_class(item: dict) -> bool:
 
 
 def first_pending_auto(queue: list, done_ids: list):
-    items = sorted(queue, key=lambda x: x.get("priority", 999999))
-    for item in items:
-        idx = queue.index(item)
+    indexed = list(enumerate(queue))
+    indexed.sort(key=lambda pair: pair[1].get("priority", 999999))
+    for idx, item in indexed:
         if item.get("wo_id") in done_ids:
             continue
         if item.get("status", "pending") == "done":
@@ -227,10 +227,15 @@ def main():
         "mode": brief["run_mode"],
         "selected_work_order": selected_work_order,
         "auto_advance": auto_advance,
+        "meta": {
+            "auto_selected_wo_id": (selected_item or {}).get("wo_id"),
+            "auto_selected_work_order_path": selected_work_order,
+        },
         "steps": [
             {"id": 1, "name": "preflight", "cmd": f"make preflight WORK_ORDER={selected_work_order}"},
             {"id": 2, "name": "validate-json", "cmd": "make validate-json"},
-            {"id": 3, "name": "shadow-monitoring", "cmd": "make shadow-monitoring"},
+            {"id": 3, "name": "execute-work-order", "cmd": f"make execute-work-order WORK_ORDER={selected_work_order} RUN_MODE={brief['run_mode']}"},
+            {"id": 4, "name": "shadow-monitoring", "cmd": "make shadow-monitoring"},
         ],
         "candidate_iter": candidate.get("iter_id", "unknown"),
         "baseline_iter": ledger.get("current_baseline", {}).get("iter_id", "unknown"),
@@ -248,6 +253,11 @@ def main():
 
     if must_approve and decision == "auto_proceed":
         decision = "needs_human_approval"
+
+    if decision != "auto_proceed":
+        execution_plan["steps"] = [
+            {"id": 1, "name": "validate-json", "cmd": "make validate-json"}
+        ]
 
     advisory_decision = {
         "timestamp": now_iso(),
