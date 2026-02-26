@@ -1,35 +1,41 @@
 {
-  "task_id": "wo_root_001_min_loop",
-  "goal": "落地双根目录防漂移最小闭环：root-manifest + execution-engineer preflight + execution-report环境指纹 + hard-validator root-drift gate（分阶段）。",
+  "task_id": "wo_root_001_manifest_ssot",
+  "goal": "将 root-manifest.json 作为唯一事实源（SSOT），统一路径解析并禁止写死绝对路径，完善 preflight/hard-validator 漂移门禁。",
   "run_mode": "test",
-  "root_aliases": {
-    "openclaw": "/home/metis/.openclaw/workspace",
-    "naonao_project": "/mnt/e/AI/openclaw/workspaces/naonao-pet-content"
-  },
-  "phased_policy": {
-    "schema_required_mode": "compat_add_only",
-    "root_drift_gate_phase": {
-      "phase_1": "shadow_soft",
-      "phase_2": "C_class_hard_fail"
-    }
+  "boundaries": {
+    "auto_class": "A",
+    "baseline_policy": "no_overwrite",
+    "schema_policy": "compat_add_only",
+    "semantic_policy": "no_change",
+    "cross_root_write": false
   },
   "files": [
     {
-      "root_alias": "openclaw",
       "path": "projects/naonao-content-ops/handovers/root-manifest.json",
-      "operation": "ADD",
-      "change_spec": "新增根目录单一事实源（root aliases、active roots、cross-root write policy）。",
-      "validation": [
-        "json_parse=pass",
-        "contains root_aliases/openclaw/naonao_project"
-      ],
-      "acceptance_criteria": [
-        "all downstream reports can reference manifest"
-      ]
+      "operation": "ENSURE",
+      "notes": "确保包含 root_aliases/active_root_for_runtime/active_root_for_reports/forbid_cross_root_write_without_ticket 等字段，并由 preflight 读取。"
+    },
+    {
+      "path": "projects/naonao-content-ops/tools/preflight-root-check.py",
+      "operation": "PATCH_IF_EXISTS",
+      "notes": "所有路径解析必须通过 root-manifest 的 alias，不允许写死绝对路径；输出 workspace_root/git_head/root_manifest_fingerprint/path_resolution_table。"
+    },
+    {
+      "path": "agents/naonao-hard-validator/skills/gatekeeper/SKILL.md",
+      "operation": "PATCH_IF_EXISTS",
+      "notes": "增加 root drift gate：shadow/普通A类 soft（conditional or warning），C类 hard fail。"
     }
   ],
   "postchecks": [
-    "no_production_baseline_overwrite=must_pass"
-  ],
-  "rollback_required": false
+    {
+      "name": "preflight_alias_resolution",
+      "cmd": "make preflight",
+      "acceptance": "preflight 输出包含 alias->abs 解析表且与 root-manifest 一致；发现跨根写时 blocked。"
+    },
+    {
+      "name": "report_fingerprint_present",
+      "cmd": "python3 -c \"import json; j=json.load(open('projects/naonao-content-ops/reports/execution-report.latest.json')); assert 'workspace_root' in j.get('meta', {})\"",
+      "acceptance": "execution-report.meta 必含 workspace_root/git_head/root_manifest_fingerprint/path_resolution_table/root_drift_status。"
+    }
+  ]
 }

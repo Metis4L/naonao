@@ -136,6 +136,40 @@ def write_approval_packet(item: dict, reason: str):
 def write_idle_report(queue_cfg: dict, queue_state: dict, health: dict):
     ts = datetime.now(TZ).strftime("%Y%m%d-%H%M%S")
     p = OUT_IDLE_DIR / f"idle-report-{ts}.json"
+
+    summary_path = Path("projects/naonao-content-ops/reports/auto-advance-run-summary.latest.json")
+    summary = load_json(summary_path, default={})
+    attempts = queue_state.get("attempts", {})
+    blocked = queue_state.get("blocked", [])
+
+    proposed_queue_patch = [
+        {
+            "wo_id": "WO-ROOT-001",
+            "path": "projects/naonao-content-ops/handovers/work-order-root-001.json",
+            "class": "governance",
+            "auto": False,
+            "priority": 5,
+            "max_attempts": 3,
+            "on_fail": "quarantine"
+        },
+        {
+            "wo_id": "WO-DRIFT-AUDIT-001",
+            "path": "projects/naonao-content-ops/handovers/work-order-drift-audit-001.json",
+            "class": "observability",
+            "auto": False,
+            "priority": 20,
+            "max_attempts": 3,
+            "on_fail": "retry"
+        }
+    ]
+
+    rationale = {
+        "recent_stop_reason": summary.get("stop_reason"),
+        "recent_repo_head": summary.get("repo_head"),
+        "blocked_count": len(blocked),
+        "attempts": attempts
+    }
+
     payload = {
         "timestamp": now_iso(),
         "type": "idle",
@@ -147,7 +181,9 @@ def write_idle_report(queue_cfg: dict, queue_state: dict, health: dict):
             "补充新的 auto=true WO 到 auto-queue.json",
             "执行漂移快照并写入 shadow monitoring",
             "整理候选迭代晋升材料（仅草案）"
-        ]
+        ],
+        "proposed_queue_patch": proposed_queue_patch,
+        "rationale": rationale
     }
     save_json(p, payload)
     return p

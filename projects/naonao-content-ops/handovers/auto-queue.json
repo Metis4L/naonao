@@ -12,11 +12,11 @@
       "path": "projects/naonao-content-ops/handovers/work-order-root-001.json",
       "class": "governance",
       "auto": true,
-      "priority": 10,
+      "priority": 5,
       "max_attempts": 3,
-      "on_fail": "retry",
+      "on_fail": "quarantine",
       "status": "done",
-      "done_at": "2026-02-26T16:45:47"
+      "done_at": "2026-02-26T16:54:07"
     },
     {
       "wo_id": "WO-DRIFT-AUDIT-001",
@@ -26,8 +26,7 @@
       "priority": 20,
       "max_attempts": 3,
       "on_fail": "retry",
-      "status": "done",
-      "done_at": "2026-02-26T16:45:51"
+      "status": "pending"
     }
   ]
 }
