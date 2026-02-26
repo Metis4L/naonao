@@ -78,6 +78,40 @@
         "file_results_complete": "pass"
       },
       "timestamp": "2026-02-26T03:51:00+08:00"
+    },
+    {
+      "run_id": "shadow-monitoring-iter8-minpatch-20260226-135303",
+      "iter_id": "iter8-minpatch",
+      "track": "shadow_monitoring",
+      "mode": "test",
+      "status": "completed",
+      "result": {
+        "snapshot_ref": "projects/naonao-content-ops/reports/correction-regression-shadow-monitoring.json",
+        "score_mean": 100.0,
+        "score_std": 0.0
+      },
+      "postchecks": {
+        "no_production_baseline_overwrite": "pass",
+        "execution_report_generated": "pass"
+      },
+      "timestamp": "2026-02-26T13:53:03+08:00"
+    },
+    {
+      "run_id": "shadow-monitoring-iter8-minpatch-20260226-140344",
+      "iter_id": "iter8-minpatch",
+      "track": "shadow_monitoring",
+      "mode": "test",
+      "status": "completed",
+      "result": {
+        "snapshot_ref": "projects/naonao-content-ops/reports/correction-regression-shadow-monitoring.json",
+        "score_mean": 100.0,
+        "score_std": 0.0
+      },
+      "postchecks": {
+        "no_production_baseline_overwrite": "pass",
+        "execution_report_generated": "pass"
+      },
+      "timestamp": "2026-02-26T14:03:44+08:00"
     }
   ]
 }

@@ -1,0 +1,62 @@
+{
+  "task_id": "wo_generated_20260226_140344",
+  "goal": "（一句话写清这次要达成的业务目标）",
+  "run_mode": "test|shadow|prod",
+  "root_aliases": {
+    "openclaw": "/home/metis/.openclaw/workspace",
+    "naonao_project": "/mnt/e/AI/openclaw/workspaces/naonao-pet-content"
+  },
+  "boundaries": {
+    "allow": [
+      "shadow reruns",
+      "report generation",
+      "drift/fingerprint observation",
+      "handover ledger updates"
+    ],
+    "forbid": [
+      "baseline promotion",
+      "baseline overwrite",
+      "schema/contract change",
+      "classification semantics change"
+    ]
+  },
+  "source_brief": "projects/naonao-content-ops/handovers/brief.template.md",
+  "advisory": {
+    "baseline_policy": "no_overwrite|promote_with_approval",
+    "schema_policy": "compat_add_only|needs_approval",
+    "semantic_policy": "no_change|needs_approval"
+  },
+  "files": [
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/reports/correction-regression-shadow-monitoring.json",
+      "operation": "ADD",
+      "change_spec": "Append monitoring snapshots: score mean/min/max/std, fingerprint drift flags, unexplained_regression, unstable_candidate.",
+      "validation": [
+        "json_parse=pass",
+        "contains timestamp + candidate_iter + baseline_iter + flags"
+      ],
+      "acceptance_criteria": [
+        "no baseline write",
+        "snapshot is comparable with prior run"
+      ]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/handovers/iteration-ledger.json",
+      "operation": "MODIFY",
+      "change_spec": "Append shadow monitoring record only.",
+      "validation": [
+        "current_baseline.iter_id remains iter6"
+      ],
+      "acceptance_criteria": [
+        "baseline field unchanged"
+      ]
+    }
+  ],
+  "postchecks": [
+    "no_production_baseline_overwrite=must_pass",
+    "execution_report_generated=must_pass"
+  ],
+  "rollback_required": false
+}

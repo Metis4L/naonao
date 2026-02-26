@@ -1,0 +1,72 @@
+name: P1.5 Guard (Advisor + IDE + OpenClaw)
+
+on:
+  pull_request:
+    paths:
+      - 'Makefile'
+      - '.vscode/tasks.json'
+      - 'projects/naonao-content-ops/**'
+      - '.github/workflows/p0-guard.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'Makefile'
+      - '.vscode/tasks.json'
+      - 'projects/naonao-content-ops/**'
+      - '.github/workflows/p0-guard.yml'
+  workflow_dispatch:
+
+jobs:
+  p15-guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Setup jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Ensure required files
+        run: |
+          test -f Makefile
+          test -f projects/naonao-content-ops/handovers/root-manifest.json
+          test -f projects/naonao-content-ops/handovers/work-order-shadow-monitoring.json
+
+      - name: Run P1.5 pipeline
+        run: make p15-all
+
+      - name: Guard checks (no baseline overwrite)
+        run: |
+          python3 - <<'PY'
+          import json
+          p='projects/naonao-content-ops/handovers/iteration-ledger.json'
+          d=json.load(open(p,'r',encoding='utf-8'))
+          b=d.get('current_baseline',{}).get('iter_id')
+          if b!='iter6':
+              raise SystemExit(f'baseline changed unexpectedly: {b}')
+          print('baseline guard ok:', b)
+          PY
+
+      - name: Upload guard artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p15-guard-artifacts
+          path: |
+            projects/naonao-content-ops/handovers/generated-work-order.latest.json
+            projects/naonao-content-ops/reports/execution-plan.latest.json
+            projects/naonao-content-ops/reports/advisory-decision.latest.json
+            projects/naonao-content-ops/reports/preflight.latest.json
+            projects/naonao-content-ops/reports/validate-json-batch.latest.json
+            projects/naonao-content-ops/reports/correction-regression-shadow-monitoring.json
+            projects/naonao-content-ops/handovers/iteration-ledger.json
+          if-no-files-found: warn

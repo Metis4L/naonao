@@ -1,0 +1,58 @@
+{
+  "snapshots": [
+    {
+      "timestamp": "2026-02-26T13:53:03+08:00",
+      "candidate_iter": "iter8-minpatch",
+      "baseline_iter": "iter6",
+      "score": {
+        "mean": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "std": 0.0,
+        "n": 4
+      },
+      "flags": {
+        "unexplained_regression": false,
+        "unstable_candidate": false,
+        "no_production_baseline_overwrite": true
+      },
+      "note": "shadow monitoring only; no baseline write"
+    },
+    {
+      "timestamp": "2026-02-26T14:03:44+08:00",
+      "candidate_iter": "iter8-minpatch",
+      "baseline_iter": "iter6",
+      "score": {
+        "mean": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "std": 0.0,
+        "n": 4
+      },
+      "flags": {
+        "unexplained_regression": false,
+        "unstable_candidate": false,
+        "no_production_baseline_overwrite": true
+      },
+      "note": "shadow monitoring only; no baseline write"
+    }
+  ],
+  "latest": {
+    "timestamp": "2026-02-26T14:03:44+08:00",
+    "candidate_iter": "iter8-minpatch",
+    "baseline_iter": "iter6",
+    "score": {
+      "mean": 100.0,
+      "min": 100.0,
+      "max": 100.0,
+      "std": 0.0,
+      "n": 4
+    },
+    "flags": {
+      "unexplained_regression": false,
+      "unstable_candidate": false,
+      "no_production_baseline_overwrite": true
+    },
+    "note": "shadow monitoring only; no baseline write"
+  }
+}

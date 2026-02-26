@@ -1,0 +1,52 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "naonao:p0:preflight",
+      "type": "shell",
+      "command": "make preflight",
+      "problemMatcher": []
+    },
+    {
+      "label": "naonao:p0:validate-json",
+      "type": "shell",
+      "command": "make validate-json",
+      "problemMatcher": []
+    },
+    {
+      "label": "naonao:p0:shadow-monitoring",
+      "type": "shell",
+      "command": "make shadow-monitoring",
+      "problemMatcher": []
+    },
+    {
+      "label": "naonao:p15:advisor-plan",
+      "type": "shell",
+      "command": "make advisor-plan",
+      "problemMatcher": []
+    },
+    {
+      "label": "naonao:p0:all",
+      "type": "shell",
+      "command": "make p0-all",
+      "dependsOn": [
+        "naonao:p0:preflight",
+        "naonao:p0:validate-json",
+        "naonao:p0:shadow-monitoring"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    },
+    {
+      "label": "naonao:p15:all",
+      "type": "shell",
+      "command": "make p15-all",
+      "dependsOn": [
+        "naonao:p15:advisor-plan",
+        "naonao:p0:all"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-02-26T14:03:44+08:00",
+  "decision": "needs_human_approval",
+  "must_approve_items": [
+    "baseline_change",
+    "schema_change",
+    "semantic_change",
+    "prod_run"
+  ],
+  "safe_auto_scope": [
+    "preflight",
+    "json_validation",
+    "shadow_monitoring",
+    "report_generation"
+  ],
+  "blocked_auto_scope": [
+    "baseline_promotion",
+    "baseline_overwrite",
+    "schema_semantic_change_without_approval"
+  ],
+  "context": {
+    "goal": "（一句话写清这次要达成的业务目标）",
+    "run_mode": "test|shadow|prod",
+    "candidate_iter": "iter8-minpatch",
+    "baseline_iter": "iter6"
+  }
+}
