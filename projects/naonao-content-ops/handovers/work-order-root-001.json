@@ -1,0 +1,35 @@
+{
+  "task_id": "wo_root_001_min_loop",
+  "goal": "落地双根目录防漂移最小闭环：root-manifest + execution-engineer preflight + execution-report环境指纹 + hard-validator root-drift gate（分阶段）。",
+  "run_mode": "test",
+  "root_aliases": {
+    "openclaw": "/home/metis/.openclaw/workspace",
+    "naonao_project": "/mnt/e/AI/openclaw/workspaces/naonao-pet-content"
+  },
+  "phased_policy": {
+    "schema_required_mode": "compat_add_only",
+    "root_drift_gate_phase": {
+      "phase_1": "shadow_soft",
+      "phase_2": "C_class_hard_fail"
+    }
+  },
+  "files": [
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/handovers/root-manifest.json",
+      "operation": "ADD",
+      "change_spec": "新增根目录单一事实源（root aliases、active roots、cross-root write policy）。",
+      "validation": [
+        "json_parse=pass",
+        "contains root_aliases/openclaw/naonao_project"
+      ],
+      "acceptance_criteria": [
+        "all downstream reports can reference manifest"
+      ]
+    }
+  ],
+  "postchecks": [
+    "no_production_baseline_overwrite=must_pass"
+  ],
+  "rollback_required": false
+}

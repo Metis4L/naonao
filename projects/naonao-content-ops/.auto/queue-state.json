@@ -1,5 +1,11 @@
 {
-  "last_selected": null,
-  "completed": [],
-  "updated_at": null
+  "last_run_at": "2026-02-26T16:34:26+08:00",
+  "done": [],
+  "blocked": [],
+  "last_selected": {
+    "wo_id": "WO-ROOT-001",
+    "path": "projects/naonao-content-ops/handovers/work-order-root-001.json",
+    "queue_index": 0,
+    "selected_at": "2026-02-26T16:34:26+08:00"
+  }
 }

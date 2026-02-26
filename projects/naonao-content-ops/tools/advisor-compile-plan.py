@@ -106,8 +106,12 @@ def is_c_class(item: dict) -> bool:
     return False
 
 
-def first_pending_auto(queue: list):
-    for idx, item in enumerate(queue):
+def first_pending_auto(queue: list, done_ids: list):
+    items = sorted(queue, key=lambda x: x.get("priority", 999999))
+    for item in items:
+        idx = queue.index(item)
+        if item.get("wo_id") in done_ids:
+            continue
         if item.get("status", "pending") == "done":
             continue
         if item.get("auto") is True:
@@ -137,7 +141,7 @@ def write_idle_report(queue_cfg: dict, queue_state: dict, health: dict):
         "type": "idle",
         "reason": "queue_empty_or_inactive",
         "active": queue_cfg.get("active", False),
-        "completed": queue_state.get("completed", []),
+        "completed": queue_state.get("done", []),
         "health_signals": health,
         "top3_suggestions": [
             "补充新的 auto=true WO 到 auto-queue.json",
@@ -163,7 +167,7 @@ def main():
     ledger = load_json(ITER_LEDGER)
     wo_base = load_json(WO_SHADOW)
     queue_cfg = load_json(Path(args.auto_queue), default={"active": False, "queue": []})
-    queue_state = load_json(Path(args.queue_state), default={"last_selected": None, "completed": [], "updated_at": None})
+    queue_state = load_json(Path(args.queue_state), default={"last_run_at": None, "done": [], "blocked": [], "last_selected": None})
 
     candidate = next((x for x in ledger.get("iterations", []) if x.get("status") == "candidate"), {})
     selected_item = None
@@ -173,7 +177,7 @@ def main():
     artifacts = {}
 
     if auto_advance and queue_cfg.get("active", False):
-        idx, item = first_pending_auto(queue_cfg.get("queue", []))
+        idx, item = first_pending_auto(queue_cfg.get("queue", []), queue_state.get("done", []))
         if item is None:
             idle_path = write_idle_report(queue_cfg, queue_state, {
                 "baseline_iter": ledger.get("current_baseline", {}).get("iter_id", "unknown"),
@@ -195,7 +199,7 @@ def main():
                 "queue_index": idx,
                 "selected_at": now_iso()
             }
-            queue_state["updated_at"] = now_iso()
+            queue_state["last_run_at"] = now_iso()
             save_json(Path(args.queue_state), queue_state)
 
     generated_wo = {

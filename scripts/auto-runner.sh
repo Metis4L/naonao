@@ -39,11 +39,11 @@ for item in q.get('queue',[]):
         item['status']='done'
         item['done_at']=datetime.now().isoformat(timespec='seconds')
         break
-completed=s.get('completed',[])
-if wo_id not in completed:
-    completed.append(wo_id)
-s['completed']=completed
-s['updated_at']=datetime.now().isoformat(timespec='seconds')
+done=s.get('done',[])
+if wo_id not in done:
+    done.append(wo_id)
+s['done']=done
+s['last_run_at']=datetime.now().isoformat(timespec='seconds')
 sf.parent.mkdir(parents=True, exist_ok=True)
 sf.write_text(json.dumps(s,ensure_ascii=False,indent=2),encoding='utf-8')
 qf.write_text(json.dumps(q,ensure_ascii=False,indent=2),encoding='utf-8')

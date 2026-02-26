@@ -1,0 +1,33 @@
+{
+  "task_id": "wo_shadow_monitoring_iter8_candidate",
+  "goal": "Run periodic shadow monitoring for iter8 candidate without touching production baseline.",
+  "run_mode": "test",
+  "root_aliases": {
+    "openclaw": "/home/metis/.openclaw/workspace",
+    "naonao_project": "/mnt/e/AI/openclaw/workspaces/naonao-pet-content"
+  },
+  "boundaries": {
+    "allow": [
+      "shadow reruns",
+      "report generation",
+      "drift/fingerprint observation",
+      "handover ledger updates"
+    ],
+    "forbid": [
+      "baseline promotion",
+      "baseline overwrite"
+    ]
+  },
+  "files": [
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/reports/correction-regression-shadow-monitoring.json",
+      "operation": "ADD",
+      "change_spec": "Append monitoring snapshots"
+    }
+  ],
+  "postchecks": [
+    "no_production_baseline_overwrite=must_pass"
+  ],
+  "rollback_required": false
+}
