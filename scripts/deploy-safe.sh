@@ -205,6 +205,9 @@ main() {
 
   if [[ "$pre_head" == "$post_head" ]]; then
     send_with_retry "ok" "Deploy 状态：success | env=${HOST_NAME}/${DEPLOY_BRANCH} | 范围：no-change | 日志：$LOG_FILE"
+    if [[ -x "$REPO_ROOT/scripts/auto-runner.sh" ]]; then
+      "$REPO_ROOT/scripts/auto-runner.sh" || true
+    fi
     exit 0
   fi
 
@@ -232,6 +235,9 @@ main() {
   echo "$post_head" > "$STATE_FILE"
 
   notify_deploy_result "ok" "${HOST_NAME}/${DEPLOY_BRANCH}" "$old_success" "$post_head" "" "$all_count"
+  if [[ -x "$REPO_ROOT/scripts/auto-runner.sh" ]]; then
+    "$REPO_ROOT/scripts/auto-runner.sh" || true
+  fi
   echo "[deploy] success" | tee -a "$LOG_FILE"
 }
 

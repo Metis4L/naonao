@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ApprovalPacket",
+  "type": "object",
+  "required": ["timestamp", "type", "reason", "wo", "question"],
+  "properties": {
+    "timestamp": { "type": "string" },
+    "type": { "const": "approval_required" },
+    "reason": { "type": "string" },
+    "wo": { "type": "object" },
+    "question": { "type": "string" }
+  },
+  "additionalProperties": true
+}

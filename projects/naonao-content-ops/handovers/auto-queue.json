@@ -1,9 +1,28 @@
 {
   "active": true,
-  "auto_classes": ["ops", "governance", "observability"],
+  "auto_classes": [
+    "ops",
+    "governance",
+    "observability"
+  ],
+  "max_steps_per_run": 2,
   "queue": [
-    { "wo_id": "WO-ROOT-001", "class": "governance", "auto": true },
-    { "wo_id": "WO-DRIFT-AUDIT-001", "class": "observability", "auto": true }
+    {
+      "wo_id": "WO-ROOT-001",
+      "path": "projects/naonao-content-ops/handovers/work-order-wo-root-001.json",
+      "class": "governance",
+      "auto": true,
+      "priority": 10,
+      "status": "pending"
+    },
+    {
+      "wo_id": "WO-DRIFT-AUDIT-001",
+      "path": "projects/naonao-content-ops/handovers/work-order-shadow-monitoring.json",
+      "class": "observability",
+      "auto": true,
+      "priority": 20,
+      "status": "pending"
+    }
   ],
   "stop_when": {
     "queue_empty": true,
