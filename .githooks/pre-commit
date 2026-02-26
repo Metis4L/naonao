@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Block sensitive auth files from commit
+if git diff --cached --name-only | grep -E '(^|/)(auth\.json|auth-profiles\.json)$' >/dev/null; then
+  echo '[pre-commit] blocked: auth.json/auth-profiles.json detected in staged files'
+  exit 1
+fi
+
+# Optional warning for .env commits
+if git diff --cached --name-only | grep -E '(^|/)\.env(\.|$)' >/dev/null; then
+  echo '[pre-commit] blocked: .env* files are not allowed in commits'
+  exit 1
+fi
+
+exit 0

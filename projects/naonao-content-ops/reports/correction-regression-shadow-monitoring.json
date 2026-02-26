@@ -35,12 +35,282 @@
         "no_production_baseline_overwrite": true
       },
       "note": "shadow monitoring only; no baseline write"
+    },
+    {
+      "timestamp": "2026-02-26T15:47:19+08:00",
+      "candidate_iter": "iter8-minpatch",
+      "baseline_iter": "iter6",
+      "score": {
+        "mean": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "std": 0.0,
+        "n": 4
+      },
+      "flags": {
+        "unexplained_regression": false,
+        "unstable_candidate": false,
+        "no_production_baseline_overwrite": true
+      },
+      "note": "shadow monitoring only; no baseline write"
+    },
+    {
+      "timestamp": "2026-02-26T15:48:54+08:00",
+      "candidate_iter": "iter8-minpatch",
+      "baseline_iter": "iter6",
+      "score": {
+        "mean": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "std": 0.0,
+        "n": 4
+      },
+      "flags": {
+        "unexplained_regression": false,
+        "unstable_candidate": false,
+        "no_production_baseline_overwrite": true
+      },
+      "note": "shadow monitoring only; no baseline write"
+    },
+    {
+      "timestamp": "2026-02-26T16:32:26+08:00",
+      "candidate_iter": "iter8-minpatch",
+      "baseline_iter": "iter6",
+      "score": {
+        "mean": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "std": 0.0,
+        "n": 4
+      },
+      "flags": {
+        "unexplained_regression": false,
+        "unstable_candidate": false,
+        "no_production_baseline_overwrite": true
+      },
+      "note": "shadow monitoring only; no baseline write"
+    },
+    {
+      "timestamp": "2026-02-26T16:32:30+08:00",
+      "candidate_iter": "iter8-minpatch",
+      "baseline_iter": "iter6",
+      "score": {
+        "mean": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "std": 0.0,
+        "n": 4
+      },
+      "flags": {
+        "unexplained_regression": false,
+        "unstable_candidate": false,
+        "no_production_baseline_overwrite": true
+      },
+      "note": "shadow monitoring only; no baseline write"
+    },
+    {
+      "timestamp": "2026-02-26T16:32:39+08:00",
+      "candidate_iter": "iter8-minpatch",
+      "baseline_iter": "iter6",
+      "score": {
+        "mean": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "std": 0.0,
+        "n": 4
+      },
+      "flags": {
+        "unexplained_regression": false,
+        "unstable_candidate": false,
+        "no_production_baseline_overwrite": true
+      },
+      "note": "shadow monitoring only; no baseline write"
+    },
+    {
+      "timestamp": "2026-02-26T16:34:26+08:00",
+      "candidate_iter": "iter8-minpatch",
+      "baseline_iter": "iter6",
+      "score": {
+        "mean": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "std": 0.0,
+        "n": 4
+      },
+      "flags": {
+        "unexplained_regression": false,
+        "unstable_candidate": false,
+        "no_production_baseline_overwrite": true
+      },
+      "note": "shadow monitoring only; no baseline write"
+    },
+    {
+      "timestamp": "2026-02-26T16:40:33+08:00",
+      "candidate_iter": "iter8-minpatch",
+      "baseline_iter": "iter6",
+      "score": {
+        "mean": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "std": 0.0,
+        "n": 4
+      },
+      "flags": {
+        "unexplained_regression": false,
+        "unstable_candidate": false,
+        "no_production_baseline_overwrite": true
+      },
+      "note": "shadow monitoring only; no baseline write"
+    },
+    {
+      "timestamp": "2026-02-26T16:40:56+08:00",
+      "candidate_iter": "iter8-minpatch",
+      "baseline_iter": "iter6",
+      "score": {
+        "mean": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "std": 0.0,
+        "n": 4
+      },
+      "flags": {
+        "unexplained_regression": false,
+        "unstable_candidate": false,
+        "no_production_baseline_overwrite": true
+      },
+      "note": "shadow monitoring only; no baseline write"
+    },
+    {
+      "timestamp": "2026-02-26T16:45:48+08:00",
+      "candidate_iter": "iter8-minpatch",
+      "baseline_iter": "iter6",
+      "score": {
+        "mean": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "std": 0.0,
+        "n": 4
+      },
+      "flags": {
+        "unexplained_regression": false,
+        "unstable_candidate": false,
+        "no_production_baseline_overwrite": true
+      },
+      "note": "shadow monitoring only; no baseline write"
+    },
+    {
+      "timestamp": "2026-02-26T16:45:51+08:00",
+      "candidate_iter": "iter8-minpatch",
+      "baseline_iter": "iter6",
+      "score": {
+        "mean": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "std": 0.0,
+        "n": 4
+      },
+      "flags": {
+        "unexplained_regression": false,
+        "unstable_candidate": false,
+        "no_production_baseline_overwrite": true
+      },
+      "note": "shadow monitoring only; no baseline write"
+    },
+    {
+      "timestamp": "2026-02-26T16:54:07+08:00",
+      "candidate_iter": "iter8-minpatch",
+      "baseline_iter": "iter6",
+      "score": {
+        "mean": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "std": 0.0,
+        "n": 4
+      },
+      "flags": {
+        "unexplained_regression": false,
+        "unstable_candidate": false,
+        "no_production_baseline_overwrite": true
+      },
+      "note": "shadow monitoring only; no baseline write"
+    },
+    {
+      "timestamp": "2026-02-26T17:11:48+08:00",
+      "candidate_iter": "iter8-minpatch",
+      "baseline_iter": "iter6",
+      "score": {
+        "mean": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "std": 0.0,
+        "n": 4
+      },
+      "flags": {
+        "unexplained_regression": false,
+        "unstable_candidate": false,
+        "no_production_baseline_overwrite": true
+      },
+      "note": "shadow monitoring only; no baseline write"
+    },
+    {
+      "timestamp": "2026-02-26T17:12:08+08:00",
+      "candidate_iter": "iter8-minpatch",
+      "baseline_iter": "iter6",
+      "score": {
+        "mean": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "std": 0.0,
+        "n": 4
+      },
+      "flags": {
+        "unexplained_regression": false,
+        "unstable_candidate": false,
+        "no_production_baseline_overwrite": true
+      },
+      "note": "shadow monitoring only; no baseline write"
+    },
+    {
+      "timestamp": "2026-02-26T17:15:25+08:00",
+      "candidate_iter": "iter8-minpatch",
+      "baseline_iter": "iter6",
+      "score": {
+        "mean": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "std": 0.0,
+        "n": 4
+      },
+      "flags": {
+        "unexplained_regression": false,
+        "unstable_candidate": false,
+        "no_production_baseline_overwrite": true
+      },
+      "note": "shadow monitoring only; no baseline write"
+    },
+    {
+      "timestamp": "2026-02-26T18:43:22+08:00",
+      "candidate_iter": "iter8-minpatch",
+      "baseline_iter": "iter8-minpatch",
+      "score": {
+        "mean": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "std": 0.0,
+        "n": 4
+      },
+      "flags": {
+        "unexplained_regression": false,
+        "unstable_candidate": false,
+        "no_production_baseline_overwrite": true
+      },
+      "note": "shadow monitoring only; no baseline write"
     }
   ],
   "latest": {
-    "timestamp": "2026-02-26T14:03:44+08:00",
+    "timestamp": "2026-02-26T18:43:22+08:00",
     "candidate_iter": "iter8-minpatch",
-    "baseline_iter": "iter6",
+    "baseline_iter": "iter8-minpatch",
     "score": {
       "mean": 100.0,
       "min": 100.0,
@@ -54,5 +324,17 @@
       "no_production_baseline_overwrite": true
     },
     "note": "shadow monitoring only; no baseline write"
+  },
+  "policy_applied": {
+    "min_interval_minutes": 30,
+    "quiet_hours": {
+      "enabled": true,
+      "start": "23:00",
+      "end": "08:00"
+    },
+    "alert_thresholds": {
+      "score_std_warn_gt": 0.5,
+      "score_mean_drop_warn_gt": 5.0
+    }
   }
 }

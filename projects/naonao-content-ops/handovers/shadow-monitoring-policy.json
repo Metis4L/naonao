@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "min_interval_minutes": 30,
+  "quiet_hours": {
+    "enabled": true,
+    "start": "23:00",
+    "end": "08:00"
+  },
+  "trigger_conditions": {
+    "allow_on_unstable_candidate": true,
+    "allow_on_unexplained_regression": true,
+    "allow_on_candidate_change": true,
+    "force_env_var": "FORCE_SHADOW_MONITORING"
+  },
+  "alert_thresholds": {
+    "score_std_warn_gt": 0.5,
+    "score_mean_drop_warn_gt": 5.0
+  }
+}

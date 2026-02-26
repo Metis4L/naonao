@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json
+import os
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
@@ -7,10 +8,15 @@ TZ = timezone(timedelta(hours=8))
 
 LEDGER = Path("projects/naonao-content-ops/handovers/iteration-ledger.json")
 OUT = Path("projects/naonao-content-ops/reports/correction-regression-shadow-monitoring.json")
+POLICY = Path("projects/naonao-content-ops/handovers/shadow-monitoring-policy.json")
+
+
+def now_dt():
+    return datetime.now(TZ)
 
 
 def now_iso():
-    return datetime.now(TZ).isoformat(timespec="seconds")
+    return now_dt().isoformat(timespec="seconds")
 
 
 def mean(vals):
@@ -24,7 +30,9 @@ def std(vals):
     return (sum((x - m) ** 2 for x in vals) / len(vals)) ** 0.5
 
 
-def load_json(p):
+def load_json(p, default=None):
+    if not p.exists():
+        return {} if default is None else default
     with open(p, "r", encoding="utf-8") as f:
         return json.load(f)
 
@@ -35,11 +43,64 @@ def save_json(p, obj):
         json.dump(obj, f, ensure_ascii=False, indent=2)
 
 
+def in_quiet_hours(policy):
+    q = (policy.get("quiet_hours") or {})
+    if not q.get("enabled", False):
+        return False
+    start = q.get("start", "23:00")
+    end = q.get("end", "08:00")
+    n = now_dt().strftime("%H:%M")
+    if start <= end:
+        return start <= n <= end
+    return n >= start or n <= end
+
+
+def should_throttle(policy, monitoring, candidate_iter, snapshot_flags):
+    if not policy.get("enabled", True):
+        return False, "policy_disabled"
+
+    trig = policy.get("trigger_conditions", {})
+    force_var = trig.get("force_env_var", "FORCE_SHADOW_MONITORING")
+    if os.getenv(force_var, "0") == "1":
+        return False, "forced"
+
+    latest = monitoring.get("latest") or {}
+    if latest:
+        # event-driven bypasses
+        if trig.get("allow_on_candidate_change", True) and latest.get("candidate_iter") != candidate_iter:
+            return False, "candidate_changed"
+        if trig.get("allow_on_unexplained_regression", True) and snapshot_flags.get("unexplained_regression"):
+            return False, "unexplained_regression"
+        if trig.get("allow_on_unstable_candidate", True) and snapshot_flags.get("unstable_candidate"):
+            return False, "unstable_candidate"
+
+        # quiet window check
+        if in_quiet_hours(policy):
+            return True, "quiet_hours"
+
+        # min interval check
+        last_ts = latest.get("timestamp")
+        if last_ts:
+            try:
+                last_dt = datetime.fromisoformat(last_ts)
+                delta_min = (now_dt() - last_dt).total_seconds() / 60
+                if delta_min < float(policy.get("min_interval_minutes", 30)):
+                    return True, f"min_interval<{policy.get('min_interval_minutes',30)}m"
+            except Exception:
+                pass
+
+    return False, "ok"
+
+
 def main():
     ledger = load_json(LEDGER)
+    policy = load_json(POLICY, default={"enabled": True, "min_interval_minutes": 30})
 
     baseline_iter = ledger.get("current_baseline", {}).get("iter_id", "unknown")
-    candidate = next((x for x in ledger.get("iterations", []) if x.get("status") == "candidate"), None)
+    candidate = next((x for x in ledger.get("iterations", []) if x.get("status") in {"candidate", "baseline"} and x.get("iter_id") != baseline_iter), None)
+    if not candidate:
+        # fallback to historical candidate
+        candidate = next((x for x in ledger.get("iterations", []) if x.get("iter_id") == "iter8-minpatch"), None)
     if not candidate:
         raise SystemExit("no candidate iteration found")
 
@@ -70,12 +131,27 @@ def main():
         "note": "shadow monitoring only; no baseline write",
     }
 
-    monitoring = {"snapshots": []}
-    if OUT.exists():
-        monitoring = load_json(OUT)
-        monitoring.setdefault("snapshots", [])
+    monitoring = load_json(OUT, default={"snapshots": []})
+    monitoring.setdefault("snapshots", [])
+
+    throttled, reason = should_throttle(policy, monitoring, candidate_iter, snapshot["flags"])
+    if throttled:
+        print(json.dumps({
+            "status": "skipped",
+            "reason": reason,
+            "policy": str(POLICY),
+            "candidate_iter": candidate_iter,
+            "baseline_iter": baseline_iter,
+        }, ensure_ascii=False, indent=2))
+        return
+
     monitoring["snapshots"].append(snapshot)
     monitoring["latest"] = snapshot
+    monitoring["policy_applied"] = {
+        "min_interval_minutes": policy.get("min_interval_minutes", 30),
+        "quiet_hours": policy.get("quiet_hours", {}),
+        "alert_thresholds": policy.get("alert_thresholds", {}),
+    }
     save_json(OUT, monitoring)
 
     ledger.setdefault("validation_runs", []).append({
