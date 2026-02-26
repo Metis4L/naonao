@@ -33,5 +33,10 @@ bash scripts/deploy-safe.sh
   - `block`：阻断部署
 - 可临时切换：`DIRTY_MODE=block bash scripts/deploy-safe.sh`
 - 部署锁默认：`/tmp/openclaw_deploy.lock`，拿不到锁会通知 `deploy skipped (locked)`。
-- commit 列表最多 20 条，超出显示 `+N more`。
-- 依赖 `openclaw message send` 可用；若通知发送失败，不影响回滚与主流程。
+- Telegram 消息长度保险丝：`MAX_TG_CHARS=3500`（默认）。
+  - Level 0：完整消息（最多 20 条 commit）
+  - Level 1：降级为最多 10 条 commit + `+N more`
+  - Level 2：短消息（状态/env/range/commit数/top3/本地复现命令）
+- 本地复现命令模板：`git -C <repo> log --oneline <old>..<new>`
+- 通知发送失败自动重试最多 3 次（`NOTIFY_RETRY_MAX=3`）。
+- 依赖 `openclaw message send` 可用；若通知最终失败，不影响回滚与主流程。

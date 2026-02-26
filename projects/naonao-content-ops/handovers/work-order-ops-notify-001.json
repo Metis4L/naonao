@@ -1,0 +1,20 @@
+{
+  "task_id": "wo_ops_notify_001",
+  "goal": "为 Telegram 通知增加长度保险丝与两级降级，并加入发送重试。",
+  "scope": {
+    "file": "scripts/deploy-safe.sh",
+    "features": [
+      "MAX_TG_CHARS=3500",
+      "Level0/1/2 降级发送",
+      "old..new + 本地复现命令",
+      "NOTIFY_RETRY_MAX=3",
+      "可选 compare_link"
+    ]
+  },
+  "acceptance": [
+    "超长 commit 列表仍能成功发送",
+    "消息包含 old..new",
+    "消息包含本地复现命令"
+  ],
+  "status": "implemented"
+}
