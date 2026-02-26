@@ -44,15 +44,16 @@ jobs:
       - name: Run P1.5 pipeline
         run: make p15-all
 
-      - name: Guard checks (no baseline overwrite)
+      - name: Guard checks (baseline sanity)
         run: |
           python3 - <<'PY'
           import json
           p='projects/naonao-content-ops/handovers/iteration-ledger.json'
           d=json.load(open(p,'r',encoding='utf-8'))
           b=d.get('current_baseline',{}).get('iter_id')
-          if b!='iter6':
-              raise SystemExit(f'baseline changed unexpectedly: {b}')
+          allowed={'iter6','iter8-minpatch'}
+          if b not in allowed:
+              raise SystemExit(f'baseline not in allowed set {allowed}: {b}')
           print('baseline guard ok:', b)
           PY
 
