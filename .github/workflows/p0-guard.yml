@@ -17,6 +17,10 @@ on:
       - '.github/workflows/p0-guard.yml'
   workflow_dispatch:
 
+concurrency:
+  group: p15-guard-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   p15-guard:
     runs-on: ubuntu-latest
@@ -40,21 +44,33 @@ jobs:
           test -f Makefile
           test -f projects/naonao-content-ops/handovers/root-manifest.json
           test -f projects/naonao-content-ops/handovers/work-order-shadow-monitoring.json
+          test -f projects/naonao-content-ops/contracts/work-order.schema.json
 
-      - name: Run P1.5 pipeline
-        run: make p15-all
+      - name: Deterministic P1.5 guard chain
+        run: |
+          make preflight WORK_ORDER=projects/naonao-content-ops/handovers/work-order-shadow-monitoring.json
+          make validate-json
+          make validate-work-order-schema WORK_ORDER=projects/naonao-content-ops/handovers/work-order-shadow-monitoring.json GATE_REPORT=projects/naonao-content-ops/reports/hard-validator-gate.latest.json
+          make execute-work-order WORK_ORDER=projects/naonao-content-ops/handovers/work-order-shadow-monitoring.json RUN_MODE=apply
+          make shadow-monitoring
 
-      - name: Guard checks (baseline sanity)
+      - name: Guard checks (baseline + gate)
         run: |
           python3 - <<'PY'
           import json
-          p='projects/naonao-content-ops/handovers/iteration-ledger.json'
-          d=json.load(open(p,'r',encoding='utf-8'))
+          # baseline sanity (allow historical + current promoted baseline)
+          ledger='projects/naonao-content-ops/handovers/iteration-ledger.json'
+          d=json.load(open(ledger,'r',encoding='utf-8'))
           b=d.get('current_baseline',{}).get('iter_id')
           allowed={'iter6','iter8-minpatch'}
           if b not in allowed:
               raise SystemExit(f'baseline not in allowed set {allowed}: {b}')
-          print('baseline guard ok:', b)
+          # gate must pass
+          g='projects/naonao-content-ops/reports/hard-validator-gate.latest.json'
+          gd=json.load(open(g,'r',encoding='utf-8'))
+          if gd.get('decision') != 'pass':
+              raise SystemExit(f'gate not pass: {gd.get("decision")}, reason={gd.get("reason")}')
+          print('guard ok:', {'baseline': b, 'gate': gd.get('decision')})
           PY
 
       - name: Upload guard artifacts
@@ -63,11 +79,11 @@ jobs:
         with:
           name: p15-guard-artifacts
           path: |
-            projects/naonao-content-ops/handovers/generated-work-order.latest.json
-            projects/naonao-content-ops/reports/execution-plan.latest.json
-            projects/naonao-content-ops/reports/advisory-decision.latest.json
             projects/naonao-content-ops/reports/preflight.latest.json
             projects/naonao-content-ops/reports/validate-json-batch.latest.json
+            projects/naonao-content-ops/reports/work-order-schema-validation.latest.json
+            projects/naonao-content-ops/reports/execution-report-wo_wo_shadow_monitoring_iter8_candidate.json
+            projects/naonao-content-ops/reports/hard-validator-gate.latest.json
             projects/naonao-content-ops/reports/correction-regression-shadow-monitoring.json
             projects/naonao-content-ops/handovers/iteration-ledger.json
           if-no-files-found: warn
