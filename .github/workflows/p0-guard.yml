@@ -41,8 +41,8 @@ jobs:
           test -f projects/naonao-content-ops/handovers/root-manifest.json
           test -f projects/naonao-content-ops/handovers/work-order-shadow-monitoring.json
 
-      - name: Run P1.5 pipeline
-        run: make p15-all
+      - name: Run P0 pipeline (CI smoke)
+        run: make p0-all
 
       - name: Guard checks (baseline sanity)
         run: |
