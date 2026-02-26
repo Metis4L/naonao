@@ -39,6 +39,9 @@ jobs:
       - name: Setup jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
+      - name: Install Python deps for guard
+        run: python3 -m pip install --upgrade pip jsonschema
+
       - name: Ensure required files
         run: |
           test -f Makefile
