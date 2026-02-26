@@ -9,17 +9,16 @@ DEPLOY_CMD="${DEPLOY_CMD:-make p15-all}"
 TELEGRAM_CHAT_ID="${TELEGRAM_CHAT_ID:-5667549865}"
 NOTIFY_CHANNEL="${NOTIFY_CHANNEL:-telegram}"
 DIRTY_MODE="${DIRTY_MODE:-warn}"   # block | warn
-LOCK_FILE="${LOCK_FILE:-$REPO_ROOT/.deploy.lock}"
+LOCK_FILE="${LOCK_FILE:-/tmp/openclaw_deploy.lock}"
 LOG_DIR="${LOG_DIR:-$REPO_ROOT/.deploy-logs}"
-mkdir -p "$LOG_DIR"
+DEPLOY_WORKTREE="${DEPLOY_WORKTREE:-/home/metis/.openclaw/deploy-worktree}"
+STATE_FILE="${STATE_FILE:-$REPO_ROOT/projects/naonao-content-ops/.deploy/last_success_head}"
+MAX_COMMITS="${MAX_COMMITS:-20}"
+HOST_NAME="$(hostname)"
+
+mkdir -p "$LOG_DIR" "$(dirname "$STATE_FILE")"
 RUN_TS="$(date +%Y%m%d-%H%M%S)"
 LOG_FILE="$LOG_DIR/deploy-$RUN_TS.log"
-
-exec 9>"$LOCK_FILE"
-if ! flock -n 9; then
-  echo "[deploy] another deployment is running" | tee -a "$LOG_FILE"
-  exit 0
-fi
 
 notify() {
   local level="$1"
@@ -33,6 +32,13 @@ notify() {
   fi
 }
 
+exec 9>"$LOCK_FILE"
+if ! flock -n 9; then
+  notify "skip" "deploy skipped (locked) host=$HOST_NAME branch=$DEPLOY_BRANCH"
+  echo "[deploy] skipped: lock held" | tee -a "$LOG_FILE"
+  exit 0
+fi
+
 run() {
   echo "+ $*" | tee -a "$LOG_FILE"
   "$@" 2>&1 | tee -a "$LOG_FILE"
@@ -43,6 +49,51 @@ rollback() {
   local to="$2"
   echo "[deploy] rollback: $to -> $from" | tee -a "$LOG_FILE"
   git reset --hard "$from" 2>&1 | tee -a "$LOG_FILE"
+}
+
+ensure_worktree_at_head() {
+  local head="$1"
+
+  if [[ ! -e "$DEPLOY_WORKTREE/.git" ]]; then
+    mkdir -p "$(dirname "$DEPLOY_WORKTREE")"
+    run git worktree add --force "$DEPLOY_WORKTREE" "$DEPLOY_BRANCH"
+  fi
+
+  run git -C "$DEPLOY_WORKTREE" fetch origin "$DEPLOY_BRANCH"
+  run git -C "$DEPLOY_WORKTREE" checkout -B "$DEPLOY_BRANCH" "$head"
+  run git -C "$DEPLOY_WORKTREE" reset --hard "$head"
+  run git -C "$DEPLOY_WORKTREE" clean -fd
+}
+
+build_commit_summary() {
+  local old="$1"
+  local new="$2"
+
+  local all_count=0
+  if [[ -n "$old" ]]; then
+    all_count="$(git rev-list --count "${old}..${new}" 2>/dev/null || echo 0)"
+  fi
+
+  local summary=""
+  if [[ -n "$old" && "$all_count" -gt 0 ]]; then
+    mapfile -t lines < <(git log --oneline "${old}..${new}")
+    local shown=0
+    for l in "${lines[@]}"; do
+      summary+="\n- $l"
+      shown=$((shown + 1))
+      if [[ "$shown" -ge "$MAX_COMMITS" ]]; then
+        break
+      fi
+    done
+    if [[ "$all_count" -gt "$MAX_COMMITS" ]]; then
+      local more=$((all_count - MAX_COMMITS))
+      summary+="\n- ... +${more} more"
+    fi
+  else
+    summary="\n- (no commits in range)"
+  fi
+
+  printf '%s' "$summary"
 }
 
 main() {
@@ -58,7 +109,7 @@ main() {
       notify "blocked" "工作区有未提交改动，已阻止自动部署。"
       exit 1
     fi
-    notify "warn" "工作区有未提交改动，按 DIRTY_MODE=warn 继续执行部署。"
+    notify "warn" "工作区有未提交改动，按 DIRTY_MODE=warn 继续；构建在独立 worktree。"
   fi
 
   local pre_head post_head
@@ -69,17 +120,32 @@ main() {
   post_head="$(git rev-parse HEAD)"
 
   if [[ "$pre_head" == "$post_head" ]]; then
-    notify "ok" "无新提交，部署未执行。HEAD=$post_head"
+    notify "ok" "Deploy 状态：success | env=${HOST_NAME}/${DEPLOY_BRANCH} | 范围：no-change | 日志：$LOG_FILE"
     exit 0
   fi
 
-  if ! bash -lc "$DEPLOY_CMD" 2>&1 | tee -a "$LOG_FILE"; then
+  ensure_worktree_at_head "$post_head"
+
+  if ! (cd "$DEPLOY_WORKTREE" && bash -lc "$DEPLOY_CMD") 2>&1 | tee -a "$LOG_FILE"; then
     rollback "$pre_head" "$post_head"
-    notify "failed" "部署失败，已回滚到 ${pre_head:0:8}。日志: $LOG_FILE"
+    notify "failed" "Deploy 状态：fail | env=${HOST_NAME}/${DEPLOY_BRANCH} | 范围：${pre_head}..${post_head} | 回滚：${pre_head} | 日志：$LOG_FILE"
     exit 1
   fi
 
-  notify "ok" "部署成功 ${pre_head:0:8} -> ${post_head:0:8}，命令: $DEPLOY_CMD"
+  local old_success=""
+  if [[ -f "$STATE_FILE" ]]; then
+    old_success="$(cat "$STATE_FILE" | tr -d '\n')"
+  fi
+  if [[ -z "$old_success" ]]; then
+    old_success="$pre_head"
+  fi
+
+  local commit_summary
+  commit_summary="$(build_commit_summary "$old_success" "$post_head")"
+
+  echo "$post_head" > "$STATE_FILE"
+
+  notify "ok" "Deploy 状态：success | env=${HOST_NAME}/${DEPLOY_BRANCH} | 范围：${old_success}..${post_head} | commits:${commit_summary} | 日志：$LOG_FILE"
   echo "[deploy] success" | tee -a "$LOG_FILE"
 }
 

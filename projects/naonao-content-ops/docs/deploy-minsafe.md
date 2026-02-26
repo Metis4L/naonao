@@ -11,11 +11,12 @@
 
 ## 流程
 1. `post-merge` hook 触发 `scripts/deploy-safe.sh`
-2. 预检：仅 `main` 分支、工作区必须干净
+2. 预检：仅 `main` 分支（工作区脏改动按 `DIRTY_MODE` 处理）
 3. `git fetch + git pull --ff-only origin main`
-4. 执行 `make p15-all`
+4. 在独立 worktree（默认 `/home/metis/.openclaw/deploy-worktree`）执行 `make p15-all`
 5. 失败则 `git reset --hard <pre_head>` 自动回滚
-6. 通过 `openclaw message send` 发 Telegram 通知
+6. 生成可追溯通知（状态/env/范围/commit列表/回滚/日志）并发 Telegram
+7. 成功后写入 `projects/naonao-content-ops/.deploy/last_success_head`
 
 ## 手动执行
 ```bash
@@ -31,4 +32,6 @@ bash scripts/deploy-safe.sh
   - `warn`（默认）：仅告警，不阻断部署
   - `block`：阻断部署
 - 可临时切换：`DIRTY_MODE=block bash scripts/deploy-safe.sh`
+- 部署锁默认：`/tmp/openclaw_deploy.lock`，拿不到锁会通知 `deploy skipped (locked)`。
+- commit 列表最多 20 条，超出显示 `+N more`。
 - 依赖 `openclaw message send` 可用；若通知发送失败，不影响回滚与主流程。
