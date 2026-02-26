@@ -1,50 +1,33 @@
 {
   "task_id": "wo_shadow_monitoring_iter8_candidate",
   "goal": "Run periodic shadow monitoring for iter8 candidate without touching production baseline.",
-  "run_mode": "test",
+  "scope": "shadow_monitoring/no_baseline_write",
+  "run_mode": "apply",
+  "rollback_required": false,
   "root_aliases": {
-    "openclaw": "/home/metis/.openclaw/workspace",
+    "openclaw": ".",
     "naonao_project": "/mnt/e/AI/openclaw/workspaces/naonao-pet-content"
   },
-  "boundaries": {
-    "allow": [
-      "shadow reruns",
-      "report generation",
-      "drift/fingerprint observation",
-      "handover ledger updates"
-    ],
-    "forbid": [
-      "baseline promotion",
-      "baseline overwrite",
-      "schema/contract change",
-      "classification semantics change"
-    ]
-  },
+  "prechecks": [
+    "python3 projects/naonao-content-ops/tools/validate-json-batch.py"
+  ],
   "files": [
     {
       "root_alias": "openclaw",
-      "path": "projects/naonao-content-ops/reports/correction-regression-shadow-monitoring.json",
-      "operation": "ADD",
-      "change_spec": "Append monitoring snapshots: score mean/min/max/std, fingerprint drift flags, unexplained_regression, unstable_candidate.",
-      "validation": [
-        "json_parse=pass",
-        "contains timestamp + candidate_iter + baseline_iter + flags"
-      ],
-      "acceptance_criteria": [
-        "no baseline write",
-        "snapshot is comparable with prior run"
-      ]
-    },
-    {
-      "root_alias": "openclaw",
-      "path": "projects/naonao-content-ops/handovers/iteration-ledger.json",
+      "path": "projects/naonao-content-ops/reports/shadow-monitoring-workorder-marker.json",
       "operation": "MODIFY",
-      "change_spec": "Append shadow monitoring record only.",
+      "change_spec": {
+        "mode": "structured_write",
+        "content": "{\n  \"task\": \"wo_shadow_monitoring_iter8_candidate\",\n  \"mode\": \"shadow_only\",\n  \"no_production_baseline_overwrite\": true\n}\n"
+      },
       "validation": [
-        "current_baseline.iter_id remains iter6"
+        {
+          "type": "json_parse"
+        }
       ],
       "acceptance_criteria": [
-        "baseline field unchanged"
+        "marker report is valid JSON",
+        "no production baseline overwrite"
       ]
     }
   ],
@@ -52,5 +35,6 @@
     "no_production_baseline_overwrite=must_pass",
     "execution_report_generated=must_pass"
   ],
-  "rollback_required": false
+  "owner": "naonao-technical-advisor",
+  "created_at": "2026-02-26T20:26:00+08:00"
 }
