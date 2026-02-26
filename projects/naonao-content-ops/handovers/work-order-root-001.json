@@ -1,41 +1,37 @@
 {
-  "task_id": "wo_root_001_manifest_ssot",
-  "goal": "将 root-manifest.json 作为唯一事实源（SSOT），统一路径解析并禁止写死绝对路径，完善 preflight/hard-validator 漂移门禁。",
-  "run_mode": "test",
-  "boundaries": {
-    "auto_class": "A",
-    "baseline_policy": "no_overwrite",
-    "schema_policy": "compat_add_only",
-    "semantic_policy": "no_change",
-    "cross_root_write": false
+  "task_id": "wo_root_manifest_001",
+  "goal": "将 root-manifest.json 固化为单一事实源（SSOT），明确 active_root_for_runtime/reports，并启用 forbid_cross_root_write_without_ticket。",
+  "run_mode": "apply",
+  "rollback_required": false,
+  "root_aliases": {
+    "openclaw": "/home/metis/.openclaw/workspace",
+    "naonao_project": "/mnt/e/AI/openclaw/workspaces/naonao-pet-content"
   },
-  "files": [
-    {
-      "path": "projects/naonao-content-ops/handovers/root-manifest.json",
-      "operation": "ENSURE",
-      "notes": "确保包含 root_aliases/active_root_for_runtime/active_root_for_reports/forbid_cross_root_write_without_ticket 等字段，并由 preflight 读取。"
-    },
-    {
-      "path": "projects/naonao-content-ops/tools/preflight-root-check.py",
-      "operation": "PATCH_IF_EXISTS",
-      "notes": "所有路径解析必须通过 root-manifest 的 alias，不允许写死绝对路径；输出 workspace_root/git_head/root_manifest_fingerprint/path_resolution_table。"
-    },
-    {
-      "path": "agents/naonao-hard-validator/skills/gatekeeper/SKILL.md",
-      "operation": "PATCH_IF_EXISTS",
-      "notes": "增加 root drift gate：shadow/普通A类 soft（conditional or warning），C类 hard fail。"
-    }
+  "scope": "governance/root-ssot",
+  "owner": "naonao-technical-advisor",
+  "created_at": "2026-02-26T16:55:00+08:00",
+  "prechecks": [
+    "test -f projects/naonao-content-ops/handovers/root-manifest.json",
+    "python3 -c \"import json;json.load(open('projects/naonao-content-ops/handovers/root-manifest.json','r',encoding='utf-8'))\""
   ],
   "postchecks": [
+    "python3 -c \"import json; j=json.load(open('projects/naonao-content-ops/handovers/root-manifest.json','r',encoding='utf-8')); assert j.get('active_root_for_runtime')=='openclaw'; assert j.get('active_root_for_reports')=='openclaw'; assert j.get('forbid_cross_root_write_without_ticket') is True\"",
+    "make preflight"
+  ],
+  "files": [
     {
-      "name": "preflight_alias_resolution",
-      "cmd": "make preflight",
-      "acceptance": "preflight 输出包含 alias->abs 解析表且与 root-manifest 一致；发现跨根写时 blocked。"
-    },
-    {
-      "name": "report_fingerprint_present",
-      "cmd": "python3 -c \"import json; j=json.load(open('projects/naonao-content-ops/reports/execution-report.latest.json')); assert 'workspace_root' in j.get('meta', {})\"",
-      "acceptance": "execution-report.meta 必含 workspace_root/git_head/root_manifest_fingerprint/path_resolution_table/root_drift_status。"
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/handovers/root-manifest.json",
+      "operation": "MODIFY",
+      "change_spec": {
+        "mode": "full_replace",
+        "content": "{\n  \"root_aliases\": {\n    \"openclaw\": \"/home/metis/.openclaw/workspace\",\n    \"naonao_project\": \"/mnt/e/AI/openclaw/workspaces/naonao-pet-content\"\n  },\n  \"active_root_for_reports\": \"openclaw\",\n  \"active_root_for_runtime\": \"openclaw\",\n  \"forbid_cross_root_write_without_ticket\": true\n}\n"
+      },
+      "acceptance_criteria": [
+        "root-manifest.json 可被 json.load 解析且包含 root_aliases.openclaw/root_aliases.naonao_project",
+        "active_root_for_runtime == openclaw 且 active_root_for_reports == openclaw",
+        "forbid_cross_root_write_without_ticket == true"
+      ]
     }
   ]
 }

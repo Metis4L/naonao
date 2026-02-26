@@ -1,23 +1,34 @@
 {
-  "last_run_at": "2026-02-26T16:54:07",
+  "last_run_at": "2026-02-26T17:12:08",
   "done": [
-    "WO-ROOT-001"
+    "WO-DRIFT-AUDIT-001",
+    "WO-ROOT-001B"
   ],
   "blocked": [],
   "in_flight": null,
   "attempts": {},
   "last_error": {},
   "last_selected": {
-    "wo_id": "WO-ROOT-001",
+    "wo_id": "WO-ROOT-001B",
     "path": "projects/naonao-content-ops/handovers/work-order-root-001.json",
-    "queue_index": 0,
-    "selected_at": "2026-02-26T16:54:06+08:00"
+    "queue_index": 2,
+    "selected_at": "2026-02-26T17:12:08+08:00"
   },
   "done_detail": [
     {
       "wo_id": "WO-ROOT-001",
       "gate_report_path": "projects/naonao-content-ops/reports/hard-validator-gate.latest.json",
       "at": "2026-02-26T16:54:07"
+    },
+    {
+      "wo_id": "WO-DRIFT-AUDIT-001",
+      "gate_report_path": "projects/naonao-content-ops/reports/hard-validator-gate.latest.json",
+      "at": "2026-02-26T17:11:47"
+    },
+    {
+      "wo_id": "WO-ROOT-001B",
+      "gate_report_path": "projects/naonao-content-ops/reports/hard-validator-gate.latest.json",
+      "at": "2026-02-26T17:12:08"
     }
   ]
 }
