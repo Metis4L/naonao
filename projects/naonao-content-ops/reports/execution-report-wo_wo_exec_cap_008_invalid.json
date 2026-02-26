@@ -1,0 +1,46 @@
+{
+  "task_id": "wo_exec_cap_008_invalid",
+  "status": "failed",
+  "run_mode": "apply",
+  "source_work_order": "projects/naonao-content-ops/handovers/work-order-exec-capability-008-invalid.json",
+  "finished_at": "2026-02-26T18:50:34",
+  "summary": "executed files: 0 success / 1 failed",
+  "file_results": [
+    {
+      "index": 1,
+      "root_alias": "openclaw",
+      "relative_path": "projects/naonao-content-ops/reports/exec-cap-008/invalid.json",
+      "operation": "MERGE",
+      "status": "failed",
+      "reason_code": "unsupported_mode",
+      "error_code": "EXE_MODE_UNSUPPORTED",
+      "error_class": "schema_fail",
+      "resolved_path": "/home/metis/.openclaw/workspace/projects/naonao-content-ops/reports/exec-cap-008/invalid.json",
+      "before_exists": false,
+      "before_size": 0,
+      "detail": "unsupported mode: patch for operation MERGE",
+      "after_exists": false,
+      "after_size": 0
+    }
+  ],
+  "meta": {
+    "workspace_root": "/home/metis/.openclaw/workspace",
+    "git_head": "8dd96fb40a2e9ed8f7ddba3bd0f98c9f091c25c5",
+    "root_manifest_fingerprint": "d8fd992297a568ed4006e2ddc67274f469482cf7b8024ea1d01ee2f69080ca0b",
+    "root_aliases_used": {
+      "openclaw": "/home/metis/.openclaw/workspace",
+      "naonao_project": "/mnt/e/AI/openclaw/workspaces/naonao-pet-content"
+    },
+    "capability_matrix_version": "2026-02-26.v1"
+  },
+  "blocking_issues": [
+    {
+      "code": "EXE_MODE_UNSUPPORTED",
+      "reason_code": "unsupported_mode",
+      "error_class": "schema_fail",
+      "file": "projects/naonao-content-ops/reports/exec-cap-008/invalid.json",
+      "operation": "MERGE",
+      "detail": "unsupported mode: patch for operation MERGE"
+    }
+  ]
+}

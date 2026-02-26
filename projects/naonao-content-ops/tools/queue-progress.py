@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import argparse, json
+import argparse, json, subprocess
 from datetime import datetime
 from pathlib import Path
 
@@ -39,12 +39,63 @@ def get_policy(queue_item, queue_cfg):
     return max_attempts, on_fail
 
 
+def classify_failure(gate):
+    cls = str(gate.get('failure_class', '')).strip()
+    if cls in {'schema_fail', 'exec_fail', 'gate_fail', 'infra_fail'}:
+        return cls
+
+    reason = str(gate.get('reason', '')).lower()
+    if reason.startswith('EXE_'):
+        if 'SCHEMA' in reason or 'MODE_UNSUPPORTED' in reason or 'OPERATION_UNSUPPORTED' in reason:
+            return 'schema_fail'
+        if 'WRITE_FAILED' in reason or 'READ_FAILED' in reason or 'DELETE_FAILED' in reason:
+            return 'infra_fail'
+        return 'exec_fail'
+
+    if reason.startswith('schema_'):
+        return 'schema_fail'
+    if reason.startswith('gate=') or 'gate' in reason:
+        return 'gate_fail'
+    return 'exec_fail'
+
+
+def get_retry_budget(queue_item, queue_cfg, failure_class, max_attempts):
+    rb = queue_cfg.get('retry_budget', {}) if isinstance(queue_cfg, dict) else {}
+    default_budget = int(rb.get('default', max_attempts))
+    by_class = rb.get('by_failure_class', {}) if isinstance(rb, dict) else {}
+    class_budget = int(by_class.get(failure_class, default_budget))
+
+    override = queue_item.get('retry_budget_override', {}) if isinstance(queue_item, dict) else {}
+    if isinstance(override, dict) and failure_class in override:
+        class_budget = int(override[failure_class])
+
+    return min(class_budget, max_attempts)
+
+
 def mark_queue_item(queue_cfg, wo_id, **fields):
     for item in queue_cfg.get('queue', []):
         if item.get('wo_id') == wo_id:
             item.update(fields)
             return item
     return {}
+
+
+def notify_quarantined(wo_id, attempts, reason, failure_class):
+    text = f"[queue-quarantined] wo_id={wo_id} attempts={attempts} failure_class={failure_class} reason={reason}"
+    try:
+        subprocess.run(
+            [
+                'openclaw', 'message', 'send',
+                '--target', '5667549865',
+                '--message', text,
+            ],
+            check=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+    except Exception:
+        pass
 
 
 def main():
@@ -77,13 +128,13 @@ def main():
         print('queue-progress: in_flight set')
         return
 
-    # post stage
     state['in_flight'] = None
 
     if decision != 'auto_proceed':
         state.setdefault('blocked', []).append({
             'wo_id': wo_id,
             'reason': f'decision={decision}',
+            'failure_class': 'gate_fail',
             'gate_report_path': args.gate,
             'at': now()
         })
@@ -107,26 +158,29 @@ def main():
     else:
         attempts = state.setdefault('attempts', {})
         attempts[wo_id] = int(attempts.get(wo_id, 0)) + 1
-        state.setdefault('last_error', {})[wo_id] = {
+
+        failure_class = classify_failure(gate)
+        budget = get_retry_budget(item, queue_cfg, failure_class, max_attempts)
+
+        last_error = {
             'reason': f'gate={gate_decision}',
+            'failure_class': failure_class,
             'gate_report_path': args.gate,
             'at': now()
         }
-        state.setdefault('blocked', []).append({
-            'wo_id': wo_id,
-            'reason': f'gate={gate_decision}',
-            'gate_report_path': args.gate,
-            'at': now()
-        })
+        state.setdefault('last_error', {})[wo_id] = last_error
+        state.setdefault('blocked', []).append({'wo_id': wo_id, **last_error})
 
-        if attempts[wo_id] >= max_attempts:
-            mark_queue_item(queue_cfg, wo_id, status='quarantined', quarantined_at=now())
+        if attempts[wo_id] >= budget:
+            mark_queue_item(queue_cfg, wo_id, status='quarantined', quarantined_at=now(), failure_class=failure_class)
+            reason = f"gate={gate_decision}; retry_budget_reached={budget}"
+            notify_quarantined(wo_id, attempts[wo_id], reason, failure_class)
         elif on_fail == 'skip':
-            mark_queue_item(queue_cfg, wo_id, status='skipped', skipped_at=now())
+            mark_queue_item(queue_cfg, wo_id, status='skipped', skipped_at=now(), failure_class=failure_class)
         elif on_fail == 'quarantine':
-            mark_queue_item(queue_cfg, wo_id, status='quarantined', quarantined_at=now())
+            mark_queue_item(queue_cfg, wo_id, status='quarantined', quarantined_at=now(), failure_class=failure_class)
         else:
-            mark_queue_item(queue_cfg, wo_id, status='pending')
+            mark_queue_item(queue_cfg, wo_id, status='pending', failure_class=failure_class)
 
     save(QUEUE_STATE, state)
     save(QUEUE_FILE, queue_cfg)

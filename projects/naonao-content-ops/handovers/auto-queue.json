@@ -2,6 +2,15 @@
   "active": true,
   "max_steps_per_run": 1,
   "max_attempts": 3,
+  "retry_budget": {
+    "default": 2,
+    "by_failure_class": {
+      "schema_fail": 0,
+      "exec_fail": 2,
+      "gate_fail": 0,
+      "infra_fail": 4
+    }
+  },
   "stop_when": {
     "queue_empty": true,
     "requires_approval_class_C": true
@@ -15,7 +24,11 @@
       "priority": 5,
       "max_attempts": 3,
       "on_fail": "quarantine",
-      "status": "pending"
+      "retry_budget_override": {
+        "gate_fail": 0
+      },
+      "status": "done",
+      "done_at": "2026-02-26T17:15:25"
     },
     {
       "wo_id": "WO-DRIFT-AUDIT-001",
@@ -25,6 +38,10 @@
       "priority": 20,
       "max_attempts": 3,
       "on_fail": "retry",
+      "retry_budget_override": {
+        "exec_fail": 3,
+        "infra_fail": 4
+      },
       "status": "done",
       "done_at": "2026-02-26T17:11:47"
     },
@@ -36,6 +53,10 @@
       "priority": 4,
       "max_attempts": 3,
       "on_fail": "quarantine",
+      "retry_budget_override": {
+        "schema_fail": 0,
+        "gate_fail": 0
+      },
       "status": "done",
       "done_at": "2026-02-26T17:12:08"
     }

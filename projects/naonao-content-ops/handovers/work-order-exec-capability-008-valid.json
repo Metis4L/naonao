@@ -1,0 +1,61 @@
+{
+  "task_id": "wo_exec_cap_008_valid",
+  "goal": "验证执行器支持矩阵：ADD/MODIFY/MERGE/DELETE",
+  "run_mode": "apply",
+  "rollback_required": false,
+  "root_aliases": {
+    "openclaw": "/home/metis/.openclaw/workspace",
+    "naonao_project": "/mnt/e/AI/openclaw/workspaces/naonao-pet-content"
+  },
+  "files": [
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/reports/exec-cap-008/add.txt",
+      "operation": "ADD",
+      "change_spec": {"mode": "full_replace", "content": "line1\n"},
+      "acceptance_criteria": ["create file"]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/reports/exec-cap-008/add.txt",
+      "operation": "MODIFY",
+      "change_spec": {"mode": "append_section", "content": "line2\n"},
+      "acceptance_criteria": ["append"]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/reports/exec-cap-008/add.txt",
+      "operation": "MODIFY",
+      "change_spec": {"mode": "patch", "patch_text": "{\"old\":\"line2\",\"new\":\"line2_patched\"}"},
+      "acceptance_criteria": ["patch"]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/reports/exec-cap-008/data.json",
+      "operation": "MODIFY",
+      "change_spec": {"mode": "structured_write", "content": "{\"a\":1,\"nested\":{\"x\":1}}"},
+      "acceptance_criteria": ["structured_write"]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/reports/exec-cap-008/data.json",
+      "operation": "MERGE",
+      "change_spec": {"mode": "structured_write", "content": "{\"b\":2,\"nested\":{\"y\":2}}"},
+      "acceptance_criteria": ["merge"]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/reports/exec-cap-008/to-delete.txt",
+      "operation": "ADD",
+      "change_spec": {"mode": "full_replace", "content": "delete me\n"},
+      "acceptance_criteria": ["create delete target"]
+    },
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/reports/exec-cap-008/to-delete.txt",
+      "operation": "DELETE",
+      "change_spec": {"mode": "full_replace", "content": ""},
+      "acceptance_criteria": ["deleted"]
+    }
+  ]
+}

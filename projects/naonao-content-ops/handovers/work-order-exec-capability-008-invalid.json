@@ -1,0 +1,22 @@
+{
+  "task_id": "wo_exec_cap_008_invalid",
+  "goal": "invalid matrix sample should fail with unsupported mode",
+  "run_mode": "apply",
+  "rollback_required": false,
+  "root_aliases": {
+    "openclaw": "/home/metis/.openclaw/workspace",
+    "naonao_project": "/mnt/e/AI/openclaw/workspaces/naonao-pet-content"
+  },
+  "files": [
+    {
+      "root_alias": "openclaw",
+      "path": "projects/naonao-content-ops/reports/exec-cap-008/invalid.json",
+      "operation": "MERGE",
+      "change_spec": {
+        "mode": "patch",
+        "content": "{\"x\":1}"
+      },
+      "acceptance_criteria": ["must fail by matrix guard"]
+    }
+  ]
+}
